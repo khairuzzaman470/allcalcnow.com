@@ -1,0 +1,534 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'vat-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const selectClass = inputClass + ' cursor-pointer';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const vatRates = [
+  { value: '20', label: '20% Standard UK' },
+  { value: '5', label: '5% Reduced UK' },
+  { value: '0', label: '0% Zero Rated' },
+  { value: '23', label: '23% Ireland' },
+  { value: '19', label: '19% Germany' },
+  { value: '21', label: '21% Netherlands' },
+  { value: '25', label: '25% Denmark and Sweden' },
+  { value: 'custom', label: 'Custom %' },
+];
+
+const relatedTools = [
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'Mortgage Calculator', icon: '🏠', description: 'Calculate monthly payments and total cost', href: '/mortgage-calculator' },
+  { name: 'Loan Calculator', icon: '💰', description: 'Monthly EMI and total interest for any loan', href: '/loan-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/vat-calculator';
+const pageTitle = 'VAT Calculator — Add or Remove VAT Instantly | AllCalcNow';
+const pageDescription =
+  'Free VAT calculator at AllCalcNow. Add or remove VAT from any price in seconds. Supports UK, Ireland, Germany, Netherlands and custom rates.';
+
+const faqs = [
+  {
+    question: 'What is the standard VAT rate in the UK?',
+    answer:
+      'The standard VAT rate in the United Kingdom is 20%. It applies to most goods and services unless a reduced rate, zero rate, or exemption applies. Always confirm the correct rate for your product category with HMRC guidance or your accountant.',
+  },
+  {
+    question: 'How do I add 20% VAT to a price?',
+    answer:
+      'Multiply the net (ex-VAT) price by 1.20. For example, £100 net becomes £120 gross, with £20 VAT. Alternatively, divide the net amount by 100 and multiply by 20 to find the VAT portion, then add it to the net figure. Use the Add VAT mode on this calculator to do it instantly.',
+  },
+  {
+    question: 'How do I remove VAT from a price?',
+    answer:
+      'Divide the gross (inc-VAT) price by 1 plus the VAT rate as a decimal. For 20% VAT, divide by 1.20. A £120 gross price becomes £100 net with £20 VAT. Select Remove VAT on this page and enter your gross amount—the tool splits net and VAT automatically.',
+  },
+  {
+    question: 'Which items are VAT exempt in the UK?',
+    answer:
+      'Some supplies are outside the scope of VAT or exempt, including many education, health, insurance, and financial services, plus certain residential property transactions. Zero-rated items (0% VAT) still count as taxable supplies but at 0%—such as most food, children’s clothing, and books. Rules are detailed; check HMRC for your specific case.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'VAT Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('VAT Calculator', '/vat-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/vat-calculator"
+  schemas={schemas}
+>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'VAT Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Tax &amp; pricing
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">VAT Calculator</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Add or remove VAT from any amount—UK, Ireland, Germany, Netherlands, and custom rates.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-12 xl:items-start">
+      <section
+        class="xl:col-span-5 rounded-2xl border border-border/80 bg-card p-6 shadow-[0_4px_24px_-4px_rgba(26,24,20,0.08)] sm:p-8"
+        aria-label="VAT inputs"
+      >
+        <h2 class="text-lg font-bold text-text">Price details</h2>
+        <p class="mt-1 text-sm text-muted">Enter an amount and choose how to calculate.</p>
+
+        <form id="vat-form" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="vat-amount" class={labelClass} id="amount-label">Amount (ex-VAT)</label>
+            <div class="relative">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">£</span>
+              <input type="number" id="vat-amount" value="100" min="0" step="0.01" class={`${inputClass} pl-8`} />
+            </div>
+          </div>
+
+          <div>
+            <label for="vat-rate" class={labelClass}>VAT rate</label>
+            <select id="vat-rate" class={selectClass}>
+              {vatRates.map((r) => (
+                <option value={r.value}>{r.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div id="custom-rate-wrap" class="hidden">
+            <label for="vat-custom-rate" class={labelClass}>Custom rate</label>
+            <div class="relative">
+              <input type="number" id="vat-custom-rate" value="15" min="0" max="100" step="0.01" class={`${inputClass} pr-10`} />
+              <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">%</span>
+            </div>
+          </div>
+
+          <div>
+            <span class={labelClass}>Calculation type</span>
+            <div class="vat-segment mt-1" role="group" aria-label="Calculation type">
+              <button type="button" data-calc-type="add" class="calc-type-btn segment-btn segment-active">Add VAT</button>
+              <button type="button" data-calc-type="remove" class="calc-type-btn segment-btn">Remove VAT</button>
+            </div>
+            <p id="calc-type-hint" class="mt-2 text-xs text-muted">
+              Net price → gross price (ex-VAT to inc-VAT).
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+            <button
+              type="submit"
+              class="flex-1 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30 active:translate-y-0"
+            >
+              Calculate
+            </button>
+            <button
+              type="button"
+              id="btn-clear"
+              class="rounded-xl border border-border bg-white px-6 py-3.5 text-sm font-semibold text-text transition-colors hover:bg-bg"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+        <div id="vat-error" class="vat-error mt-4 hidden rounded-xl px-4 py-3 text-sm" role="alert"></div>
+      </section>
+
+      <section id="vat-results" class="space-y-5 xl:col-span-7" aria-label="VAT results">
+        <div class="overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_32px_-8px_rgba(26,24,20,0.35)]">
+          <div class="border-b border-white/10 px-6 py-5 sm:px-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Gross amount (inc-VAT)</p>
+            <p id="result-gross" class="mt-1 font-heading text-4xl font-bold tracking-tight sm:text-5xl">—</p>
+          </div>
+          <div class="grid gap-4 px-6 py-5 sm:grid-cols-2 sm:px-8">
+            <div>
+              <p class="text-xs font-medium text-white/60">Net amount (ex-VAT)</p>
+              <p id="result-net" class="mt-0.5 text-2xl font-bold tabular-nums">—</p>
+            </div>
+            <div>
+              <p class="text-xs font-medium text-white/60">VAT amount</p>
+              <p id="result-vat" class="mt-0.5 text-2xl font-bold tabular-nums text-accent">—</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:p-6">
+          <h3 class="text-sm font-bold text-text">Breakdown</h3>
+          <dl id="breakdown-body" class="mt-4 space-y-3"></dl>
+        </div>
+      </section>
+    </div>
+
+    <article
+      class="seo-content mt-14 max-w-3xl border-t border-border pt-10"
+      itemscope
+      itemtype="https://schema.org/Article"
+    >
+      <meta itemprop="headline" content="VAT Calculator — Add or Remove VAT Instantly" />
+      <meta itemprop="description" content={pageDescription} />
+
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">VAT Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free VAT calculator</strong> lets you
+        <strong class="font-semibold text-text">add VAT to a net price</strong> or
+        <strong class="font-semibold text-text">remove VAT from a gross price</strong> in seconds. Whether you invoice
+        clients, check receipts, or compare prices across Europe, you need clear net, VAT, and gross figures. Use the
+        tool above with preset rates for the UK, Ireland, Germany, the Netherlands, Denmark, Sweden—or enter a custom
+        percentage for any jurisdiction.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#what-is-vat" class="text-accent hover:underline">What is VAT?</a></li>
+          <li><a href="#how-to-calculate-vat" class="text-accent hover:underline">How to Calculate VAT</a></li>
+          <li><a href="#how-to-remove-vat" class="text-accent hover:underline">How to Remove VAT from a Price</a></li>
+          <li><a href="#vat-rates-europe" class="text-accent hover:underline">VAT Rates by Country in Europe</a></li>
+          <li><a href="#vat-calculator-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="what-is-vat" class="mt-10 scroll-mt-24" aria-labelledby="heading-what-is-vat">
+        <h2 id="heading-what-is-vat" class="font-heading text-xl font-bold text-text">What is VAT?</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Value Added Tax (VAT)</strong> is a consumption tax charged at each
+          stage of the supply chain where value is added. In the UK and European Union, businesses registered for VAT
+          typically collect it on sales and reclaim VAT on qualifying purchases. The amount customers pay includes VAT
+          on taxable supplies; the rate depends on the product or service category and the country.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Prices are often quoted <strong class="font-semibold text-text">excluding VAT (net)</strong> in B2B contexts
+          and <strong class="font-semibold text-text">including VAT (gross)</strong> on consumer-facing retail labels.
+          Confusing the two leads to under-quoting, invoice errors, and margin mistakes. A dedicated VAT calculator keeps
+          net, tax, and gross aligned so your figures match what HMRC or your local tax authority expects on returns.
+        </p>
+      </section>
+
+      <section id="how-to-calculate-vat" class="mt-10 scroll-mt-24" aria-labelledby="heading-calculate-vat">
+        <h2 id="heading-calculate-vat" class="font-heading text-xl font-bold text-text">How to Calculate VAT</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          To <strong class="font-semibold text-text">add VAT</strong> to a net (ex-VAT) amount, multiply the net price
+          by the VAT rate expressed as a decimal, then add that to the net figure—or multiply the net price by (1 + rate).
+        </p>
+        <p class="mt-2 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          VAT amount = Net × (Rate ÷ 100)<br />
+          Gross = Net + VAT amount = Net × (1 + Rate ÷ 100)
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Example (UK standard 20%):</strong> Net £250 → VAT £50 → Gross £300.
+          For 5% reduced rate on £200 net: VAT = £10, gross = £210. Select your rate from the dropdown, choose
+          <em>Add VAT</em>, and enter the net amount—the calculator updates all three values instantly.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          For percentage problems without tax, try our
+          <a href="/percentage-calculator" class="font-semibold text-accent hover:underline">percentage calculator</a>.
+        </p>
+      </section>
+
+      <section id="how-to-remove-vat" class="mt-10 scroll-mt-24" aria-labelledby="heading-remove-vat">
+        <h2 id="heading-remove-vat" class="font-heading text-xl font-bold text-text">How to Remove VAT from a Price</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          When you only know the <strong class="font-semibold text-text">gross (inc-VAT)</strong> price, do not subtract
+          20% from the total—that understates the net figure. The correct method is to divide the gross amount by 1 plus
+          the VAT rate as a decimal.
+        </p>
+        <p class="mt-2 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Net = Gross ÷ (1 + Rate ÷ 100)<br />
+          VAT amount = Gross − Net
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Example:</strong> A receipt shows £480 inc-VAT at 20%. Net = £480 ÷ 1.20
+          = £400; VAT = £80. Switch this page to <em>Remove VAT</em>, enter £480, and confirm the split. The same formula
+          works for 23% Irish VAT, 19% German VAT, or any custom rate you select.
+        </p>
+      </section>
+
+      <section id="vat-rates-europe" class="mt-10 scroll-mt-24" aria-labelledby="heading-rates-europe">
+        <h2 id="heading-rates-europe" class="font-heading text-xl font-bold text-text">VAT Rates by Country in Europe</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Standard VAT rates vary by EU member state and the UK. This calculator includes common presets; always verify
+          current rates before filing returns, as governments occasionally adjust them.
+        </p>
+        <div class="mt-4 overflow-hidden rounded-xl border border-border/80">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-navy text-xs uppercase tracking-wider text-white/80">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Country / region</th>
+                <th class="px-4 py-3 font-semibold">Standard rate</th>
+                <th class="px-4 py-3 font-semibold">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border/60 bg-card text-muted">
+              <tr>
+                <td class="px-4 py-3 font-medium text-text">United Kingdom</td>
+                <td class="px-4 py-3 tabular-nums">20%</td>
+                <td class="px-4 py-3">5% reduced; 0% zero-rated on qualifying goods</td>
+              </tr>
+              <tr class="bg-bg/40">
+                <td class="px-4 py-3 font-medium text-text">Ireland</td>
+                <td class="px-4 py-3 tabular-nums">23%</td>
+                <td class="px-4 py-3">Reduced rates on specific categories</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-medium text-text">Germany</td>
+                <td class="px-4 py-3 tabular-nums">19%</td>
+                <td class="px-4 py-3">7% reduced rate available</td>
+              </tr>
+              <tr class="bg-bg/40">
+                <td class="px-4 py-3 font-medium text-text">Netherlands</td>
+                <td class="px-4 py-3 tabular-nums">21%</td>
+                <td class="px-4 py-3">9% reduced on some supplies</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-medium text-text">Denmark &amp; Sweden</td>
+                <td class="px-4 py-3 tabular-nums">25%</td>
+                <td class="px-4 py-3">Among the higher standard rates in the EU</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 leading-relaxed text-muted">
+          Use <strong class="font-semibold text-text">Custom %</strong> in the calculator for other countries or special
+          rates. Cross-border B2B sales may follow different rules (reverse charge, MOSS, etc.)—this tool handles arithmetic
+          only; consult a tax adviser for compliance.
+        </p>
+      </section>
+
+      <section id="vat-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="heading-faq">
+        <h2 id="heading-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <p class="mt-2 text-sm text-muted">Common questions about UK VAT, adding 20%, removing tax, and exemptions.</p>
+
+        <div class="mt-6 space-y-4">
+          {
+            faqs.map((faq, i) => (
+              <details
+                class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20"
+                id={`faq-${i + 1}`}
+                open={i === 0}
+              >
+                <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center justify-between gap-3">
+                    {faq.question}
+                    <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </span>
+                </summary>
+                <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                  <p class="leading-relaxed text-muted">{faq.answer}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Results are for illustration only—not tax or legal advice. VAT
+        rates and rules change; confirm with your tax authority or adviser before filing.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('vat-form');
+  const amountEl = document.getElementById('vat-amount');
+  const rateEl = document.getElementById('vat-rate');
+  const customRateWrap = document.getElementById('custom-rate-wrap');
+  const customRateEl = document.getElementById('vat-custom-rate');
+  const amountLabel = document.getElementById('amount-label');
+  const calcTypeHint = document.getElementById('calc-type-hint');
+  const errorEl = document.getElementById('vat-error');
+  const resultGross = document.getElementById('result-gross');
+  const resultNet = document.getElementById('result-net');
+  const resultVat = document.getElementById('result-vat');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const btnClear = document.getElementById('btn-clear');
+
+  let calcType = 'add';
+
+  const money = (n) =>
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(n);
+
+  const pct = (n) =>
+    new Intl.NumberFormat('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(n) + '%';
+
+  function getRate() {
+    const selected = rateEl?.value || '20';
+    if (selected === 'custom') return parseFloat(customRateEl?.value || '0') || 0;
+    return parseFloat(selected) || 0;
+  }
+
+  function setCalcType(type) {
+    calcType = type;
+    document.querySelectorAll('.calc-type-btn').forEach((btn) => {
+      btn.classList.toggle('segment-active', btn.getAttribute('data-calc-type') === type);
+    });
+    if (amountLabel) {
+      amountLabel.textContent = type === 'add' ? 'Amount (ex-VAT)' : 'Amount (inc-VAT)';
+    }
+    if (calcTypeHint) {
+      calcTypeHint.textContent =
+        type === 'add'
+          ? 'Net price → gross price (ex-VAT to inc-VAT).'
+          : 'Gross price → net price (inc-VAT to ex-VAT).';
+    }
+  }
+
+  function breakdownRow(term, value) {
+    return `<div class="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 hover:bg-bg/80"><dt class="text-sm text-muted">${term}</dt><dd class="text-sm font-bold tabular-nums text-text">${value}</dd></div>`;
+  }
+
+  function calculate() {
+    const amount = parseFloat(amountEl?.value || '');
+    const rate = getRate();
+
+    if (Number.isNaN(amount) || amount < 0) {
+      if (errorEl) {
+        errorEl.textContent = 'Please enter a valid amount (0 or greater).';
+        errorEl.classList.remove('hidden');
+      }
+      return;
+    }
+    if (rate < 0 || rate > 100) {
+      if (errorEl) {
+        errorEl.textContent = 'VAT rate must be between 0% and 100%.';
+        errorEl.classList.remove('hidden');
+      }
+      return;
+    }
+    errorEl?.classList.add('hidden');
+
+    const factor = 1 + rate / 100;
+    let net, gross, vatAmount;
+
+    if (calcType === 'add') {
+      net = amount;
+      vatAmount = net * (rate / 100);
+      gross = net + vatAmount;
+    } else {
+      gross = amount;
+      net = rate === 0 ? gross : gross / factor;
+      vatAmount = gross - net;
+    }
+
+    if (resultGross) resultGross.textContent = money(gross);
+    if (resultNet) resultNet.textContent = money(net);
+    if (resultVat) resultVat.textContent = money(vatAmount);
+
+    if (breakdownBody) {
+      breakdownBody.innerHTML = [
+        breakdownRow('Net amount (excluding VAT)', money(net)),
+        breakdownRow('VAT amount', money(vatAmount)),
+        breakdownRow('Gross amount (including VAT)', money(gross)),
+        breakdownRow('VAT rate applied', pct(rate)),
+      ].join('');
+    }
+  }
+
+  document.querySelectorAll('.calc-type-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setCalcType(btn.getAttribute('data-calc-type') || 'add');
+      calculate();
+    });
+  });
+
+  rateEl?.addEventListener('change', () => {
+    const isCustom = rateEl.value === 'custom';
+    customRateWrap?.classList.toggle('hidden', !isCustom);
+    calculate();
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    calculate();
+  });
+
+  amountEl?.addEventListener('input', calculate);
+  customRateEl?.addEventListener('input', calculate);
+  rateEl?.addEventListener('input', calculate);
+
+  btnClear?.addEventListener('click', () => {
+    if (amountEl) amountEl.value = '100';
+    if (rateEl) rateEl.value = '20';
+    if (customRateEl) customRateEl.value = '15';
+    customRateWrap?.classList.add('hidden');
+    setCalcType('add');
+    calculate();
+  });
+
+  setCalcType('add');
+  calculate();
+</script>
+
+<style>
+  .vat-segment {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 0.75rem;
+    background: var(--color-bg);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-border) 80%, transparent);
+  }
+  .segment-btn {
+    flex: 1;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    transition: all 0.2s ease;
+  }
+  .segment-btn:hover:not(.segment-active) {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-card) 60%, transparent);
+  }
+  .segment-active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+  .vat-error {
+    background: color-mix(in srgb, var(--color-accent) 8%, white);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-accent);
+  }
+</style>

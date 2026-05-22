@@ -1,0 +1,280 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageUrl = 'https://allcalcnow.com/contact';
+const pageTitle = 'Contact — Get in Touch';
+const pageDescription =
+  'Contact the AllCalcNow team. Report a bug, suggest a new calculator, or send feedback. We read every message.';
+
+const subjects = [
+  'General Enquiry',
+  'Report a Bug',
+  'Suggest a Calculator',
+  'Accuracy Issue',
+  'Partnership or Business',
+  'Other',
+];
+
+const quickLinks = [
+  { label: 'Report a bug', subject: 'Report a Bug', icon: '🐛', href: '#contact-form' },
+  { label: 'Suggest a calculator', subject: 'Suggest a Calculator', icon: '💡', href: '#contact-form' },
+  { label: 'Privacy questions', subject: '', icon: '🔐', href: '/privacy-policy' },
+  { label: 'How calculations work', subject: '', icon: '🧮', href: '/' },
+];
+
+const inputClass =
+  'w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold text-text';
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact AllCalcNow',
+    url: pageUrl,
+    description: pageDescription,
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/contact" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <header class="max-w-2xl">
+      <h1 class="font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Get In Touch</h1>
+      <p class="mt-3 text-lg text-muted">We read every message and reply within 48 hours.</p>
+    </header>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:items-start">
+      <!-- Form column -->
+      <div class="lg:col-span-7">
+        <div
+          id="form-success"
+          class="mb-6 hidden rounded-2xl border-2 border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-800"
+          role="status"
+        >
+          Thank you! The AllCalcNow team will get back to you within 48 hours.
+        </div>
+
+        <form
+          id="contact-form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-8"
+          novalidate
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden" aria-hidden="true">
+            <label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="space-y-5">
+            <div>
+              <label for="full-name" class={labelClass}>Full name <span class="text-accent">*</span></label>
+              <input type="text" id="full-name" name="name" required autocomplete="name" class={inputClass} />
+              <p id="error-name" class="contact-error mt-1.5 hidden text-sm text-red-600" role="alert"></p>
+            </div>
+
+            <div>
+              <label for="email" class={labelClass}>Email address <span class="text-accent">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" class={inputClass} />
+              <p id="error-email" class="contact-error mt-1.5 hidden text-sm text-red-600" role="alert"></p>
+            </div>
+
+            <div>
+              <label for="subject" class={labelClass}>Subject <span class="text-accent">*</span></label>
+              <select id="subject" name="subject" required class={`${inputClass} cursor-pointer`}>
+                {subjects.map((s) => (
+                  <option value={s}>{s}</option>
+                ))}
+              </select>
+              <p id="error-subject" class="contact-error mt-1.5 hidden text-sm text-red-600" role="alert"></p>
+            </div>
+
+            <div>
+              <label for="message" class={labelClass}>Message <span class="text-accent">*</span></label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="5"
+                minlength="20"
+                class={`${inputClass} resize-y`}
+                placeholder="Tell us what’s on your mind (at least 20 characters)…"
+              ></textarea>
+              <p id="error-message" class="contact-error mt-1.5 hidden text-sm text-red-600" role="alert"></p>
+            </div>
+
+            <button
+              type="submit"
+              id="btn-submit"
+              class="w-full rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="space-y-6 lg:col-span-5">
+        <div class="rounded-2xl border border-border/80 bg-bg/60 p-6">
+          <h2 class="font-heading text-lg font-bold text-text">Alternative contact</h2>
+          <p class="mt-3 text-sm leading-relaxed text-muted">Prefer email? Drop us a line directly.</p>
+          <p class="mt-4">
+            <a href="mailto:hello@allcalcnow.com" class="text-base font-semibold text-accent hover:underline">
+              hello@allcalcnow.com
+            </a>
+          </p>
+          <p class="mt-3 text-sm text-muted">
+            <strong class="text-text">Response time:</strong> within 48 hours
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-heading text-lg font-bold text-text">Quick links</h2>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            {
+              quickLinks.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    data-preset-subject={link.subject}
+                    class="quick-link-card flex items-center gap-3 rounded-xl border border-border/80 bg-card px-4 py-3 text-sm font-semibold text-text transition-all hover:border-accent/30 hover:bg-accent/5 hover:shadow-sm"
+                  >
+                    <span class="text-xl" aria-hidden="true">{link.icon}</span>
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const successEl = document.getElementById('form-success');
+  const btnSubmit = document.getElementById('btn-submit');
+  const nameEl = document.getElementById('full-name');
+  const emailEl = document.getElementById('email');
+  const subjectEl = document.getElementById('subject');
+  const messageEl = document.getElementById('message');
+
+  const errors = {
+    name: document.getElementById('error-name'),
+    email: document.getElementById('error-email'),
+    subject: document.getElementById('error-subject'),
+    message: document.getElementById('error-message'),
+  };
+
+  function showError(field, msg) {
+    const el = errors[field];
+    const input = field === 'name' ? nameEl : field === 'email' ? emailEl : field === 'subject' ? subjectEl : messageEl;
+    if (el) {
+      el.textContent = msg;
+      el.classList.remove('hidden');
+    }
+    input?.classList.add('border-red-400', 'ring-red-100');
+    input?.setAttribute('aria-invalid', 'true');
+  }
+
+  function clearErrors() {
+    Object.keys(errors).forEach((field) => {
+      errors[field]?.classList.add('hidden');
+      const input =
+        field === 'name' ? nameEl : field === 'email' ? emailEl : field === 'subject' ? subjectEl : messageEl;
+      input?.classList.remove('border-red-400', 'ring-red-100');
+      input?.removeAttribute('aria-invalid');
+    });
+  }
+
+  function validate() {
+    clearErrors();
+    let valid = true;
+
+    const name = nameEl?.value?.trim() || '';
+    const email = emailEl?.value?.trim() || '';
+    const message = messageEl?.value?.trim() || '';
+
+    if (!name) {
+      showError('name', 'Please enter your full name.');
+      valid = false;
+    }
+
+    if (!email) {
+      showError('email', 'Please enter your email address.');
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('email', 'Please enter a valid email address.');
+      valid = false;
+    }
+
+    if (!message) {
+      showError('message', 'Please enter a message.');
+      valid = false;
+    } else if (message.length < 20) {
+      showError('message', `Message must be at least 20 characters (${message.length}/20).`);
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = 'Sending…';
+    }
+
+    try {
+      const formData = new FormData(form);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString(),
+      });
+    } catch {
+      /* Netlify may be unavailable locally; still show success after validation */
+    }
+
+    form?.classList.add('hidden');
+    successEl?.classList.remove('hidden');
+    successEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  document.querySelectorAll('.quick-link-card[data-preset-subject]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const subject = link.getAttribute('data-preset-subject');
+      if (!subject) return;
+      e.preventDefault();
+      if (subjectEl) subjectEl.value = subject;
+      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+      nameEl?.focus();
+    });
+  });
+
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const subject = params.get('subject');
+    if (subject && subjectEl) {
+      const options = Array.from(subjectEl.options).map((o) => o.value);
+      if (options.includes(subject)) subjectEl.value = subject;
+    }
+  }
+</script>

@@ -1,0 +1,380 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'ci-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const selectClass = inputClass + ' cursor-pointer';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const compoundOptions = [
+  { value: '1', label: 'Annually' },
+  { value: '2', label: 'Semi-annually' },
+  { value: '4', label: 'Quarterly' },
+  { value: '12', label: 'Monthly' },
+  { value: '365', label: 'Daily' },
+];
+
+const relatedTools = [
+  { name: 'Loan Calculator', icon: '💰', description: 'Monthly EMI and total interest for any loan', href: '/loan-calculator' },
+  { name: 'Mortgage Calculator', icon: '🏠', description: 'Calculate monthly payments and total cost', href: '/mortgage-calculator' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/compound-interest-calculator';
+const pageTitle = 'Compound Interest Calculator — Watch Your Money Grow | AllCalcNow';
+const pageDescription =
+  'Free compound interest calculator at AllCalcNow. See how your savings and investments grow over time with the power of compounding.';
+
+const faqs = [
+  {
+    question: 'What is compound interest in simple terms?',
+    answer:
+      'Compound interest means you earn interest on your interest. Each period, interest is calculated on the full balance—including what you deposited and interest already earned—so growth accelerates over time. Simple interest only pays on the original principal.',
+  },
+  {
+    question: 'How often should interest compound for best results?',
+    answer:
+      'More frequent compounding (daily or monthly) slightly increases returns versus annual compounding at the same stated annual rate, because interest is reinvested sooner. The biggest drivers are the rate, time, and how much you contribute—not compounding frequency alone.',
+  },
+  {
+    question: 'What is the Rule of 72?',
+    answer:
+      'Divide 72 by your annual interest rate (as a whole number) to estimate years to double your money. At 8% per year, 72 ÷ 8 ≈ 9 years. It is a rough mental math shortcut, not exact, but useful for planning.',
+  },
+  {
+    question: 'Is compound interest good or bad for borrowers?',
+    answer:
+      'For savers and investors, compounding works in your favor. For borrowers, compounding on unpaid credit card or loan interest works against you—balances grow faster. Paying on time and reducing principal limits the compounding effect on debt.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Compound Interest Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Compound Interest Calculator', '/compound-interest-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/compound-interest-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Compound Interest Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Investing
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Compound Interest Calculator</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        See how principal, monthly contributions, and compounding frequency grow your balance over time.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-12 xl:items-start">
+      <section
+        class="xl:col-span-5 rounded-2xl border border-border/80 bg-card p-6 shadow-[0_4px_24px_-4px_rgba(26,24,20,0.08)] sm:p-8"
+        aria-label="Compound interest inputs"
+      >
+        <h2 class="text-lg font-bold text-text">Investment details</h2>
+        <p class="mt-1 text-sm text-muted">Adjust values—results update automatically.</p>
+
+        <form id="ci-form" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="principal" class={labelClass}>Initial investment / principal</label>
+            <div class="relative">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">$</span>
+              <input type="number" id="principal" value="10000" min="0" step="100" class={`${inputClass} pl-8`} />
+            </div>
+          </div>
+          <div>
+            <label for="monthly" class={labelClass}>
+              Monthly contribution <span class="font-normal text-muted">(optional)</span>
+            </label>
+            <div class="relative">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">$</span>
+              <input type="number" id="monthly" value="200" min="0" step="10" class={`${inputClass} pl-8`} />
+            </div>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="annual-rate" class={labelClass}>Annual interest rate</label>
+              <div class="relative">
+                <input type="number" id="annual-rate" value="7" min="0" max="100" step="0.01" class={`${inputClass} pr-10`} />
+                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">%</span>
+              </div>
+            </div>
+            <div>
+              <label for="years" class={labelClass}>Investment period</label>
+              <div class="relative">
+                <input type="number" id="years" value="10" min="1" max="50" step="1" class={`${inputClass} pr-12`} />
+                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted">yrs</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="compound-freq" class={labelClass}>Compound frequency</label>
+            <select id="compound-freq" class={selectClass}>
+              {compoundOptions.map((o) => (
+                <option value={o.value}>{o.label}</option>
+              ))}
+            </select>
+          </div>
+        </form>
+      </section>
+
+      <section class="space-y-5 xl:col-span-7" aria-label="Compound interest results">
+        <div class="overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_32px_-8px_rgba(26,24,20,0.35)]">
+          <div class="px-6 py-6 sm:px-8 sm:py-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Final balance</p>
+            <p id="result-final" class="mt-2 font-heading text-4xl font-bold tracking-tight sm:text-5xl">—</p>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Total contributed</p>
+            <p id="result-contributed" class="mt-1 text-xl font-bold tabular-nums text-text">—</p>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Total interest earned</p>
+            <p id="result-interest" class="mt-1 text-xl font-bold tabular-nums text-accent">—</p>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:col-span-2">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Interest as % of final balance</p>
+            <p id="result-interest-pct" class="mt-1 text-xl font-bold tabular-nums text-text">—</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="border-b border-border bg-bg/50 px-6 py-5 sm:px-8">
+        <h2 class="text-lg font-bold text-text">Year-by-year growth</h2>
+        <p class="mt-1 text-sm text-muted">Opening balance, interest, contributions, and closing balance each year.</p>
+      </div>
+      <div class="max-h-[28rem] overflow-auto">
+        <table class="w-full min-w-[640px] text-left text-sm">
+          <thead class="sticky top-0 z-10 bg-navy text-xs uppercase tracking-wider text-white/80">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Year</th>
+              <th class="px-4 py-3 text-right font-semibold">Opening balance</th>
+              <th class="px-4 py-3 text-right font-semibold">Interest</th>
+              <th class="px-4 py-3 text-right font-semibold">Contributions</th>
+              <th class="px-4 py-3 text-right font-semibold">Balance</th>
+            </tr>
+          </thead>
+          <tbody id="yearly-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Compound Interest Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Compound Interest Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free compound interest calculator</strong> shows how savings and
+        investments grow when returns are reinvested. Enter your starting principal, optional
+        <strong class="font-semibold text-text">monthly contributions</strong>, annual rate, years, and how often
+        interest compounds. You get a <strong class="font-semibold text-text">final balance</strong>, total interest
+        earned, and a <strong class="font-semibold text-text">year-by-year growth table</strong>—the same compounding
+        logic used in retirement accounts, CDs, and long-term portfolios (before taxes and fees).
+      </p>
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#what-is-compound-interest" class="text-accent hover:underline">What is Compound Interest?</a></li>
+          <li><a href="#power-of-compounding" class="text-accent hover:underline">The Power of Compounding — Real Life Examples</a></li>
+          <li><a href="#compound-vs-simple" class="text-accent hover:underline">Compound Interest vs Simple Interest</a></li>
+          <li><a href="#maximize-growth" class="text-accent hover:underline">How to Maximize Your Compound Interest Growth</a></li>
+          <li><a href="#compound-interest-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+      <section id="what-is-compound-interest" class="mt-10 scroll-mt-24" aria-labelledby="h-what">
+        <h2 id="h-what" class="font-heading text-xl font-bold text-text">What is Compound Interest?</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Compound interest</strong> is interest calculated on the initial
+          principal plus all accumulated interest from prior periods. Each compounding event adds to your balance, so the
+          next period’s interest is computed on a larger amount. Over decades, that snowball effect is why starting early
+          matters more than timing the market.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          The formula for a lump sum with no contributions: <strong class="font-semibold text-text">A = P(1 + r/n)^(nt)</strong>,
+          where P is principal, r is annual rate, n is compounds per year, and t is years. Monthly contributions add more
+          moving parts—our calculator simulates each period for accuracy.
+        </p>
+      </section>
+      <section id="power-of-compounding" class="mt-10 scroll-mt-24" aria-labelledby="h-power">
+        <h2 id="h-power" class="font-heading text-xl font-bold text-text">The Power of Compounding — Real Life Examples</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Example 1:</strong> $10,000 at 7% compounded monthly for 10 years with no
+          extra deposits grows to roughly $20,000—about $10,000 in interest. Add $200 every month and the final balance
+          jumps dramatically because each deposit also compounds.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Example 2:</strong> Two investors save $300/month at 8%. One starts at
+          25 and stops at 35; the other starts at 35 and saves until 65. The early starter often ends with more despite
+          contributing for fewer years—time in the market beats amount alone.
+        </p>
+      </section>
+      <section id="compound-vs-simple" class="mt-10 scroll-mt-24" aria-labelledby="h-vs">
+        <h2 id="h-vs" class="font-heading text-xl font-bold text-text">Compound Interest vs Simple Interest</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Simple interest</strong> applies only to the original principal: $10,000
+          at 7% simple for 10 years earns $7,000 interest ($70,000 total). <strong class="font-semibold text-text">Compound
+          interest</strong> on the same terms earns more because year-two interest builds on year-one gains. Short-term
+          products sometimes quote simple rates; long-term savings almost always compound.
+        </p>
+      </section>
+      <section id="maximize-growth" class="mt-10 scroll-mt-24" aria-labelledby="h-max">
+        <h2 id="h-max" class="font-heading text-xl font-bold text-text">How to Maximize Your Compound Interest Growth</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Start early, contribute consistently, and avoid withdrawing gains. Choose competitive annual yields (high-yield
+          savings, bonds, diversified funds—each with different risk). Reinvest dividends. Minimize fees that drag on net
+          returns. Use our <a href="/loan-calculator" class="font-semibold text-accent hover:underline">loan calculator</a>
+          to see how compounding works against you on high-interest debt.
+        </p>
+      </section>
+      <section id="compound-interest-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">
+        <h2 id="h-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Projections exclude taxes, fees, and market risk. Not investment advice.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const principalEl = document.getElementById('principal');
+  const monthlyEl = document.getElementById('monthly');
+  const rateEl = document.getElementById('annual-rate');
+  const yearsEl = document.getElementById('years');
+  const freqEl = document.getElementById('compound-freq');
+  const resultFinal = document.getElementById('result-final');
+  const resultContributed = document.getElementById('result-contributed');
+  const resultInterest = document.getElementById('result-interest');
+  const resultInterestPct = document.getElementById('result-interest-pct');
+  const yearlyBody = document.getElementById('yearly-body');
+
+  const money = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+  const money2 = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+  const pct = (n) => new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n) + '%';
+
+  function simulate(principal, monthly, annualPct, years, compoundsPerYear) {
+    const ratePerPeriod = annualPct / 100 / compoundsPerYear;
+    const monthsPerPeriod = 12 / compoundsPerYear;
+    let balance = principal;
+    let totalContributed = principal;
+    const rows = [];
+
+    for (let y = 1; y <= years; y++) {
+      const opening = balance;
+      let yearInterest = 0;
+      let yearContrib = 0;
+
+      for (let p = 0; p < compoundsPerYear; p++) {
+        for (let m = 0; m < monthsPerPeriod; m++) {
+          balance += monthly;
+          yearContrib += monthly;
+          totalContributed += monthly;
+        }
+        const interest = balance * ratePerPeriod;
+        balance += interest;
+        yearInterest += interest;
+      }
+
+      rows.push({ year: y, opening, interest: yearInterest, contributions: yearContrib, balance });
+    }
+
+    const totalInterest = balance - totalContributed;
+    return { finalBalance: balance, totalContributed, totalInterest, rows };
+  }
+
+  function calculate() {
+    const principal = parseFloat(principalEl?.value || '0') || 0;
+    const monthly = parseFloat(monthlyEl?.value || '0') || 0;
+    const annualPct = parseFloat(rateEl?.value || '0') || 0;
+    const years = parseInt(yearsEl?.value || '1', 10) || 1;
+    const compoundsPerYear = parseInt(freqEl?.value || '12', 10) || 12;
+
+    const { finalBalance, totalContributed, totalInterest, rows } = simulate(
+      principal,
+      monthly,
+      annualPct,
+      years,
+      compoundsPerYear
+    );
+
+    if (resultFinal) resultFinal.textContent = money(finalBalance);
+    if (resultContributed) resultContributed.textContent = money(totalContributed);
+    if (resultInterest) resultInterest.textContent = money(totalInterest);
+    if (resultInterestPct) {
+      resultInterestPct.textContent =
+        finalBalance > 0 ? pct((totalInterest / finalBalance) * 100) : '0%';
+    }
+
+    if (yearlyBody) {
+      yearlyBody.innerHTML = rows
+        .map(
+          (r, i) => `
+        <tr class="border-b border-border/40 ${i % 2 === 0 ? 'bg-white' : 'bg-bg/40'}">
+          <td class="px-4 py-2.5 font-medium">${r.year}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums">${money(r.opening)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums text-accent">${money(r.interest)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums text-muted">${money(r.contributions)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums font-bold">${money(r.balance)}</td>
+        </tr>`
+        )
+        .join('');
+    }
+  }
+
+  [principalEl, monthlyEl, rateEl, yearsEl, freqEl].forEach((el) => {
+    el?.addEventListener('input', calculate);
+    el?.addEventListener('change', calculate);
+  });
+  calculate();
+</script>

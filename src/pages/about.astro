@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/ToolCard.astro';
+
+const pageUrl = 'https://allcalcnow.com/about';
+const pageTitle = 'About — Free Online Calculators for Everyone';
+const pageDescription =
+  'Learn about AllCalcNow.com. We build free, fast and accurate online calculators to help with everyday decisions. No ads, no sign-up, always free.';
+
+const calculators = [
+  { name: 'Age Calculator', icon: '🎂', description: 'Find your exact age in years, months and days', href: '/age-calculator' },
+  { name: 'Mortgage Calculator', icon: '🏠', description: 'Monthly payments, interest, and amortization', href: '/mortgage-calculator' },
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price', href: '/vat-calculator' },
+  { name: 'BMI Calculator', icon: '⚖️', description: 'Body Mass Index and healthy weight range', href: '/bmi-calculator' },
+  { name: 'Loan Calculator', icon: '💰', description: 'EMI, total interest, and payoff schedule', href: '/loan-calculator' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'Currency Converter', icon: '💱', description: 'Live rates for 30+ currencies', href: '/currency-converter' },
+  { name: 'Compound Interest Calculator', icon: '📈', description: 'Watch savings grow over time', href: '/compound-interest-calculator' },
+  { name: 'Date Difference Calculator', icon: '📅', description: 'Days, weeks, and working days between dates', href: '/date-difference-calculator' },
+  { name: 'Tip Calculator', icon: '🍽️', description: 'Split the bill and calculate tip', href: '/tip-calculator' },
+];
+
+const features = [
+  {
+    icon: '⚡',
+    title: 'Super Fast',
+    text: 'Every calculator on AllCalcNow loads in under 1 second. No heavy software, no bloat—just the tool you need, right when you need it.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Private',
+    text: 'All calculations happen in your browser. AllCalcNow never sees your numbers, so your finances and health inputs stay on your device.',
+  },
+  {
+    icon: '📱',
+    title: 'Works Everywhere',
+    text: 'Fully optimised for mobile, tablet, and desktop. Use AllCalcNow at the dinner table, at your desk, or on the go—anywhere, anytime.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'AllCalcNow',
+    url: 'https://allcalcnow.com',
+    description: pageDescription,
+    email: 'hello@allcalcnow.com',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/about" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <!-- Hero -->
+    <header class="rounded-3xl bg-gradient-to-br from-amber-50 via-white to-orange-50/60 px-6 py-12 text-center ring-1 ring-amber-200/50 sm:px-12 sm:py-16">
+      <p class="font-heading text-2xl font-bold text-text sm:text-3xl">
+        <span class="text-accent">All</span>CalcNow
+      </p>
+      <h1 class="mt-4 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl lg:text-5xl">
+        Built for Everyone Who Needs a Quick Answer
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+        We got tired of calculator sites that slow you down with ads, sign-ups, and clutter. AllCalcNow is the opposite—a
+        growing collection of free tools that help you decide faster, whether you are tipping at dinner, comparing loans,
+        or checking how many days until the holidays.
+      </p>
+    </header>
+
+    <!-- Mission -->
+    <section class="mt-14 max-w-3xl" aria-labelledby="heading-mission">
+      <h2 id="heading-mission" class="font-heading text-2xl font-bold text-text sm:text-3xl">Our Mission</h2>
+      <p class="mt-4 leading-relaxed text-muted">
+        Too many online calculators are <strong class="text-text">slow</strong>, stuffed with
+        <strong class="text-text">ads</strong>, <strong class="text-text">confusing</strong> to use, and barely usable on a
+        phone. That is not how helpful tools should feel.
+      </p>
+      <p class="mt-4 leading-relaxed text-muted">
+        <strong class="font-semibold text-text">AllCalcNow’s goal</strong> is simple: stay
+        <strong class="font-semibold text-text">fast</strong>, <strong class="font-semibold text-text">clean</strong>,
+        <strong class="font-semibold text-text">accurate</strong>, and <strong class="font-semibold text-text">free forever</strong>.
+      </p>
+      <ul class="mt-6 space-y-2 rounded-2xl border border-border/80 bg-card px-5 py-4 text-sm font-semibold text-text">
+        <li class="flex items-center gap-2"><span class="text-accent" aria-hidden="true">✓</span> No sign-up</li>
+        <li class="flex items-center gap-2"><span class="text-accent" aria-hidden="true">✓</span> No ads</li>
+        <li class="flex items-center gap-2"><span class="text-accent" aria-hidden="true">✓</span> No nonsense</li>
+      </ul>
+    </section>
+
+    <!-- Feature cards -->
+    <section class="mt-14" aria-labelledby="heading-features">
+      <h2 id="heading-features" class="sr-only">Why AllCalcNow</h2>
+      <ul class="grid gap-6 sm:grid-cols-3">
+        {
+          features.map((f) => (
+            <li class="rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
+              <span class="text-3xl" aria-hidden="true">{f.icon}</span>
+              <h3 class="mt-4 font-heading text-lg font-bold text-text">{f.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{f.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Calculators -->
+    <section class="mt-14" aria-labelledby="heading-calculators">
+      <h2 id="heading-calculators" class="font-heading text-2xl font-bold text-text sm:text-3xl">Our Calculators</h2>
+      <p class="mt-3 max-w-2xl text-muted">
+        Ten free tools (and counting) for money, health, dates, and everyday math—all on AllCalcNow.
+      </p>
+      <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {calculators.map((c) => (
+          <li><ToolCard name={c.name} description={c.description} href={c.href} icon={c.icon} /></li>
+        ))}
+      </ul>
+      <p class="mt-6 text-center text-sm font-medium text-muted">
+        More tools added to AllCalcNow regularly — got an idea?
+        <a href="mailto:hello@allcalcnow.com?subject=Calculator%20suggestion" class="text-accent hover:underline">Suggest one</a>.
+      </p>
+    </section>
+
+    <!-- Accuracy -->
+    <section
+      class="mt-14 rounded-2xl border border-border/80 bg-bg/60 px-6 py-8 sm:px-8"
+      aria-labelledby="heading-accuracy"
+    >
+      <h2 id="heading-accuracy" class="font-heading text-xl font-bold text-text">Accuracy Commitment</h2>
+      <p class="mt-3 leading-relaxed text-muted">
+        Every formula on AllCalcNow is checked against official or widely accepted sources—tax rates, BMI categories, EMI
+        amortization, compound interest standards, and more. We update tools when rules change.
+      </p>
+      <p class="mt-3 leading-relaxed text-muted">
+        Spotted something off? We would love to fix it.
+        <a href="mailto:hello@allcalcnow.com?subject=Calculator%20correction" class="font-semibold text-accent hover:underline">
+          Contact us
+        </a>
+        if you find any errors on AllCalcNow.
+      </p>
+    </section>
+
+    <!-- Contact -->
+    <section class="mt-14 text-center" aria-labelledby="heading-contact">
+      <h2 id="heading-contact" class="font-heading text-2xl font-bold text-text">Say Hello</h2>
+      <p class="mt-3 text-muted">Questions, feedback, or a calculator wish list—we read every message.</p>
+      <p class="mt-4">
+        <a
+          href="mailto:hello@allcalcnow.com"
+          class="text-lg font-semibold text-accent hover:underline"
+        >
+          hello@allcalcnow.com
+        </a>
+      </p>
+      <p class="mt-4">
+        <a
+          href="mailto:hello@allcalcnow.com?subject=Calculator%20suggestion"
+          class="inline-flex items-center gap-1 text-sm font-semibold text-text underline decoration-accent/50 underline-offset-4 hover:text-accent"
+        >
+          Suggest a calculator →
+        </a>
+      </p>
+    </section>
+
+    <!-- CTA -->
+    <div class="mt-16 text-center">
+      <a
+        href="/"
+        class="inline-flex items-center justify-center rounded-2xl bg-accent px-8 py-4 text-base font-bold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30"
+      >
+        Explore All Calculators
+      </a>
+    </div>
+  </div>
+</BaseLayout>

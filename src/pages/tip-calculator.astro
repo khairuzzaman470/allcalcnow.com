@@ -1,0 +1,457 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'tip-input w-full rounded-2xl border-2 border-amber-200/80 bg-white px-4 py-3.5 text-lg text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-amber-400 focus:outline-none focus:ring-4 focus:ring-amber-200/50';
+const labelClass = 'mb-2 block text-sm font-bold text-text';
+
+const tipPresets = [
+  { pct: 10, label: 'Okay' },
+  { pct: 15, label: 'Good' },
+  { pct: 18, label: 'Great' },
+  { pct: 20, label: 'Excellent' },
+  { pct: 25, label: 'Outstanding' },
+];
+
+const relatedTools = [
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
+  { name: 'Currency Converter', icon: '💱', description: 'Live exchange rates for 30+ currencies', href: '/currency-converter' },
+];
+
+const pageUrl = 'https://allcalcnow.com/tip-calculator';
+const pageTitle = 'Tip Calculator — Split Bill and Calculate Tip | AllCalcNow';
+const pageDescription =
+  'Free tip calculator at AllCalcNow. Calculate how much to tip and split the bill between any number of people instantly.';
+
+const faqs = [
+  {
+    question: 'How much should I tip at a restaurant?',
+    answer:
+      'In the United States, 15–20% of the pre-tax bill is standard for sit-down restaurants with table service. 18% is a common “good” default; 20% or more for outstanding service. Fast-casual with minimal service might be 10% or a few dollars. Counter-service cafes often use a tip jar only. Adjust for local norms when travelling.',
+  },
+  {
+    question: 'Should you tip on pre-tax or post-tax amount?',
+    answer:
+      'Etiquette guides often recommend tipping on the pre-tax subtotal, since tax is not part of the service. Many people tip on the post-tax total for simplicity—the difference is usually small. This calculator uses the bill amount you enter; subtract tax first if you prefer pre-tax tipping.',
+  },
+  {
+    question: 'Is it rude not to tip?',
+    answer:
+      'It depends on country and context. In the US, restaurant servers are often paid a lower base wage with tips expected—skipping tip can feel rude after good service. In Japan or South Korea, tipping may be uncommon or awkward. In parts of Europe, service is sometimes included; a small extra tip for great service is still appreciated.',
+  },
+  {
+    question: 'How do I split a bill when people ordered different things?',
+    answer:
+      'Fair splits: each person pays for their own items plus tax and tip on those items, or use separate checks. For shared appetizers or wine, split those evenly among who participated. When amounts are similar, splitting the total evenly (what this calculator does) is quick and social. For big disparities, itemized splits or payment apps with line items work better.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Tip Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Tip Calculator', '/tip-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/tip-calculator"
+  schemas={schemas}
+>
+  <div class="tip-page mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Tip Calculator' }]} />
+
+    <header class="mt-6 text-center sm:text-left">
+      <span class="inline-block rounded-full bg-amber-100 px-4 py-1.5 text-sm font-bold text-amber-800">
+        🍽️ Dining &amp; friends
+      </span>
+      <p class="mt-4 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">
+        Tip Calculator
+      </p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+        Split the bill, pick a tip you feel good about, and see what everyone owes—no awkward math at the table.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-12 lg:items-start">
+      <section
+        class="tip-card lg:col-span-6 rounded-3xl border-2 border-amber-200/60 bg-gradient-to-br from-amber-50 via-white to-orange-50/80 p-6 shadow-[0_8px_40px_-12px_rgba(232,85,44,0.2)] sm:p-8"
+        aria-label="Tip calculator inputs"
+      >
+        <h2 class="text-lg font-bold text-text">Your bill</h2>
+        <p class="mt-1 text-sm text-amber-900/70">Tap a tip level or enter your own.</p>
+
+        <form id="tip-form" class="mt-6 space-y-6" novalidate>
+          <div>
+            <label for="bill-amount" class={labelClass}>Bill amount</label>
+            <div class="relative">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold text-amber-600">$</span>
+              <input type="number" id="bill-amount" value="85" min="0" step="0.01" class={`${inputClass} pl-10`} />
+            </div>
+          </div>
+
+          <div>
+            <span class={labelClass}>How was the service?</span>
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-3" role="group" aria-label="Tip percentage">
+              {
+                tipPresets.map((p) => (
+                  <button
+                    type="button"
+                    data-tip-pct={p.pct}
+                    class={`tip-preset-btn flex flex-col items-center rounded-2xl border-2 px-3 py-3 transition-all ${p.pct === 18 ? 'border-amber-400 bg-amber-100 shadow-md ring-2 ring-amber-300/50' : 'border-amber-200/80 bg-white hover:border-amber-300 hover:bg-amber-50'}`}
+                  >
+                    <span class="text-lg font-bold text-amber-700">{p.pct}%</span>
+                    <span class="mt-0.5 text-xs font-semibold text-muted">{p.label}</span>
+                  </button>
+                ))
+              }
+              <button
+                type="button"
+                data-tip-pct="custom"
+                id="btn-custom-tip"
+                class="tip-preset-btn flex flex-col items-center rounded-2xl border-2 border-amber-200/80 bg-white px-3 py-3 transition-all hover:border-amber-300 hover:bg-amber-50"
+              >
+                <span class="text-lg font-bold text-amber-700">✎</span>
+                <span class="mt-0.5 text-xs font-semibold text-muted">Custom</span>
+              </button>
+            </div>
+            <div id="custom-tip-wrap" class="mt-3 hidden">
+              <label for="custom-tip-pct" class="sr-only">Custom tip percentage</label>
+              <div class="relative">
+                <input type="number" id="custom-tip-pct" value="18" min="0" max="100" step="0.5" class={inputClass} />
+                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 font-bold text-amber-600">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="num-people" class={labelClass}>Split between how many people?</label>
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                id="btn-people-minus"
+                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-2 border-amber-200 bg-white text-xl font-bold text-amber-700 transition-colors hover:bg-amber-100"
+                aria-label="Fewer people"
+              >
+                −
+              </button>
+              <input
+                type="number"
+                id="num-people"
+                value="1"
+                min="1"
+                max="99"
+                step="1"
+                class={`${inputClass} text-center text-xl font-bold`}
+              />
+              <button
+                type="button"
+                id="btn-people-plus"
+                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-2 border-amber-200 bg-white text-xl font-bold text-amber-700 transition-colors hover:bg-amber-100"
+                aria-label="More people"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <label class="flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-amber-200/60 bg-white/80 px-4 py-3.5 transition-colors hover:bg-amber-50/80">
+            <input type="checkbox" id="round-up" class="h-5 w-5 rounded border-amber-300 text-amber-600 focus:ring-amber-400" />
+            <span class="text-sm font-semibold text-text">Round up each person’s share to the nearest dollar</span>
+          </label>
+        </form>
+      </section>
+
+      <section class="space-y-5 lg:col-span-6" aria-label="Tip results">
+        <div class="overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-[0_12px_40px_-8px_rgba(245,158,11,0.5)]">
+          <div class="px-6 py-6 sm:px-8 sm:py-8">
+            <p class="text-sm font-semibold uppercase tracking-wider text-white/80">Each person pays</p>
+            <p id="result-per-person" class="mt-2 font-heading text-5xl font-bold tracking-tight sm:text-6xl">—</p>
+            <p id="result-people-note" class="mt-2 text-sm text-white/90">Split 1 way</p>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border-2 border-amber-100 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-amber-700/80">Tip amount</p>
+            <p id="result-tip" class="mt-1 text-2xl font-bold tabular-nums text-text">—</p>
+          </div>
+          <div class="rounded-2xl border-2 border-amber-100 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-amber-700/80">Total with tip</p>
+            <p id="result-total" class="mt-1 text-2xl font-bold tabular-nums text-text">—</p>
+          </div>
+          <div class="rounded-2xl border-2 border-amber-100 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-amber-700/80">Tip per person</p>
+            <p id="result-tip-per-person" class="mt-1 text-2xl font-bold tabular-nums text-text">—</p>
+          </div>
+          <div class="rounded-2xl border-2 border-amber-100 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-amber-700/80">Tip rate</p>
+            <p id="result-tip-rate" class="mt-1 text-2xl font-bold tabular-nums text-amber-700">—</p>
+          </div>
+        </div>
+
+        <p id="round-up-note" class="hidden rounded-2xl bg-amber-100/80 px-4 py-3 text-center text-sm font-medium text-amber-900">
+          ✨ Rounded up so nobody hunts for coins!
+        </p>
+      </section>
+    </div>
+
+    <article
+      class="seo-content mt-14 max-w-3xl border-t border-amber-200/60 pt-10"
+      itemscope
+      itemtype="https://schema.org/Article"
+    >
+      <meta itemprop="headline" content="Tip Calculator — Split Bill and Calculate Tip" />
+      <meta itemprop="description" content={pageDescription} />
+
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Tip Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free tip calculator</strong> takes the stress out of paying after a
+        meal. Enter your bill, tap a tip level from “Okay” to “Outstanding,” and see the
+        <strong class="font-semibold text-text">tip amount</strong>, <strong class="font-semibold text-text">total with
+        tip</strong>, and <strong class="font-semibold text-text">per-person split</strong> in seconds. Going Dutch with
+        friends? Set the number of people and optional round-up so everyone pays a clean dollar amount.
+      </p>
+
+      <nav class="mt-6 rounded-2xl border border-amber-200/60 bg-amber-50/50 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-amber-800/70">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-much-to-tip" class="text-amber-700 hover:underline">How Much Should You Tip?</a></li>
+          <li><a href="#tipping-by-country" class="text-amber-700 hover:underline">Tipping Etiquette by Country</a></li>
+          <li><a href="#split-bill-fairly" class="text-amber-700 hover:underline">How to Split a Bill Fairly</a></li>
+          <li><a href="#tip-calculator-faq" class="text-amber-700 hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-much-to-tip" class="mt-10 scroll-mt-24" aria-labelledby="heading-how-much">
+        <h2 id="heading-how-much" class="font-heading text-xl font-bold text-text">How Much Should You Tip?</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          In the United States, <strong class="font-semibold text-text">15–20%</strong> is the usual range for sit-down
+          restaurants. Use <strong class="font-semibold text-text">10%</strong> when service was acceptable but nothing
+          special, <strong class="font-semibold text-text">18%</strong> for solid service, and
+          <strong class="font-semibold text-text">20–25%</strong> when the team went above and beyond. Bartenders, delivery
+          drivers, and hairstylists have their own norms—often a dollar per drink or 15–20% of the service total.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Tip on the amount you are comfortable with after discounts, and remember that many workers rely on tips as part
+          of their income. This tool lets you try percentages instantly before you tap “pay” on the terminal.
+        </p>
+      </section>
+
+      <section id="tipping-by-country" class="mt-10 scroll-mt-24" aria-labelledby="heading-country">
+        <h2 id="heading-country" class="font-heading text-xl font-bold text-text">Tipping Etiquette by Country</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">United States &amp; Canada:</strong> tipping is expected in restaurants,
+          bars, taxis, and hotels. <strong class="font-semibold text-text">United Kingdom &amp; Ireland:</strong> 10–12.5%
+          is common when service is not included; check the receipt. <strong class="font-semibold text-text">France &
+          Italy:</strong> service may be included (“service compris”); rounding up or leaving small change is typical.
+          <strong class="font-semibold text-text">Japan:</strong> tipping is often declined—excellent service is standard.
+          <strong class="font-semibold text-text">Australia:</strong> tipping is optional, not obligatory.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          When abroad, watch local customs rather than defaulting to US percentages. Our
+          <a href="/currency-converter" class="font-semibold text-amber-700 hover:underline">currency converter</a> helps
+          if you are splitting a bill in foreign cash.
+        </p>
+      </section>
+
+      <section id="split-bill-fairly" class="mt-10 scroll-mt-24" aria-labelledby="heading-split">
+        <h2 id="heading-split" class="font-heading text-xl font-bold text-text">How to Split a Bill Fairly</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Even split:</strong> divide the total (with tip) by the number of
+          people—fast and friendly when everyone ordered similarly. <strong class="font-semibold text-text">Itemized
+          split:</strong> each person pays for their dishes plus a share of shared items and tax. <strong class="font-semibold text-text">One
+          payer:</strong> one card pays and others Venmo their share—use this calculator to get exact amounts per person.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Enable <strong class="font-semibold text-text">round up per person</strong> when you want whole-dollar amounts;
+          the group may pay a few cents extra total, but nobody fumbles with change. For tax math on a subtotal, try the
+          <a href="/vat-calculator" class="font-semibold text-amber-700 hover:underline">VAT calculator</a> or
+          <a href="/percentage-calculator" class="font-semibold text-amber-700 hover:underline">percentage calculator</a>.
+        </p>
+      </section>
+
+      <section id="tip-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="heading-faq">
+        <h2 id="heading-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <p class="mt-2 text-sm text-muted">Restaurants, pre-tax tipping, etiquette, and uneven orders.</p>
+
+        <div class="mt-6 space-y-4">
+          {
+            faqs.map((faq, i) => (
+              <details
+                class="group rounded-2xl border-2 border-amber-100 bg-white open:ring-2 open:ring-amber-200/60"
+                id={`faq-${i + 1}`}
+                open={i === 0}
+              >
+                <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center justify-between gap-3">
+                    {faq.question}
+                    <span class="shrink-0 text-amber-600 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </span>
+                </summary>
+                <div class="border-t border-amber-100 px-5 pb-4 pt-2">
+                  <p class="leading-relaxed text-muted">{faq.answer}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-2xl bg-amber-50 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-amber-200/60">
+        <strong class="text-text">Note:</strong> Tipping customs vary. Use your judgment and local norms—this tool is for
+        quick estimates only.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-amber-200/60 pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const billEl = document.getElementById('bill-amount');
+  const customWrap = document.getElementById('custom-tip-wrap');
+  const customPctEl = document.getElementById('custom-tip-pct');
+  const numPeopleEl = document.getElementById('num-people');
+  const roundUpEl = document.getElementById('round-up');
+  const resultPerPerson = document.getElementById('result-per-person');
+  const resultPeopleNote = document.getElementById('result-people-note');
+  const resultTip = document.getElementById('result-tip');
+  const resultTotal = document.getElementById('result-total');
+  const resultTipPerPerson = document.getElementById('result-tip-per-person');
+  const resultTipRate = document.getElementById('result-tip-rate');
+  const roundUpNote = document.getElementById('round-up-note');
+  const btnMinus = document.getElementById('btn-people-minus');
+  const btnPlus = document.getElementById('btn-people-plus');
+
+  let selectedPct = 18;
+  let isCustom = false;
+
+  const money = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+
+  function getTipPct() {
+    if (isCustom) return parseFloat(customPctEl?.value || '0') || 0;
+    return selectedPct;
+  }
+
+  function setActivePreset(pct) {
+    document.querySelectorAll('.tip-preset-btn').forEach((btn) => {
+      const btnPct = btn.getAttribute('data-tip-pct');
+      const active = btnPct === 'custom' ? isCustom : !isCustom && Number(btnPct) === pct;
+      btn.classList.toggle('border-amber-400', active);
+      btn.classList.toggle('bg-amber-100', active);
+      btn.classList.toggle('shadow-md', active);
+      btn.classList.toggle('ring-2', active);
+      btn.classList.toggle('ring-amber-300/50', active);
+      btn.classList.toggle('border-amber-200/80', !active);
+      btn.classList.toggle('bg-white', !active);
+    });
+  }
+
+  function calculate() {
+    const bill = parseFloat(billEl?.value || '0') || 0;
+    const tipPct = getTipPct();
+    let people = parseInt(numPeopleEl?.value || '1', 10);
+    if (people < 1) people = 1;
+    if (people > 99) people = 99;
+    if (numPeopleEl) numPeopleEl.value = String(people);
+
+    const tipAmount = bill * (tipPct / 100);
+    const totalWithTip = bill + tipAmount;
+    const roundUp = roundUpEl?.checked ?? false;
+
+    let perPerson = totalWithTip / people;
+    let displayTotal = totalWithTip;
+    let displayTip = tipAmount;
+
+    if (roundUp && people >= 1) {
+      perPerson = Math.ceil(perPerson);
+      displayTotal = perPerson * people;
+      displayTip = displayTotal - bill;
+    }
+
+    const tipPerPerson = displayTip / people;
+
+    if (resultPerPerson) resultPerPerson.textContent = money(perPerson);
+    if (resultTip) resultTip.textContent = money(displayTip);
+    if (resultTotal) resultTotal.textContent = money(displayTotal);
+    if (resultTipPerPerson) resultTipPerPerson.textContent = money(tipPerPerson);
+    if (resultTipRate) resultTipRate.textContent = `${tipPct}%`;
+    if (resultPeopleNote) {
+      resultPeopleNote.textContent =
+        people === 1 ? 'Just you—enjoy!' : `Split ${people} ways — ${money(perPerson)} each`;
+    }
+    roundUpNote?.classList.toggle('hidden', !roundUp);
+  }
+
+  document.querySelectorAll('.tip-preset-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const val = btn.getAttribute('data-tip-pct');
+      if (val === 'custom') {
+        isCustom = true;
+        customWrap?.classList.remove('hidden');
+        setActivePreset(selectedPct);
+      } else {
+        isCustom = false;
+        selectedPct = parseInt(val || '18', 10);
+        customWrap?.classList.add('hidden');
+        setActivePreset(selectedPct);
+      }
+      calculate();
+    });
+  });
+
+  billEl?.addEventListener('input', calculate);
+  customPctEl?.addEventListener('input', calculate);
+  numPeopleEl?.addEventListener('input', calculate);
+  roundUpEl?.addEventListener('change', calculate);
+
+  btnMinus?.addEventListener('click', () => {
+    const n = Math.max(1, parseInt(numPeopleEl?.value || '1', 10) - 1);
+    if (numPeopleEl) numPeopleEl.value = String(n);
+    calculate();
+  });
+
+  btnPlus?.addEventListener('click', () => {
+    const n = Math.min(99, parseInt(numPeopleEl?.value || '1', 10) + 1);
+    if (numPeopleEl) numPeopleEl.value = String(n);
+    calculate();
+  });
+
+  setActivePreset(18);
+  calculate();
+</script>
+
+<style>
+  .tip-page .tip-preset-btn:active {
+    transform: scale(0.98);
+  }
+</style>

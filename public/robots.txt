@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://allcalcnow.com/sitemap-index.xml

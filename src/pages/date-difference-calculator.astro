@@ -1,0 +1,379 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'dd-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const today = new Date();
+const todayIso = today.toISOString().slice(0, 10);
+
+const relatedTools = [
+  { name: 'Age Calculator', icon: '🎂', description: 'Find your exact age in years, months and days', href: '/age-calculator' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'Tip Calculator', icon: '🍽️', description: 'Split bill and calculate tip instantly', href: '/tip-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/date-difference-calculator';
+const pageTitle = 'Date Difference Calculator — Days Between Two Dates | AllCalcNow';
+const pageDescription =
+  'Free date difference calculator at AllCalcNow. Find exact days, weeks, months and years between any two dates. Includes working days count.';
+
+const faqs = [
+  {
+    question: 'How do I calculate days between two dates?',
+    answer:
+      'Subtract the earlier date from the later date in calendar days. Our calculator counts the span from start to end (end exclusive by default for “days between,” or inclusive depending on convention—we use inclusive calendar-day counting for totals). You also get years, months, days breakdown, weeks, hours, and minutes.',
+  },
+  {
+    question: 'How many working days are in a year?',
+    answer:
+      'A typical full year has 260–262 working days (Monday–Friday) in the US, depending on how weekends fall and whether public holidays are excluded. This tool counts weekdays between your two dates but does not subtract public holidays unless you adjust dates manually.',
+  },
+  {
+    question: 'How do I calculate someone\'s age from their birth date?',
+    answer:
+      'Set start date to their birth date and end date to today. The years, months, and days breakdown is their age. For legal or medical precision, confirm timezone and whether the birthday has occurred this year—our calculator uses calendar dates in your local timezone.',
+  },
+  {
+    question: 'What is the difference between calendar and working day?',
+    answer:
+      'Calendar days include every day (weekends and holidays). Working days (business days) usually mean Monday through Friday, excluding weekends. Deadlines like “10 business days” skip Saturdays and Sundays; “10 calendar days” does not.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Date Difference Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Date Difference Calculator', '/date-difference-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/date-difference-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Date Difference Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Time &amp; dates
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Date Difference Calculator</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Find days, weeks, months, years—and working days—between any two dates.
+      </p>
+    </header>
+
+    <div class="mt-4 flex flex-wrap gap-2" aria-label="Quick date ranges">
+      <button type="button" class="quick-btn rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-text transition-colors hover:border-accent/40 hover:bg-accent/5" data-quick="new-year">Since New Year</button>
+      <button type="button" class="quick-btn rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-text transition-colors hover:border-accent/40 hover:bg-accent/5" data-quick="last-christmas">Since Last Christmas</button>
+      <button type="button" class="quick-btn rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-text transition-colors hover:border-accent/40 hover:bg-accent/5" data-quick="until-christmas">Days Until Christmas</button>
+      <button type="button" class="quick-btn rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-text transition-colors hover:border-accent/40 hover:bg-accent/5" data-quick="until-new-year">Days Until New Year</button>
+    </div>
+
+    <div class="mt-8 grid gap-6 xl:grid-cols-12 xl:items-start">
+      <section class="xl:col-span-5 rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-8" aria-label="Date inputs">
+        <h2 class="text-lg font-bold text-text">Select dates</h2>
+        <form id="date-form" class="mt-6 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="start-date" class={labelClass}>Start date</label>
+            <input type="date" id="start-date" value={`${today.getFullYear()}-01-01`} class={inputClass} />
+          </div>
+          <div>
+            <label for="end-date" class={labelClass}>End date</label>
+            <input type="date" id="end-date" value={todayIso} class={inputClass} />
+          </div>
+        </form>
+        <p id="date-error" class="dd-error mt-4 hidden rounded-xl px-4 py-3 text-sm" role="alert"></p>
+      </section>
+
+      <section class="space-y-5 xl:col-span-7" aria-label="Date difference results">
+        <div class="overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_32px_-8px_rgba(26,24,20,0.35)]">
+          <div class="px-6 py-6 sm:px-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Total days</p>
+            <p id="result-days" class="mt-2 font-heading text-5xl font-bold tracking-tight sm:text-6xl">—</p>
+            <p id="result-ymd" class="mt-3 text-lg text-white/90">—</p>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="rounded-2xl border border-border/80 bg-card p-4 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Weeks</p>
+            <p id="result-weeks" class="mt-1 text-xl font-bold tabular-nums">—</p>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-4 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Hours</p>
+            <p id="result-hours" class="mt-1 text-xl font-bold tabular-nums">—</p>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-4 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Minutes</p>
+            <p id="result-minutes" class="mt-1 text-xl font-bold tabular-nums">—</p>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-4 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Working days</p>
+            <p id="result-working" class="mt-1 text-xl font-bold tabular-nums text-accent">—</p>
+            <p class="mt-0.5 text-xs text-muted">Mon–Fri only</p>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-4 shadow-sm sm:col-span-2">
+            <p class="text-xs font-bold uppercase tracking-wider text-muted">Weekend days</p>
+            <p id="result-weekends" class="mt-1 text-xl font-bold tabular-nums">—</p>
+            <p class="mt-0.5 text-xs text-muted">Saturdays and Sundays in range</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Date Difference Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Date Difference Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free date difference calculator</strong> tells you exactly how much time
+        lies between two calendar dates. Use it for project deadlines, vacation planning, contract lengths, or counting
+        down to holidays. You get <strong class="font-semibold text-text">total days</strong>, a
+        <strong class="font-semibold text-text">years-months-days breakdown</strong>, weeks, hours, minutes,
+        <strong class="font-semibold text-text">working days</strong> (weekdays), and weekend days in the span.
+      </p>
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-count-days" class="text-accent hover:underline">How to Count Days Between Two Dates</a></li>
+          <li><a href="#working-vs-calendar" class="text-accent hover:underline">Working Days vs Calendar Days Explained</a></li>
+          <li><a href="#common-uses" class="text-accent hover:underline">Common Uses for Date Difference Calculations</a></li>
+          <li><a href="#date-difference-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+      <section id="how-to-count-days" class="mt-10 scroll-mt-24" aria-labelledby="h-count">
+        <h2 id="h-count" class="font-heading text-xl font-bold text-text">How to Count Days Between Two Dates</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Pick a <strong class="font-semibold text-text">start date</strong> and <strong class="font-semibold text-text">end date</strong>.
+          If the end is before the start, swap them automatically. Total days is the number of 24-hour periods between
+          midnight on the start and midnight on the end (inclusive of the start day in our display). Quick buttons set
+          common ranges like “since New Year” or “days until Christmas.”
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          The years/months/days breakdown uses calendar arithmetic (not fixed 30-day months), so it matches how people
+          describe age and tenure.
+        </p>
+      </section>
+      <section id="working-vs-calendar" class="mt-10 scroll-mt-24" aria-labelledby="h-working">
+        <h2 id="h-working" class="font-heading text-xl font-bold text-text">Working Days vs Calendar Days Explained</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Calendar days</strong> count every day. <strong class="font-semibold text-text">Working
+          days</strong> here mean Monday through Friday—useful for SLA timelines, shipping estimates, and payroll. Public holidays
+          are not excluded; subtract them manually if your contract references a specific holiday calendar.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Weekend days</strong> shows how many Saturdays and Sundays fall in the range—helpful
+          when planning events or understanding why working days are fewer than total days.
+        </p>
+      </section>
+      <section id="common-uses" class="mt-10 scroll-mt-24" aria-labelledby="h-uses">
+        <h2 id="h-uses" class="font-heading text-xl font-bold text-text">Common Uses for Date Difference Calculations</h2>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Project management:</strong> days until launch or sprint length.</li>
+          <li><strong class="text-text">Legal &amp; HR:</strong> notice periods, probation end dates, time since hire.</li>
+          <li><strong class="text-text">Personal:</strong> days until wedding, vacation, or holiday—try quick-select buttons.</li>
+          <li><strong class="text-text">Health:</strong> days since a procedure (not a substitute for medical advice).</li>
+        </ul>
+        <p class="mt-3 leading-relaxed text-muted">
+          Pair with our <a href="/age-calculator" class="font-semibold text-accent hover:underline">age calculator</a> for birth-date
+          scenarios described in the FAQ.
+        </p>
+      </section>
+      <section id="date-difference-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">
+        <h2 id="h-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Note:</strong> Calculations use your browser’s local date. Daylight saving does not affect day counts.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const startEl = document.getElementById('start-date');
+  const endEl = document.getElementById('end-date');
+  const errorEl = document.getElementById('date-error');
+  const resultDays = document.getElementById('result-days');
+  const resultYmd = document.getElementById('result-ymd');
+  const resultWeeks = document.getElementById('result-weeks');
+  const resultHours = document.getElementById('result-hours');
+  const resultMinutes = document.getElementById('result-minutes');
+  const resultWorking = document.getElementById('result-working');
+  const resultWeekends = document.getElementById('result-weekends');
+
+  function parseDate(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  function toIso(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function diffYMD(start, end) {
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+    let days = end.getDate() - start.getDate();
+    if (days < 0) {
+      months--;
+      const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+      days += prevMonth.getDate();
+    }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    return { years, months, days };
+  }
+
+  function countDayStats(start, end) {
+    let working = 0;
+    let weekends = 0;
+    const cur = new Date(start);
+    while (cur <= end) {
+      const dow = cur.getDay();
+      if (dow === 0 || dow === 6) weekends++;
+      else working++;
+      cur.setDate(cur.getDate() + 1);
+    }
+    return { working, weekends };
+  }
+
+  function applyQuick(key) {
+    const now = new Date();
+    const y = now.getFullYear();
+    let start, end;
+
+    switch (key) {
+      case 'new-year':
+        start = new Date(y, 0, 1);
+        end = now;
+        break;
+      case 'last-christmas': {
+        const christmas = new Date(y, 11, 25);
+        start = now < christmas ? new Date(y - 1, 11, 25) : christmas;
+        end = now;
+        break;
+      }
+      case 'until-christmas': {
+        let xmas = new Date(y, 11, 25);
+        if (now > xmas) xmas = new Date(y + 1, 11, 25);
+        start = now;
+        end = xmas;
+        break;
+      }
+      case 'until-new-year': {
+        const ny = new Date(y + 1, 0, 1);
+        start = now;
+        end = ny;
+        break;
+      }
+      default:
+        return;
+    }
+    if (startEl) startEl.value = toIso(start);
+    if (endEl) endEl.value = toIso(end);
+    calculate();
+  }
+
+  function calculate() {
+    if (!startEl?.value || !endEl?.value) return;
+
+    let start = parseDate(startEl.value);
+    let end = parseDate(endEl.value);
+
+    if (end < start) {
+      const tmp = start;
+      start = end;
+      end = tmp;
+      startEl.value = toIso(start);
+      endEl.value = toIso(end);
+    }
+
+    errorEl?.classList.add('hidden');
+
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const totalDays = Math.round((end - start) / msPerDay) + 1;
+    const ymd = diffYMD(start, end);
+    const { working, weekends } = countDayStats(start, end);
+
+    const hours = totalDays * 24;
+    const minutes = hours * 60;
+    const weeks = (totalDays / 7).toFixed(1);
+
+    if (resultDays) resultDays.textContent = totalDays.toLocaleString('en-US');
+    if (resultYmd) {
+      const parts = [];
+      if (ymd.years) parts.push(`${ymd.years} year${ymd.years !== 1 ? 's' : ''}`);
+      if (ymd.months) parts.push(`${ymd.months} month${ymd.months !== 1 ? 's' : ''}`);
+      parts.push(`${ymd.days} day${ymd.days !== 1 ? 's' : ''}`);
+      resultYmd.textContent = parts.join(', ');
+    }
+    if (resultWeeks) resultWeeks.textContent = weeks;
+    if (resultHours) resultHours.textContent = hours.toLocaleString('en-US');
+    if (resultMinutes) resultMinutes.textContent = minutes.toLocaleString('en-US');
+    if (resultWorking) resultWorking.textContent = working.toLocaleString('en-US');
+    if (resultWeekends) resultWeekends.textContent = weekends.toLocaleString('en-US');
+  }
+
+  document.querySelectorAll('.quick-btn').forEach((btn) => {
+    btn.addEventListener('click', () => applyQuick(btn.getAttribute('data-quick') || ''));
+  });
+
+  startEl?.addEventListener('change', calculate);
+  endEl?.addEventListener('change', calculate);
+  calculate();
+</script>
+
+<style>
+  .dd-error {
+    background: color-mix(in srgb, var(--color-accent) 8%, white);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-accent);
+  }
+</style>

@@ -1,0 +1,752 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth();
+const monthOptions = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const inputClass =
+  'mc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const selectClass = inputClass + ' cursor-pointer';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const costFields = [
+  { key: 'tax', label: 'Property Taxes', pct: '1.2', dol: '4800', unit: 'pct' },
+  { key: 'ins', label: 'Home Insurance', pct: '0.375', dol: '1500', unit: 'dol' },
+  { key: 'pmi', label: 'PMI Insurance', pct: '0', dol: '0', unit: 'pct' },
+  { key: 'hoa', label: 'HOA Fee', pct: '0', dol: '0', unit: 'dol' },
+  { key: 'oth', label: 'Other Costs', pct: '0', dol: '4000', unit: 'dol' },
+];
+
+const relatedTools = [
+  { name: 'Loan Calculator', icon: '💰', description: 'Monthly EMI and total interest for any loan', href: '/loan-calculator' },
+  { name: 'Compound Interest Calculator', icon: '📈', description: 'See how your savings grow over time', href: '/compound-interest-calculator' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/mortgage-calculator';
+const pageTitle = 'Mortgage Calculator — Monthly Payment and Total Cost | AllCalcNow';
+const pageDescription =
+  'Use our free mortgage calculator to estimate monthly payments, total interest, property taxes, insurance, PMI, and a full amortization schedule. No sign-up required.';
+
+const faqs = [
+  {
+    question: 'How much mortgage can I afford?',
+    answer:
+      'Lenders often use debt-to-income ratios, commonly keeping housing costs near 28% of gross monthly income and total debt near 36%. Use this free mortgage calculator with different home prices and down payments, then compare the total monthly payment—including taxes and insurance—to your real budget.',
+  },
+  {
+    question: 'What is a good interest rate for a mortgage?',
+    answer:
+      'A good mortgage interest rate depends on the market, your credit score, loan term, and loan type. Compare quotes from multiple lenders on the same day. This calculator shows how even a 0.25% rate change affects your monthly payment and lifetime interest.',
+  },
+  {
+    question: 'Is it better to put more money down?',
+    answer:
+      'A larger down payment reduces your loan amount, monthly mortgage payment, and total interest. It may help you avoid PMI below 20% equity. The tradeoff is less cash for emergencies and other goals—use the down payment fields above to model both options.',
+  },
+  {
+    question: 'What is the difference between principal and interest?',
+    answer:
+      'Principal is the amount you borrowed (home price minus down payment). Interest is the fee charged on the remaining balance. Early payments are mostly interest; later payments pay down more principal. The amortization schedule on this page shows the split every month.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Mortgage Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Mortgage Calculator', '/mortgage-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/mortgage-calculator"
+  schemas={schemas}
+>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Mortgage Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Home loans
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Mortgage Calculator</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Estimate principal &amp; interest, taxes, insurance, and view a full amortization schedule—instantly.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-12 xl:items-start">
+      <section
+        class="xl:col-span-5 rounded-2xl border border-border/80 bg-card p-6 shadow-[0_4px_24px_-4px_rgba(26,24,20,0.08)] sm:p-8"
+        aria-label="Mortgage inputs"
+      >
+        <h2 class="text-lg font-bold text-text">Loan details</h2>
+        <p class="mt-1 text-sm text-muted">Adjust values—results update automatically.</p>
+
+        <form id="mortgage-form" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="home-price" class={labelClass}>Home price</label>
+            <div class="relative">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">$</span>
+              <input type="number" id="home-price" value="400000" min="0" step="1000" class={`${inputClass} pl-8`} />
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <label for="down-pct" class="text-sm font-semibold text-text">Down payment</label>
+              <div class="mc-segment" role="group" aria-label="Down payment unit">
+                <button type="button" data-down-unit="pct" class="down-unit-btn segment-btn">%</button>
+                <button type="button" data-down-unit="dol" class="down-unit-btn segment-btn">$</button>
+              </div>
+            </div>
+            <input type="number" id="down-pct" value="20" min="0" max="100" step="0.1" class={inputClass} />
+            <input type="number" id="down-dollar" value="80000" min="0" step="1000" class={`${inputClass} hidden`} />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="loan-term" class={labelClass}>Loan term</label>
+              <div class="relative">
+                <input type="number" id="loan-term" value="30" min="1" max="40" step="1" class={`${inputClass} pr-12`} />
+                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted">yrs</span>
+              </div>
+            </div>
+            <div>
+              <label for="interest-rate" class={labelClass}>Interest rate</label>
+              <div class="relative">
+                <input type="number" id="interest-rate" value="6.5" min="0" max="100" step="0.001" class={`${inputClass} pr-10`} />
+                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class={labelClass}>Start date</label>
+            <div class="grid grid-cols-2 gap-3">
+              <select id="start-month" class={selectClass}>
+                {monthOptions.map((m, i) => (
+                  <option value={i} selected={i === currentMonth}>{m}</option>
+                ))}
+              </select>
+              <select id="start-year" class={selectClass}>
+                {Array.from({ length: 36 }, (_, i) => currentYear + i).map((y) => (
+                  <option value={y} selected={y === currentYear}>{y}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-bg/80 p-4 ring-1 ring-border/60">
+            <h3 class="text-sm font-bold text-text">Taxes &amp; annual costs</h3>
+            <p class="mt-0.5 text-xs text-muted">Property tax, insurance, PMI, HOA, and more.</p>
+            <div class="mt-4 space-y-4">
+              {costFields.map((field) => (
+                <div>
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <label for={`${field.key}-pct`} class="text-xs font-semibold text-text">{field.label}</label>
+                    <div class="mc-segment" role="group">
+                      <button type="button" data-cost-unit={field.key} data-unit="pct" class="cost-unit-btn segment-btn">%</button>
+                      <button type="button" data-cost-unit={field.key} data-unit="dol" class="cost-unit-btn segment-btn">$</button>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id={`${field.key}-pct`}
+                      value={field.pct}
+                      min="0"
+                      step="0.01"
+                      class={`${inputClass} py-2.5 text-sm cost-pct ${field.unit !== 'pct' ? 'hidden' : ''}`}
+                    />
+                    <input
+                      type="number"
+                      id={`${field.key}-dollar`}
+                      value={field.dol}
+                      min="0"
+                      step="50"
+                      class={`${inputClass} py-2.5 text-sm cost-dollar ${field.unit !== 'dol' ? 'hidden' : ''}`}
+                    />
+                    <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-muted">/yr</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+            <button
+              type="submit"
+              class="flex-1 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30 active:translate-y-0"
+            >
+              Calculate
+            </button>
+            <button
+              type="button"
+              id="btn-clear"
+              class="rounded-xl border border-border bg-white px-6 py-3.5 text-sm font-semibold text-text transition-colors hover:bg-bg"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+        <div id="mortgage-error" class="mc-error mt-4 hidden rounded-xl px-4 py-3 text-sm" role="alert"></div>
+      </section>
+
+      <section id="mortgage-results" class="space-y-5 xl:col-span-7" aria-label="Mortgage results">
+        <div class="overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_32px_-8px_rgba(26,24,20,0.35)]">
+          <div class="border-b border-white/10 px-6 py-5 sm:px-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Principal &amp; interest</p>
+            <p id="monthly-pay-main" class="mt-1 font-heading text-4xl font-bold tracking-tight sm:text-5xl">—</p>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-4 bg-white/5 px-6 py-4 sm:px-8">
+            <div>
+              <p class="text-xs font-medium text-white/60">Total monthly (incl. taxes &amp; costs)</p>
+              <p id="monthly-out-total" class="mt-0.5 text-2xl font-bold tabular-nums text-accent">—</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs font-medium text-white/60">Payoff date</p>
+              <p id="payoff-date-short" class="mt-0.5 text-lg font-semibold tabular-nums">—</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2">
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-text">Lifetime cost split</h3>
+            <div class="mt-4 flex items-center gap-5">
+              <div class="relative mx-auto shrink-0">
+                <div id="pie-chart" class="h-32 w-32 rounded-full shadow-inner ring-4 ring-bg" title="Cost breakdown"></div>
+                <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <div class="h-16 w-16 rounded-full bg-card shadow-sm"></div>
+                </div>
+              </div>
+              <ul id="pie-legend" class="min-w-0 flex-1 space-y-2 text-sm"></ul>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-text">Monthly breakdown</h3>
+            <div id="breakdown-body" class="mt-4 space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:p-6">
+          <h3 class="text-sm font-bold text-text">Loan summary</h3>
+          <div id="summary-body" class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="border-b border-border bg-bg/50 px-6 py-5 sm:px-8">
+        <h2 class="text-lg font-bold text-text">Amortization schedule</h2>
+        <p class="mt-1 text-sm text-muted">Month-by-month principal, interest, and remaining balance.</p>
+      </div>
+      <div class="max-h-[28rem] overflow-auto">
+        <table class="w-full min-w-[520px] text-left text-sm">
+          <thead class="sticky top-0 z-10 bg-navy text-xs uppercase tracking-wider text-white/80">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Month</th>
+              <th class="px-4 py-3 font-semibold">Date</th>
+              <th class="px-4 py-3 text-right font-semibold">Interest</th>
+              <th class="px-4 py-3 text-right font-semibold">Principal</th>
+              <th class="px-4 py-3 text-right font-semibold">Balance</th>
+            </tr>
+          </thead>
+          <tbody id="amort-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <article
+      class="seo-content mt-14 max-w-3xl border-t border-border pt-10"
+      itemscope
+      itemtype="https://schema.org/Article"
+    >
+      <meta itemprop="headline" content="Mortgage Calculator — Free Monthly Payment & Amortization Tool" />
+      <meta itemprop="description" content={pageDescription} />
+
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">
+        Mortgage Calculator
+      </h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free mortgage calculator</strong> helps you estimate your
+        <strong class="font-semibold text-text">monthly mortgage payment</strong>, total interest, and full loan cost
+        before you talk to a lender. Use the tool at the top of this page to model home price, down payment, loan term,
+        and interest rate—then include property taxes, homeowners insurance, PMI, and HOA fees for a realistic
+        <strong class="font-semibold text-text">total monthly housing payment</strong>. You also get a complete
+        <strong class="font-semibold text-text">amortization schedule</strong> showing principal versus interest every
+        month until payoff.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-calculate-mortgage-payments" class="text-accent hover:underline">How to calculate mortgage payments</a></li>
+          <li><a href="#what-affects-monthly-payment" class="text-accent hover:underline">What affects your monthly payment</a></li>
+          <li><a href="#fixed-vs-variable-mortgage" class="text-accent hover:underline">Fixed rate vs variable rate mortgages</a></li>
+          <li><a href="#mortgage-calculator-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-to-calculate-mortgage-payments" class="mt-10 scroll-mt-24" aria-labelledby="heading-how-calculate">
+        <h2 id="heading-how-calculate" class="font-heading text-xl font-bold text-text">
+          How to Calculate Mortgage Payments
+        </h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Most U.S. home loans use <strong class="font-semibold text-text">fixed-rate amortization</strong>. Your lender
+          divides repayment into equal monthly installments, but each payment splits differently between interest and
+          principal. Early payments are mostly interest; later payments reduce the balance faster.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          The standard <strong class="font-semibold text-text">mortgage payment formula</strong> is:
+        </p>
+        <p class="mt-2 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">P</strong> = principal (home price minus down payment)</li>
+          <li><strong class="text-text">r</strong> = monthly interest rate (annual rate ÷ 12)</li>
+          <li><strong class="text-text">n</strong> = number of monthly payments (years × 12)</li>
+        </ul>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Total interest</strong> = (monthly payment × n) − P. At 0% interest,
+          the monthly payment is simply P ÷ n. AllCalcNow runs these calculations in your browser—no sign-up—and adds
+          taxes and insurance so you see true out-of-pocket cost, not P&amp;I alone.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          The <strong class="font-semibold text-text">amortization schedule</strong> above the FAQ lists each month’s
+          interest, principal, and remaining balance. Compare a 15-year vs 30-year mortgage or test how a 0.25% rate
+          change affects lifetime cost.
+        </p>
+      </section>
+
+      <section id="what-affects-monthly-payment" class="mt-10 scroll-mt-24" aria-labelledby="heading-affects">
+        <h2 id="heading-affects" class="font-heading text-xl font-bold text-text">
+          What Affects Your Monthly Payment?
+        </h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Five inputs drive most mortgage scenarios on this page:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Home price</strong> — the purchase amount before financing.</li>
+          <li><strong class="text-text">Down payment</strong> — reduces the loan; 20% down often avoids PMI.</li>
+          <li><strong class="text-text">Loan term</strong> — 30 years lowers the payment vs 15 years but costs more interest overall.</li>
+          <li><strong class="text-text">Interest rate</strong> — small rate changes have a large long-term impact.</li>
+          <li><strong class="text-text">Taxes &amp; costs</strong> — property tax, insurance, PMI, HOA, and other annual fees.</li>
+        </ul>
+        <p class="mt-3 leading-relaxed text-muted">
+          Credit score, loan program (conventional, FHA, VA), discount points, and closing costs also affect what lenders
+          offer. For personal loans without real estate, try our <a href="/loan-calculator" class="font-semibold text-accent hover:underline">loan calculator</a>;
+          for quick percent math, use the <a href="/percentage-calculator" class="font-semibold text-accent hover:underline">percentage calculator</a>.
+        </p>
+      </section>
+
+      <section id="fixed-vs-variable-mortgage" class="mt-10 scroll-mt-24" aria-labelledby="heading-fixed-variable">
+        <h2 id="heading-fixed-variable" class="font-heading text-xl font-bold text-text">
+          Fixed Rate vs Variable Rate Mortgages
+        </h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          A <strong class="font-semibold text-text">fixed-rate mortgage</strong> keeps the same interest rate for the
+          full term. Your principal-and-interest payment stays stable (escrowed taxes and insurance may still change).
+          Most buyers who plan to stay long-term choose fixed rates for predictable budgeting.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Adjustable-rate mortgages (ARMs)</strong> and other variable loans
+          often start with a lower teaser rate, then reset on a schedule. Payments can decrease if rates fall or increase
+          significantly when rates rise. Always model the payment <em>after</em> the first adjustment, not only the
+          introductory period.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          This free mortgage calculator assumes a fixed rate—the same baseline most home buyers need. Use it to
+          compare options, then confirm APR, fees, and eligibility with a licensed mortgage professional before you apply.
+        </p>
+      </section>
+
+      <section id="mortgage-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="heading-faq">
+        <h2 id="heading-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <p class="mt-2 text-sm text-muted">
+          Common questions about monthly payments, rates, down payments, and principal vs interest.
+        </p>
+
+        <div class="mt-6 space-y-4">
+          {
+            faqs.map((faq, i) => (
+              <details
+                class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20"
+                id={`faq-${i + 1}`}
+                open={i === 0}
+              >
+                <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center justify-between gap-3">
+                    {faq.question}
+                    <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </span>
+                </summary>
+                <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                  <p class="leading-relaxed text-muted">{faq.answer}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Results are estimates for education only—not financial or legal
+        advice. Rates, fees, and eligibility vary by lender and location.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('mortgage-form');
+  const homePriceEl = document.getElementById('home-price');
+  const downPctEl = document.getElementById('down-pct');
+  const downDollarEl = document.getElementById('down-dollar');
+  const loanTermEl = document.getElementById('loan-term');
+  const interestRateEl = document.getElementById('interest-rate');
+  const startMonthEl = document.getElementById('start-month');
+  const startYearEl = document.getElementById('start-year');
+  const errorEl = document.getElementById('mortgage-error');
+  const monthlyPayMain = document.getElementById('monthly-pay-main');
+  const monthlyOutTotal = document.getElementById('monthly-out-total');
+  const payoffDateShort = document.getElementById('payoff-date-short');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const summaryBody = document.getElementById('summary-body');
+  const amortBody = document.getElementById('amort-body');
+  const pieChart = document.getElementById('pie-chart');
+  const pieLegend = document.getElementById('pie-legend');
+  const btnClear = document.getElementById('btn-clear');
+
+  const costKeys = ['tax', 'ins', 'pmi', 'hoa', 'oth'];
+  const costUnits = { tax: 'pct', ins: 'dol', pmi: 'pct', hoa: 'dol', oth: 'dol' };
+  let downUnit = 'pct';
+
+  const money = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+  const money0 = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+
+  function getHomePrice() {
+    return parseFloat(homePriceEl?.value || '0') || 0;
+  }
+
+  function getDownPayment(home) {
+    if (downUnit === 'pct') return home * ((parseFloat(downPctEl?.value || '0') || 0) / 100);
+    return parseFloat(downDollarEl?.value || '0') || 0;
+  }
+
+  function syncDownFromPct() {
+    const home = getHomePrice();
+    if (downDollarEl) downDollarEl.value = String(Math.round(home * (parseFloat(downPctEl?.value || '0') / 100)));
+  }
+
+  function syncDownFromDollar() {
+    const home = getHomePrice();
+    if (home > 0 && downPctEl) downPctEl.value = (((parseFloat(downDollarEl?.value || '0') || 0) / home) * 100).toFixed(2);
+  }
+
+  function annualCost(key, home) {
+    const pctInput = document.getElementById(`${key}-pct`);
+    const dolInput = document.getElementById(`${key}-dollar`);
+    if (costUnits[key] === 'pct') return home * ((parseFloat(pctInput?.value || '0') || 0) / 100);
+    return parseFloat(dolInput?.value || '0') || 0;
+  }
+
+  function monthlyPayment(principal, annualRate, months) {
+    if (principal <= 0) return 0;
+    const r = annualRate / 100 / 12;
+    if (r === 0) return principal / months;
+    const f = Math.pow(1 + r, months);
+    return (principal * r * f) / (f - 1);
+  }
+
+  function buildSchedule(principal, annualRate, months, payment, startMonth, startYear) {
+    const r = annualRate / 100 / 12;
+    const rows = [];
+    let balance = principal;
+    for (let m = 1; m <= months; m++) {
+      const interest = r === 0 ? 0 : balance * r;
+      let principalPaid = payment - interest;
+      if (m === months) principalPaid = balance;
+      balance = Math.max(0, balance - principalPaid);
+      const d = new Date(startYear, startMonth + m - 1, 1);
+      rows.push({
+        month: m,
+        date: `${d.getMonth() + 1}/${d.getFullYear()}`,
+        interest,
+        principal: principalPaid,
+        balance,
+        endOfYear: m % 12 === 0,
+        yearNum: Math.ceil(m / 12),
+      });
+    }
+    return rows;
+  }
+
+  function payoffLabel(startMonth, startYear, months) {
+    const d = new Date(startYear, startMonth + months, 1);
+    const mon = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+    return `${mon[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  function setSegmentActive(selector, matchFn) {
+    document.querySelectorAll(selector).forEach((btn) => {
+      btn.classList.toggle('segment-active', matchFn(btn));
+    });
+  }
+
+  function setDownUnit(unit) {
+    downUnit = unit;
+    setSegmentActive('.down-unit-btn', (btn) => btn.getAttribute('data-down-unit') === unit);
+    downPctEl?.classList.toggle('hidden', unit !== 'pct');
+    downDollarEl?.classList.toggle('hidden', unit !== 'dol');
+  }
+
+  function setCostUnit(key, unit) {
+    costUnits[key] = unit;
+    setSegmentActive(`[data-cost-unit="${key}"]`, (btn) => btn.getAttribute('data-unit') === unit);
+    document.getElementById(`${key}-pct`)?.classList.toggle('hidden', unit !== 'pct');
+    document.getElementById(`${key}-dollar`)?.classList.toggle('hidden', unit !== 'dol');
+  }
+
+  function renderPie(segments) {
+    const total = segments.reduce((s, x) => s + x.value, 0);
+    if (!pieChart || !pieLegend || total <= 0) return;
+    let angle = 0;
+    const stops = segments
+      .filter((s) => s.value > 0)
+      .map((s) => {
+        const pct = (s.value / total) * 100;
+        const start = angle;
+        angle += pct;
+        return `${s.color} ${start}% ${angle}%`;
+      });
+    pieChart.style.background = stops.length ? `conic-gradient(${stops.join(', ')})` : '#e4e0d8';
+    pieLegend.innerHTML = segments
+      .filter((s) => s.value > 0)
+      .map(
+        (s) =>
+          `<li class="flex items-center gap-2.5 rounded-lg bg-bg/80 px-2 py-1.5"><span class="h-2.5 w-2.5 shrink-0 rounded-full ring-2 ring-white" style="background:${s.color}"></span><span class="min-w-0 flex-1 truncate text-xs font-medium text-text">${s.label}</span><span class="shrink-0 text-xs font-bold tabular-nums text-accent">${Math.round((s.value / total) * 100)}%</span></li>`
+      )
+      .join('');
+  }
+
+  function breakdownRow(label, monthly, total, bold = false) {
+    const cls = bold
+      ? 'flex items-center justify-between gap-3 rounded-xl bg-navy/5 px-4 py-3 font-bold text-text'
+      : 'flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-bg/80';
+    return `<div class="${cls}"><span class="text-sm ${bold ? '' : 'text-muted'}">${label}</span><div class="text-right text-sm tabular-nums"><div class="${bold ? 'text-base' : ''}">${monthly}</div><div class="text-xs ${bold ? 'font-normal text-muted' : 'text-muted'}">${total} total</div></div></div>`;
+  }
+
+  function summaryCard(label, value) {
+    return `<div class="rounded-xl border border-border/60 bg-bg/50 px-4 py-3"><p class="text-xs font-medium text-muted">${label}</p><p class="mt-1 text-base font-bold tabular-nums text-text">${value}</p></div>`;
+  }
+
+  function calculate() {
+    const home = getHomePrice();
+    const down = getDownPayment(home);
+    const termYears = parseInt(loanTermEl?.value || '30', 10);
+    const annualRate = parseFloat(interestRateEl?.value || '0');
+    const startMonth = parseInt(startMonthEl?.value || '0', 10);
+    const startYear = parseInt(startYearEl?.value || '2026', 10);
+
+    if (!home || home <= 0) {
+      if (errorEl) { errorEl.textContent = 'Please enter a valid home price.'; errorEl.classList.remove('hidden'); }
+      return;
+    }
+    if (down < 0 || down >= home) {
+      if (errorEl) { errorEl.textContent = 'Down payment must be between $0 and the home price.'; errorEl.classList.remove('hidden'); }
+      return;
+    }
+    errorEl?.classList.add('hidden');
+
+    const principal = home - down;
+    const months = termYears * 12;
+    const piPayment = monthlyPayment(principal, annualRate, months);
+    const totalPI = piPayment * months;
+    const totalInterest = totalPI - principal;
+
+    const taxAnnual = annualCost('tax', home);
+    const insAnnual = annualCost('ins', home);
+    const pmiAnnual = annualCost('pmi', home);
+    const hoaAnnual = annualCost('hoa', home);
+    const othAnnual = annualCost('oth', home);
+
+    const taxMo = taxAnnual / 12;
+    const insMo = insAnnual / 12;
+    const otherMo = (pmiAnnual + hoaAnnual + othAnnual) / 12;
+    const totalTax = taxAnnual * termYears;
+    const totalIns = insAnnual * termYears;
+    const totalOther = (pmiAnnual + hoaAnnual + othAnnual) * termYears;
+    const monthlyOut = piPayment + taxMo + insMo + otherMo;
+    const totalOut = totalPI + totalTax + totalIns + totalOther;
+
+    if (monthlyPayMain) monthlyPayMain.textContent = money(piPayment);
+    if (monthlyOutTotal) monthlyOutTotal.textContent = money(monthlyOut);
+    if (payoffDateShort) payoffDateShort.textContent = payoffLabel(startMonth, startYear, months);
+
+    renderPie([
+      { label: 'Principal & Interest', value: totalPI, color: '#e8552c' },
+      { label: 'Property Taxes', value: totalTax, color: '#1a1814' },
+      { label: 'Home Insurance', value: totalIns, color: '#7a7670' },
+      { label: 'Other Costs', value: totalOther, color: '#c4bfb6' },
+    ]);
+
+    if (breakdownBody) {
+      breakdownBody.innerHTML = [
+        breakdownRow('Mortgage payment', money(piPayment), money(totalPI)),
+        breakdownRow('Property tax', money(taxMo), money(totalTax)),
+        breakdownRow('Home insurance', money(insMo), money(totalIns)),
+        breakdownRow('Other costs', money(otherMo), money(totalOther)),
+        breakdownRow('Total out-of-pocket', money(monthlyOut), money(totalOut), true),
+      ].join('');
+    }
+
+    if (summaryBody) {
+      summaryBody.innerHTML = [
+        summaryCard('House price', money(home)),
+        summaryCard('Loan amount', money(principal)),
+        summaryCard('Down payment', money(down)),
+        summaryCard(`Total payments (${months} mo)`, money(totalPI)),
+        summaryCard('Total interest', money(totalInterest)),
+        summaryCard('Payoff date', payoffLabel(startMonth, startYear, months)),
+      ].join('');
+    }
+
+    const schedule = buildSchedule(principal, annualRate, months, piPayment, startMonth, startYear);
+    if (amortBody) {
+      amortBody.innerHTML = schedule
+        .map(
+          (row, i) => `
+        <tr class="mc-amort-row border-b border-border/40 ${i % 2 === 0 ? 'bg-white' : 'bg-bg/40'}">
+          <td class="px-4 py-2.5 tabular-nums font-medium">${row.month}</td>
+          <td class="px-4 py-2.5 text-muted">${row.date}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums text-muted">${money0(row.interest)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums">${money0(row.principal)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums font-medium">${money0(row.balance)}</td>
+        </tr>
+        ${row.endOfYear ? `<tr><td colspan="5" class="bg-accent/10 px-4 py-2.5 text-center text-xs font-bold uppercase tracking-widest text-accent">End of year ${row.yearNum}</td></tr>` : ''}`
+        )
+        .join('');
+    }
+  }
+
+  document.querySelectorAll('.down-unit-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setDownUnit(btn.getAttribute('data-down-unit') || 'pct');
+      if (downUnit === 'pct') syncDownFromPct();
+      else syncDownFromDollar();
+      calculate();
+    });
+  });
+
+  document.querySelectorAll('.cost-unit-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-cost-unit');
+      const unit = btn.getAttribute('data-unit');
+      if (key && unit) setCostUnit(key, unit);
+      calculate();
+    });
+  });
+
+  homePriceEl?.addEventListener('input', () => {
+    if (downUnit === 'pct') syncDownFromPct();
+    else syncDownFromDollar();
+    calculate();
+  });
+  downPctEl?.addEventListener('input', () => { syncDownFromPct(); calculate(); });
+  downDollarEl?.addEventListener('input', () => { syncDownFromDollar(); calculate(); });
+  form?.addEventListener('submit', (e) => { e.preventDefault(); calculate(); });
+  form?.querySelectorAll('input, select').forEach((el) => {
+    el.addEventListener('change', calculate);
+    el.addEventListener('input', calculate);
+  });
+  btnClear?.addEventListener('click', () => {
+    if (homePriceEl) homePriceEl.value = '400000';
+    if (downPctEl) downPctEl.value = '20';
+    if (downDollarEl) downDollarEl.value = '80000';
+    setDownUnit('pct');
+    if (loanTermEl) loanTermEl.value = '30';
+    if (interestRateEl) interestRateEl.value = '6.5';
+    syncDownFromPct();
+    calculate();
+  });
+
+  setDownUnit('pct');
+  costKeys.forEach((k) => setCostUnit(k, costUnits[k]));
+  syncDownFromPct();
+  calculate();
+</script>
+
+<style>
+  .mc-segment {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 0.75rem;
+    background: var(--color-bg);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-border) 80%, transparent);
+  }
+  .segment-btn {
+    border-radius: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    transition: all 0.2s ease;
+  }
+  .segment-btn:hover:not(.segment-active) {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-card) 60%, transparent);
+  }
+  .segment-active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+  .mc-error {
+    background: color-mix(in srgb, var(--color-accent) 8%, white);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-accent);
+  }
+  .mc-amort-row:hover {
+    background: color-mix(in srgb, var(--color-accent) 6%, white) !important;
+  }
+  #pie-chart {
+    box-shadow: 0 4px 20px -4px rgba(26, 24, 20, 0.15);
+  }
+</style>

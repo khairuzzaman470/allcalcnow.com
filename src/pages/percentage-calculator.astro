@@ -1,0 +1,384 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const quickAmounts = [50, 100, 200, 500, 1000];
+const quickPcts = [10, 15, 20, 25, 50];
+
+const relatedTools = [
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
+  { name: 'Tip Calculator', icon: '🍽️', description: 'Split bill and calculate tip instantly', href: '/tip-calculator' },
+  { name: 'Compound Interest Calculator', icon: '📈', description: 'See how savings grow with compounding', href: '/compound-interest-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/percentage-calculator';
+const pageTitle = 'Percentage Calculator — 3 Ways to Calculate Any Percentage | AllCalcNow';
+const pageDescription =
+  'Free percentage calculator at AllCalcNow. Find what percent of a number is, calculate percentage increase or decrease, and more — instantly.';
+
+const faqs = [
+  {
+    question: 'How do I calculate 20% of a number?',
+    answer:
+      'Multiply the number by 20 and divide by 100—or multiply by 0.20. Example: 20% of 150 = 150 × 0.20 = 30. Use Tab 1 on this page: enter 20 and 150 to get the result instantly.',
+  },
+  {
+    question: 'How do I find what percentage one number is of another?',
+    answer:
+      'Divide the part by the whole, then multiply by 100. Example: 45 is what percent of 180? (45 ÷ 180) × 100 = 25%. Use Tab 2: enter 45 as the part and 180 as the whole.',
+  },
+  {
+    question: 'What is percentage change and how do I calculate it?',
+    answer:
+      'Percentage change measures growth or decline from an original value to a new value: ((New − Original) ÷ Original) × 100. A positive result is an increase; negative is a decrease. Tab 3 computes this and shows an up or down indicator.',
+  },
+  {
+    question: 'How do I calculate a discount percentage?',
+    answer:
+      'If an item was $80 and is now $60, the change is −25% (a 25% discount). Enter original 80 and new 60 in Tab 3. To find the sale price after 25% off, use Tab 1 with 25% and the original price, then subtract—or multiply by 0.75.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Percentage Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Percentage Calculator', '/percentage-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/percentage-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Percentage Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Math
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Percentage Calculator</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Three ways to work with percentages—of a number, what percent, and percent change.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="flex flex-wrap gap-1 border-b border-border bg-bg/50 p-2" role="tablist" aria-label="Calculator mode">
+        <button type="button" role="tab" id="tab-btn-1" aria-selected="true" aria-controls="tab-panel-1" data-tab="1" class="pc-tab segment-active flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all sm:flex-none">
+          % of a number
+        </button>
+        <button type="button" role="tab" id="tab-btn-2" aria-selected="false" aria-controls="tab-panel-2" data-tab="2" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          X is what % of Y?
+        </button>
+        <button type="button" role="tab" id="tab-btn-3" aria-selected="false" aria-controls="tab-panel-3" data-tab="3" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          % Change
+        </button>
+      </div>
+
+      <div class="grid gap-8 p-6 lg:grid-cols-2 lg:p-8">
+        <div>
+          <div id="tab-panel-1" role="tabpanel" aria-labelledby="tab-btn-1" class="tab-panel space-y-5">
+            <p class="text-sm text-muted">What is <strong class="text-text">X%</strong> of <strong class="text-text">Y</strong>?</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="t1-pct" class={labelClass}>Percentage (%)</label>
+                <input type="number" id="t1-pct" value="20" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="t1-whole" class={labelClass}>Of (whole number)</label>
+                <input type="number" id="t1-whole" value="100" step="any" class={inputClass} />
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-panel-2" role="tabpanel" aria-labelledby="tab-btn-2" class="tab-panel hidden space-y-5">
+            <p class="text-sm text-muted"><strong class="text-text">X</strong> is what percent of <strong class="text-text">Y</strong>?</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="t2-part" class={labelClass}>Part (X)</label>
+                <input type="number" id="t2-part" value="25" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="t2-whole" class={labelClass}>Whole (Y)</label>
+                <input type="number" id="t2-whole" value="200" step="any" class={inputClass} />
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-panel-3" role="tabpanel" aria-labelledby="tab-btn-3" class="tab-panel hidden space-y-5">
+            <p class="text-sm text-muted">Percentage change from original to new value.</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="t3-original" class={labelClass}>Original value</label>
+                <input type="number" id="t3-original" value="100" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="t3-new" class={labelClass}>New value</label>
+                <input type="number" id="t3-new" value="125" step="any" class={inputClass} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-center rounded-2xl bg-navy px-6 py-8 text-white">
+          <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Result</p>
+          <div class="mt-3 flex items-center gap-3">
+            <span id="result-arrow" class="hidden text-3xl" aria-hidden="true"></span>
+            <p id="result-value" class="font-heading text-4xl font-bold tracking-tight sm:text-5xl">—</p>
+          </div>
+          <p id="result-detail" class="mt-3 text-sm text-white/80">—</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="border-b border-border bg-bg/50 px-6 py-4">
+        <h2 class="text-lg font-bold text-text">Quick reference</h2>
+        <p class="mt-1 text-sm text-muted">Common percentages of popular amounts.</p>
+      </div>
+      <div class="overflow-auto">
+        <table class="w-full min-w-[400px] text-left text-sm">
+          <thead class="bg-navy text-xs uppercase tracking-wider text-white/80">
+            <tr>
+              <th class="px-4 py-3 font-semibold">%</th>
+              {quickAmounts.map((a) => (
+                <th class="px-4 py-3 text-right font-semibold">of {a}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {quickPcts.map((p, i) => (
+              <tr class={`border-b border-border/40 ${i % 2 === 0 ? 'bg-white' : 'bg-bg/40'}`}>
+                <td class="px-4 py-2.5 font-bold text-accent">{p}%</td>
+                {quickAmounts.map((a) => (
+                  <td class="px-4 py-2.5 text-right tabular-nums text-text">{(a * p) / 100}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Percentage Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Percentage Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free percentage calculator</strong> covers the three calculations people
+        need most: finding a <strong class="font-semibold text-text">percent of a number</strong>, finding
+        <strong class="font-semibold text-text">what percent one value is of another</strong>, and measuring
+        <strong class="font-semibold text-text">percentage increase or decrease</strong>. Switch tabs, enter two values,
+        and see the answer instantly—with green ↑ for increases and red ↓ for decreases on the change tab.
+      </p>
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-calculate-percentage" class="text-accent hover:underline">How to Calculate a Percentage</a></li>
+          <li><a href="#percentage-increase" class="text-accent hover:underline">How to Calculate Percentage Increase</a></li>
+          <li><a href="#percentage-decrease" class="text-accent hover:underline">How to Calculate Percentage Decrease</a></li>
+          <li><a href="#percentage-formula" class="text-accent hover:underline">The Percentage Formula Explained Simply</a></li>
+          <li><a href="#percentage-calculator-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+      <section id="how-to-calculate-percentage" class="mt-10 scroll-mt-24" aria-labelledby="h-calc">
+        <h2 id="h-calc" class="font-heading text-xl font-bold text-text">How to Calculate a Percentage</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          To find <strong class="font-semibold text-text">X% of Y</strong>, convert the percent to a decimal (divide by 100)
+          and multiply: Result = Y × (X ÷ 100). Example: 15% of 80 = 80 × 0.15 = 12. The quick reference table above shows
+          10%, 15%, 20%, 25%, and 50% of 50, 100, 200, 500, and 1000 for fast lookup.
+        </p>
+      </section>
+      <section id="percentage-increase" class="mt-10 scroll-mt-24" aria-labelledby="h-inc">
+        <h2 id="h-inc" class="font-heading text-xl font-bold text-text">How to Calculate Percentage Increase</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Percentage increase</strong> = ((New − Original) ÷ Original) × 100. If a
+          salary rises from $50,000 to $55,000, the increase is (($55,000 − $50,000) ÷ $50,000) × 100 = 10%. Use Tab 3 with
+          original and new values—the calculator shows a green upward arrow when the new value is higher.
+        </p>
+      </section>
+      <section id="percentage-decrease" class="mt-10 scroll-mt-24" aria-labelledby="h-dec">
+        <h2 id="h-dec" class="font-heading text-xl font-bold text-text">How to Calculate Percentage Decrease</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          The same formula applies; a lower new value yields a <strong class="font-semibold text-text">negative percentage</strong>.
+          Price drops from $200 to $170: ((170 − 200) ÷ 200) × 100 = −15% (a 15% decrease). Tab 3 displays a red downward arrow
+          for decreases—common for discounts and market dips.
+        </p>
+      </section>
+      <section id="percentage-formula" class="mt-10 scroll-mt-24" aria-labelledby="h-formula">
+        <h2 id="h-formula" class="font-heading text-xl font-bold text-text">The Percentage Formula Explained Simply</h2>
+        <p class="mt-2 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          % of Y = Y × (X / 100)<br />
+          X is what % of Y = (X / Y) × 100<br />
+          % Change = ((New − Original) / Original) × 100
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          “Percent” means per hundred. Dividing by 100 converts a percent to a proportion. For VAT or tips, try our
+          <a href="/vat-calculator" class="font-semibold text-accent hover:underline">VAT calculator</a> and
+          <a href="/tip-calculator" class="font-semibold text-accent hover:underline">tip calculator</a>.
+        </p>
+      </section>
+      <section id="percentage-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">
+        <h2 id="h-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Note:</strong> For educational use. Double-check critical financial calculations.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  let activeTab = 1;
+
+  const resultValue = document.getElementById('result-value');
+  const resultDetail = document.getElementById('result-detail');
+  const arrowEl = document.getElementById('result-arrow');
+
+  const fmt = (n) => {
+    if (!Number.isFinite(n)) return '—';
+    return new Intl.NumberFormat('en-US', { maximumFractionDigits: 4 }).format(n);
+  };
+  const fmtPct = (n) => {
+    if (!Number.isFinite(n)) return '—';
+    return new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(n) + '%';
+  };
+
+  function setTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.pc-tab').forEach((btn) => {
+      const on = Number(btn.getAttribute('data-tab')) === tab;
+      btn.classList.toggle('segment-active', on);
+      btn.classList.toggle('text-muted', !on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+      panel.classList.toggle('hidden', i + 1 !== tab);
+    });
+    calculate();
+  }
+
+  function calculate() {
+    arrowEl?.classList.add('hidden');
+    if (arrowEl) arrowEl.textContent = '';
+
+    if (activeTab === 1) {
+      const pct = parseFloat(document.getElementById('t1-pct')?.value || '0');
+      const whole = parseFloat(document.getElementById('t1-whole')?.value || '0');
+      const result = whole * (pct / 100);
+      if (resultValue) resultValue.textContent = fmt(result);
+      if (resultDetail) resultDetail.textContent = `${fmtPct(pct)} of ${fmt(whole)} = ${fmt(result)}`;
+      return;
+    }
+
+    if (activeTab === 2) {
+      const part = parseFloat(document.getElementById('t2-part')?.value || '0');
+      const whole = parseFloat(document.getElementById('t2-whole')?.value || '0');
+      if (whole === 0) {
+        if (resultValue) resultValue.textContent = '—';
+        if (resultDetail) resultDetail.textContent = 'Whole cannot be zero.';
+        return;
+      }
+      const result = (part / whole) * 100;
+      if (resultValue) resultValue.textContent = fmtPct(result);
+      if (resultDetail) resultDetail.textContent = `${fmt(part)} is ${fmtPct(result)} of ${fmt(whole)}`;
+      return;
+    }
+
+    const original = parseFloat(document.getElementById('t3-original')?.value || '0');
+    const newVal = parseFloat(document.getElementById('t3-new')?.value || '0');
+    if (original === 0) {
+      if (resultValue) resultValue.textContent = '—';
+      if (resultDetail) resultDetail.textContent = 'Original value cannot be zero.';
+      return;
+    }
+    const change = ((newVal - original) / original) * 100;
+    const isUp = change > 0;
+    const isDown = change < 0;
+
+    if (resultValue) {
+      resultValue.textContent = (isUp ? '+' : '') + fmtPct(change);
+      resultValue.classList.toggle('text-green-400', isUp);
+      resultValue.classList.toggle('text-red-400', isDown);
+      resultValue.classList.toggle('text-white', !isUp && !isDown);
+    }
+    if (arrowEl) {
+      arrowEl.classList.remove('hidden');
+      if (isUp) {
+        arrowEl.textContent = '↑';
+        arrowEl.className = 'text-3xl text-green-400';
+      } else if (isDown) {
+        arrowEl.textContent = '↓';
+        arrowEl.className = 'text-3xl text-red-400';
+      } else {
+        arrowEl.textContent = '→';
+        arrowEl.className = 'text-3xl text-white/60';
+      }
+    }
+    if (resultDetail) {
+      resultDetail.textContent = `From ${fmt(original)} to ${fmt(newVal)} (${isUp ? 'increase' : isDown ? 'decrease' : 'no change'})`;
+      resultDetail.className = 'mt-3 text-sm text-white/80';
+    }
+  }
+
+  document.querySelectorAll('.pc-tab').forEach((btn) => {
+    btn.addEventListener('click', () => setTab(Number(btn.getAttribute('data-tab'))));
+  });
+
+  document.querySelectorAll('#tab-panel-1 input, #tab-panel-2 input, #tab-panel-3 input').forEach((el) => {
+    el.addEventListener('input', calculate);
+  });
+
+  setTab(1);
+</script>
+
+<style>
+  .pc-tab.segment-active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+</style>

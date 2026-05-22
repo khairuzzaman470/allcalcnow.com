@@ -1,0 +1,597 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'lc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const selectClass = inputClass + ' cursor-pointer';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const loanTypes = [
+  { value: 'personal', label: 'Personal Loan' },
+  { value: 'car', label: 'Car and Auto Loan' },
+  { value: 'student', label: 'Student Loan' },
+  { value: 'business', label: 'Business Loan' },
+];
+
+const relatedTools = [
+  { name: 'Mortgage Calculator', icon: '🏠', description: 'Calculate monthly payments and total cost', href: '/mortgage-calculator' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/loan-calculator';
+const pageTitle = 'Loan Calculator — Monthly EMI and Total Interest | AllCalcNow';
+const pageDescription =
+  'Free loan calculator at AllCalcNow. Calculate monthly EMI, total interest and full repayment cost for personal, car or student loans.';
+
+const faqs = [
+  {
+    question: 'How is loan EMI calculated?',
+    answer:
+      'EMI uses the standard amortizing loan formula: EMI = P × [r(1+r)^n] / [(1+r)^n − 1], where P is the loan principal, r is the monthly interest rate (annual rate ÷ 12), and n is the number of monthly payments. Each EMI pays interest on the remaining balance first; the rest reduces principal. At 0% interest, EMI is simply P ÷ n.',
+  },
+  {
+    question: 'What is a good interest rate for a personal loan?',
+    answer:
+      'Personal loan APRs vary widely by credit score, income, and lender—often roughly 6%–36% in the U.S. as of recent markets. Scores above 720 may qualify for single-digit rates; fair credit often sees mid-teens or higher. Compare offers from banks, credit unions, and online lenders on the same day, and check whether the rate is fixed or variable.',
+  },
+  {
+    question: 'Can I pay off a loan early?',
+    answer:
+      'Most personal and auto loans allow early payoff, but some charge prepayment penalties or fees—read your promissory note. Paying extra toward principal reduces total interest and shortens the term. This calculator assumes fixed payments for the full schedule; extra payments would lower your real cost below the projected total.',
+  },
+  {
+    question: 'What happens if I miss a loan payment?',
+    answer:
+      'A missed payment typically triggers a late fee and may be reported to credit bureaus after 30 days, hurting your credit score. Interest continues to accrue on the balance, and repeated misses can lead to default, collections, or repossession for secured loans. Contact your lender immediately if you expect difficulty—many offer hardship plans or modified terms.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Loan Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Loan Calculator', '/loan-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/loan-calculator"
+  schemas={schemas}
+>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Loan Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Lending
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Loan Calculator</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Calculate monthly EMI, total interest, and year-by-year payoff for personal, auto, student, or business loans.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-12 xl:items-start">
+      <section
+        class="xl:col-span-5 rounded-2xl border border-border/80 bg-card p-6 shadow-[0_4px_24px_-4px_rgba(26,24,20,0.08)] sm:p-8"
+        aria-label="Loan inputs"
+      >
+        <h2 class="text-lg font-bold text-text">Loan details</h2>
+        <p class="mt-1 text-sm text-muted">Adjust values—results update automatically.</p>
+
+        <form id="loan-form" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="loan-type" class={labelClass}>Loan type</label>
+            <select id="loan-type" class={selectClass}>
+              {loanTypes.map((t) => (
+                <option value={t.value}>{t.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label for="loan-amount" class={labelClass}>Loan amount</label>
+            <div class="relative">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">$</span>
+              <input type="number" id="loan-amount" value="25000" min="0" step="100" class={`${inputClass} pl-8`} />
+            </div>
+          </div>
+
+          <div>
+            <label for="interest-rate" class={labelClass}>Annual interest rate</label>
+            <div class="relative">
+              <input type="number" id="interest-rate" value="8.5" min="0" max="100" step="0.01" class={`${inputClass} pr-10`} />
+              <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted">%</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <label for="loan-term" class="text-sm font-semibold text-text">Loan term</label>
+              <div class="lc-segment" role="group" aria-label="Loan term unit">
+                <button type="button" data-term-unit="years" class="term-unit-btn segment-btn segment-active">Years</button>
+                <button type="button" data-term-unit="months" class="term-unit-btn segment-btn">Months</button>
+              </div>
+            </div>
+            <div class="relative">
+              <input type="number" id="loan-term" value="5" min="1" max="600" step="1" class={`${inputClass} pr-16`} />
+              <span id="term-unit-label" class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted">yrs</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+            <button
+              type="submit"
+              class="flex-1 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30 active:translate-y-0"
+            >
+              Calculate EMI
+            </button>
+            <button
+              type="button"
+              id="btn-clear"
+              class="rounded-xl border border-border bg-white px-6 py-3.5 text-sm font-semibold text-text transition-colors hover:bg-bg"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+        <div id="loan-error" class="lc-error mt-4 hidden rounded-xl px-4 py-3 text-sm" role="alert"></div>
+      </section>
+
+      <section id="loan-results" class="space-y-5 xl:col-span-7" aria-label="Loan results">
+        <div class="overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_32px_-8px_rgba(26,24,20,0.35)]">
+          <div class="border-b border-white/10 px-6 py-5 sm:px-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Monthly EMI</p>
+            <p id="result-emi" class="mt-1 font-heading text-4xl font-bold tracking-tight sm:text-5xl">—</p>
+          </div>
+          <div class="grid gap-4 px-6 py-5 sm:grid-cols-2 sm:px-8">
+            <div>
+              <p class="text-xs font-medium text-white/60">Total interest</p>
+              <p id="result-interest" class="mt-0.5 text-xl font-bold tabular-nums text-accent">—</p>
+            </div>
+            <div>
+              <p class="text-xs font-medium text-white/60">Total amount payable</p>
+              <p id="result-total" class="mt-0.5 text-xl font-bold tabular-nums">—</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2">
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-text">Principal vs interest</h3>
+            <div class="mt-4 flex items-center gap-5">
+              <div class="relative mx-auto shrink-0">
+                <div id="pie-chart" class="h-32 w-32 rounded-full shadow-inner ring-4 ring-bg" title="Principal vs interest"></div>
+                <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <div class="h-16 w-16 rounded-full bg-card shadow-sm"></div>
+                </div>
+              </div>
+              <ul id="pie-legend" class="min-w-0 flex-1 space-y-2 text-sm"></ul>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-text">Loan summary</h3>
+            <dl id="summary-body" class="mt-4 space-y-2"></dl>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="border-b border-border bg-bg/50 px-6 py-5 sm:px-8">
+        <h2 class="text-lg font-bold text-text">Year-by-year payoff summary</h2>
+        <p class="mt-1 text-sm text-muted">Principal and interest paid each year, plus remaining balance.</p>
+      </div>
+      <div class="max-h-[28rem] overflow-auto">
+        <table class="w-full min-w-[520px] text-left text-sm">
+          <thead class="sticky top-0 z-10 bg-navy text-xs uppercase tracking-wider text-white/80">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Year</th>
+              <th class="px-4 py-3 text-right font-semibold">Principal paid</th>
+              <th class="px-4 py-3 text-right font-semibold">Interest paid</th>
+              <th class="px-4 py-3 text-right font-semibold">Total paid</th>
+              <th class="px-4 py-3 text-right font-semibold">Balance</th>
+            </tr>
+          </thead>
+          <tbody id="yearly-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <article
+      class="seo-content mt-14 max-w-3xl border-t border-border pt-10"
+      itemscope
+      itemtype="https://schema.org/Article"
+    >
+      <meta itemprop="headline" content="Loan Calculator — Monthly EMI and Total Interest" />
+      <meta itemprop="description" content={pageDescription} />
+
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Loan Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free loan calculator</strong> helps you estimate your
+        <strong class="font-semibold text-text">monthly EMI (Equated Monthly Installment)</strong>, total interest, and
+        full repayment cost before you sign. Whether you are comparing personal loans, financing a car, covering
+        education, or funding a business, enter the loan amount, annual interest rate, and term in years or months. You
+        get instant EMI, a principal-versus-interest breakdown, and a <strong class="font-semibold text-text">year-by-year
+        payoff summary</strong>—the same core math used by banks for fixed-rate amortizing loans.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-calculate-loan-emi" class="text-accent hover:underline">How to Calculate Loan EMI</a></li>
+          <li><a href="#what-is-emi" class="text-accent hover:underline">What is EMI?</a></li>
+          <li><a href="#lower-interest-rate" class="text-accent hover:underline">How to Get a Lower Interest Rate on a Loan</a></li>
+          <li><a href="#personal-vs-car-loan" class="text-accent hover:underline">Personal Loan vs Car Loan — Key Differences</a></li>
+          <li><a href="#loan-calculator-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-to-calculate-loan-emi" class="mt-10 scroll-mt-24" aria-labelledby="heading-calculate-emi">
+        <h2 id="heading-calculate-emi" class="font-heading text-xl font-bold text-text">How to Calculate Loan EMI</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Fixed-rate loans use standard amortization. The lender sets equal monthly payments so the loan is paid off by
+          the end of the term. Each payment covers interest on the outstanding balance first; the remainder reduces
+          principal.
+        </p>
+        <p class="mt-2 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          EMI = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">P</strong> = loan amount (principal)</li>
+          <li><strong class="text-text">r</strong> = monthly interest rate (annual rate ÷ 12)</li>
+          <li><strong class="text-text">n</strong> = number of monthly payments</li>
+        </ul>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Total interest</strong> = (EMI × n) − P. At 0% interest, EMI = P ÷ n.
+          AllCalcNow runs this in your browser with no sign-up. For home purchases with taxes and insurance, use our
+          <a href="/mortgage-calculator" class="font-semibold text-accent hover:underline">mortgage calculator</a>.
+        </p>
+      </section>
+
+      <section id="what-is-emi" class="mt-10 scroll-mt-24" aria-labelledby="heading-what-is-emi">
+        <h2 id="heading-what-is-emi" class="font-heading text-xl font-bold text-text">What is EMI?</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">EMI (Equated Monthly Installment)</strong> is a fixed payment you make
+          each month until the loan is repaid. The amount stays the same for a fixed-rate loan, but the split between
+          interest and principal changes over time: early payments are mostly interest; later payments pay down more
+          principal. Knowing your EMI helps you budget and compare offers from different lenders on equal terms.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Variable-rate loans can change EMI when the index rate moves. This calculator assumes a fixed rate for the full
+          term—the most common setup for personal and auto loans.
+        </p>
+      </section>
+
+      <section id="lower-interest-rate" class="mt-10 scroll-mt-24" aria-labelledby="heading-lower-rate">
+        <h2 id="heading-lower-rate" class="font-heading text-xl font-bold text-text">How to Get a Lower Interest Rate on a Loan</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Lenders price risk using credit score, income stability, debt-to-income ratio, and loan purpose. Steps that
+          often help: improve your credit report (pay on time, lower card balances), compare multiple lenders including
+          credit unions, choose a shorter term if you can afford higher EMI, add a co-signer where allowed, and secure the
+          loan with collateral (e.g. auto loans vs unsecured personal loans).
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Even a 1% rate reduction saves meaningful interest on large, long loans. Run scenarios in the calculator above—
+          a $30,000 loan at 10% over 5 years costs far more interest than the same loan at 7%.
+        </p>
+      </section>
+
+      <section id="personal-vs-car-loan" class="mt-10 scroll-mt-24" aria-labelledby="heading-personal-car">
+        <h2 id="heading-personal-car" class="font-heading text-xl font-bold text-text">Personal Loan vs Car Loan — Key Differences</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Personal loans</strong> are usually unsecured—you do not pledge the car
+          or house as collateral. Amounts and rates depend heavily on credit; terms often run 2–7 years. Use them for
+          debt consolidation, medical bills, or other general needs.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Car and auto loans</strong> are secured by the vehicle, so rates may be
+          lower for the same borrower. Lenders may cap term length based on vehicle age; new cars often qualify for longer
+          financing. If you default, the lender can repossess the car. <strong class="font-semibold text-text">Student
+          loans</strong> may offer income-driven repayment or deferment; <strong class="font-semibold text-text">business
+          loans</strong> look at revenue and collateral. The EMI math is the same—only rates, terms, and fees differ.
+        </p>
+      </section>
+
+      <section id="loan-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="heading-faq">
+        <h2 id="heading-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <p class="mt-2 text-sm text-muted">EMI formula, rates, early payoff, and missed payments.</p>
+
+        <div class="mt-6 space-y-4">
+          {
+            faqs.map((faq, i) => (
+              <details
+                class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20"
+                id={`faq-${i + 1}`}
+                open={i === 0}
+              >
+                <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center justify-between gap-3">
+                    {faq.question}
+                    <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </span>
+                </summary>
+                <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                  <p class="leading-relaxed text-muted">{faq.answer}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Results are estimates for education only—not financial or legal
+        advice. Actual APR, fees, and eligibility vary by lender.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('loan-form');
+  const loanTypeEl = document.getElementById('loan-type');
+  const loanAmountEl = document.getElementById('loan-amount');
+  const interestRateEl = document.getElementById('interest-rate');
+  const loanTermEl = document.getElementById('loan-term');
+  const termUnitLabel = document.getElementById('term-unit-label');
+  const errorEl = document.getElementById('loan-error');
+  const resultEmi = document.getElementById('result-emi');
+  const resultInterest = document.getElementById('result-interest');
+  const resultTotal = document.getElementById('result-total');
+  const pieChart = document.getElementById('pie-chart');
+  const pieLegend = document.getElementById('pie-legend');
+  const summaryBody = document.getElementById('summary-body');
+  const yearlyBody = document.getElementById('yearly-body');
+  const btnClear = document.getElementById('btn-clear');
+
+  let termUnit = 'years';
+
+  const LOAN_TYPE_LABELS = {
+    personal: 'Personal Loan',
+    car: 'Car and Auto Loan',
+    student: 'Student Loan',
+    business: 'Business Loan',
+  };
+
+  const money = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+  const money0 = (n) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+  const pct = (n) =>
+    new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n) + '%';
+
+  function getMonths() {
+    const term = parseInt(loanTermEl?.value || '0', 10);
+    return termUnit === 'years' ? term * 12 : term;
+  }
+
+  function emi(principal, annualRate, months) {
+    if (principal <= 0) return 0;
+    const r = annualRate / 100 / 12;
+    if (r === 0) return principal / months;
+    const f = Math.pow(1 + r, months);
+    return (principal * r * f) / (f - 1);
+  }
+
+  function buildSchedule(principal, annualRate, months, payment) {
+    const r = annualRate / 100 / 12;
+    const rows = [];
+    let balance = principal;
+    for (let m = 1; m <= months; m++) {
+      const interest = r === 0 ? 0 : balance * r;
+      let principalPaid = payment - interest;
+      if (m === months) principalPaid = balance;
+      balance = Math.max(0, balance - principalPaid);
+      rows.push({ month: m, interest, principal: principalPaid, balance });
+    }
+    return rows;
+  }
+
+  function buildYearlySummary(schedule) {
+    const years = {};
+    schedule.forEach((row) => {
+      const year = Math.ceil(row.month / 12);
+      if (!years[year]) years[year] = { year, principal: 0, interest: 0, balance: row.balance };
+      years[year].principal += row.principal;
+      years[year].interest += row.interest;
+      years[year].balance = row.balance;
+    });
+    return Object.values(years).sort((a, b) => a.year - b.year);
+  }
+
+  function setTermUnit(unit) {
+    termUnit = unit;
+    document.querySelectorAll('.term-unit-btn').forEach((btn) => {
+      btn.classList.toggle('segment-active', btn.getAttribute('data-term-unit') === unit);
+    });
+    if (termUnitLabel) termUnitLabel.textContent = unit === 'years' ? 'yrs' : 'mo';
+    if (loanTermEl) {
+      const current = parseInt(loanTermEl.value || '5', 10);
+      if (unit === 'months' && current <= 40) loanTermEl.value = String(current * 12);
+      if (unit === 'years' && current > 40) loanTermEl.value = String(Math.max(1, Math.round(current / 12)));
+      loanTermEl.max = unit === 'years' ? '40' : '480';
+    }
+  }
+
+  function renderPie(principal, totalInterest) {
+    const total = principal + totalInterest;
+    if (!pieChart || !pieLegend || total <= 0) return;
+    const principalPct = (principal / total) * 100;
+    pieChart.style.background = `conic-gradient(#e8552c 0% ${principalPct}%, #1a1814 ${principalPct}% 100%)`;
+    pieLegend.innerHTML = [
+      `<li class="flex items-center gap-2.5 rounded-lg bg-bg/80 px-2 py-1.5"><span class="h-2.5 w-2.5 shrink-0 rounded-full bg-accent ring-2 ring-white"></span><span class="min-w-0 flex-1 text-xs font-medium text-text">Principal</span><span class="shrink-0 text-xs font-bold tabular-nums text-accent">${pct(principalPct)}</span></li>`,
+      `<li class="flex items-center gap-2.5 rounded-lg bg-bg/80 px-2 py-1.5"><span class="h-2.5 w-2.5 shrink-0 rounded-full bg-navy ring-2 ring-white"></span><span class="min-w-0 flex-1 text-xs font-medium text-text">Interest</span><span class="shrink-0 text-xs font-bold tabular-nums text-muted">${pct(100 - principalPct)}</span></li>`,
+    ].join('');
+  }
+
+  function summaryRow(term, value) {
+    return `<div class="flex items-center justify-between gap-3 rounded-lg px-2 py-2 hover:bg-bg/80"><dt class="text-sm text-muted">${term}</dt><dd class="text-sm font-bold tabular-nums text-text">${value}</dd></div>`;
+  }
+
+  function calculate() {
+    const principal = parseFloat(loanAmountEl?.value || '0') || 0;
+    const annualRate = parseFloat(interestRateEl?.value || '0') || 0;
+    const months = getMonths();
+    const loanType = loanTypeEl?.value || 'personal';
+
+    if (principal <= 0) {
+      if (errorEl) {
+        errorEl.textContent = 'Please enter a valid loan amount.';
+        errorEl.classList.remove('hidden');
+      }
+      return;
+    }
+    if (months <= 0 || months > 480) {
+      if (errorEl) {
+        errorEl.textContent = 'Please enter a valid loan term (1–480 months).';
+        errorEl.classList.remove('hidden');
+      }
+      return;
+    }
+    if (annualRate < 0 || annualRate > 100) {
+      if (errorEl) {
+        errorEl.textContent = 'Interest rate must be between 0% and 100%.';
+        errorEl.classList.remove('hidden');
+      }
+      return;
+    }
+    errorEl?.classList.add('hidden');
+
+    const payment = emi(principal, annualRate, months);
+    const totalPayable = payment * months;
+    const totalInterest = totalPayable - principal;
+
+    if (resultEmi) resultEmi.textContent = money(payment);
+    if (resultInterest) resultInterest.textContent = money(totalInterest);
+    if (resultTotal) resultTotal.textContent = money(totalPayable);
+
+    renderPie(principal, totalInterest);
+
+    const termLabel = termUnit === 'years' ? `${loanTermEl?.value} years` : `${loanTermEl?.value} months`;
+    if (summaryBody) {
+      summaryBody.innerHTML = [
+        summaryRow('Loan type', LOAN_TYPE_LABELS[loanType] || loanType),
+        summaryRow('Loan amount', money(principal)),
+        summaryRow('Interest rate', pct(annualRate)),
+        summaryRow('Term', `${termLabel} (${months} payments)`),
+        summaryRow('Principal share', pct((principal / totalPayable) * 100)),
+        summaryRow('Interest share', pct((totalInterest / totalPayable) * 100)),
+      ].join('');
+    }
+
+    const schedule = buildSchedule(principal, annualRate, months, payment);
+    const yearly = buildYearlySummary(schedule);
+
+    if (yearlyBody) {
+      yearlyBody.innerHTML = yearly
+        .map(
+          (y, i) => `
+        <tr class="lc-year-row border-b border-border/40 ${i % 2 === 0 ? 'bg-white' : 'bg-bg/40'}">
+          <td class="px-4 py-2.5 font-medium tabular-nums">Year ${y.year}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums">${money0(y.principal)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums text-muted">${money0(y.interest)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums font-medium">${money0(y.principal + y.interest)}</td>
+          <td class="px-4 py-2.5 text-right tabular-nums">${money0(y.balance)}</td>
+        </tr>`
+        )
+        .join('');
+    }
+  }
+
+  document.querySelectorAll('.term-unit-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setTermUnit(btn.getAttribute('data-term-unit') || 'years');
+      calculate();
+    });
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    calculate();
+  });
+  form?.querySelectorAll('input, select').forEach((el) => {
+    el.addEventListener('input', calculate);
+    el.addEventListener('change', calculate);
+  });
+
+  btnClear?.addEventListener('click', () => {
+    if (loanTypeEl) loanTypeEl.value = 'personal';
+    if (loanAmountEl) loanAmountEl.value = '25000';
+    if (interestRateEl) interestRateEl.value = '8.5';
+    if (loanTermEl) loanTermEl.value = '5';
+    setTermUnit('years');
+    calculate();
+  });
+
+  setTermUnit('years');
+  calculate();
+</script>
+
+<style>
+  .lc-segment {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 0.75rem;
+    background: var(--color-bg);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-border) 80%, transparent);
+  }
+  .segment-btn {
+    border-radius: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    transition: all 0.2s ease;
+  }
+  .segment-btn:hover:not(.segment-active) {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-card) 60%, transparent);
+  }
+  .segment-active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+  .lc-error {
+    background: color-mix(in srgb, var(--color-accent) 8%, white);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-accent);
+  }
+  .lc-year-row:hover {
+    background: color-mix(in srgb, var(--color-accent) 6%, white) !important;
+  }
+  #pie-chart {
+    box-shadow: 0 4px 20px -4px rgba(26, 24, 20, 0.15);
+  }
+</style>

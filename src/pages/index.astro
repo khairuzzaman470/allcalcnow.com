@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/ToolCard.astro';
+
+const calculators = [
+  { name: 'Mortgage Calculator', icon: '🏠', description: 'Calculate monthly payments, taxes, insurance, and full amortization schedule.', href: '/mortgage-calculator', category: 'finance' },
+  { name: 'Loan Calculator', icon: '💰', description: 'Determine monthly EMI, total interest, and view loan payoff timelines.', href: '/loan-calculator', category: 'finance' },
+  { name: 'Compound Interest Calculator', icon: '📈', description: 'Project your savings and investment growth with daily or monthly compounding.', href: '/compound-interest-calculator', category: 'finance' },
+  { name: 'Currency Converter', icon: '💱', description: 'Convert between global currencies with live exchange rates.', href: '/currency-converter', category: 'finance' },
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT instantly with presets for UK, Europe, or custom rates.', href: '/vat-calculator', category: 'finance' },
+  { name: 'BMI Calculator', icon: '⚖️', description: 'Find your Body Mass Index (BMI) and check your healthy weight range.', href: '/bmi-calculator', category: 'health' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Quickly solve three types of percentage calculations in seconds.', href: '/percentage-calculator', category: 'math' },
+  { name: 'Tip Calculator', icon: '🍽️', description: 'Split bills, calculate tips, and check individual shares instantly.', href: '/tip-calculator', category: 'math' },
+  { name: 'Date Difference Calculator', icon: '📅', description: 'Calculate years, months, weeks, and days between any two dates.', href: '/date-difference-calculator', category: 'time' },
+  { name: 'Age Calculator', icon: '🎂', description: 'Find your exact age in years, months, days, and count down to your next birthday.', href: '/age-calculator', category: 'time' },
+];
+
+const categories = [
+  { id: 'all', name: 'All Tools', count: calculators.length },
+  { id: 'finance', name: 'Finance & Money', count: calculators.filter(c => c.category === 'finance').length },
+  { id: 'health', name: 'Health & Fitness', count: calculators.filter(c => c.category === 'health').length },
+  { id: 'math', name: 'Everyday Math', count: calculators.filter(c => c.category === 'math').length },
+  { id: 'time', name: 'Time & Dates', count: calculators.filter(c => c.category === 'time').length },
+];
+---
+
+<BaseLayout
+  title="Free Online Calculators"
+  description="Fast, accurate tools for everyday decisions—no sign-up, no ads. Mortgage, Loan, VAT, BMI, Percentage, and Currency calculators."
+  canonicalPath="/"
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-navy py-20 text-white sm:py-24">
+    <!-- Ambient glowing circle -->
+    <div class="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -left-20 -bottom-20 h-80 w-80 rounded-full bg-orange-800/10 blur-3xl" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3.5 py-1 text-sm font-semibold tracking-wide text-accent ring-1 ring-accent/20">
+        <span class="h-1.5 w-1.5 rounded-full bg-accent animate-pulse"></span>
+        100% Free & No Ads
+      </span>
+      
+      <h1 class="mt-6 font-heading text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white">
+        All Calculators. <span class="text-accent">All Free.</span> Right Now.
+      </h1>
+      <p class="mx-auto mt-4 max-w-xl text-lg text-white/70 leading-relaxed">
+        Fast, private, and accurate tools for math, finance, health, and date calculations. No signup required.
+      </p>
+
+      <!-- Interactive Search Box -->
+      <div class="mx-auto mt-10 max-w-lg">
+        <div class="relative rounded-2xl bg-white shadow-xl shadow-navy/20">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+            <svg class="h-5 w-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search calculators (e.g. mortgage, age, bmi...)"
+            class="w-full rounded-2xl border border-transparent bg-transparent py-4 pl-12 pr-4 text-base text-text outline-none placeholder:text-muted/65 focus:border-accent/40 focus:ring-2 focus:ring-accent/10"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories and Grid Section -->
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    
+    <!-- Category Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2.5 pb-6 border-b border-border/60">
+      {categories.map((cat) => (
+        <button
+          type="button"
+          data-category-tab={cat.id}
+          class={`category-tab inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer ${
+            cat.id === 'all'
+              ? 'bg-accent text-white shadow-md shadow-accent/15'
+              : 'bg-card text-muted border border-border/80 hover:text-text hover:border-accent/30'
+          }`}
+        >
+          {cat.name}
+          <span class={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+            cat.id === 'all' ? 'bg-white/20 text-white' : 'bg-bg text-muted group-hover:bg-accent/10'
+          }`}>
+            {cat.count}
+          </span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Active Filter Status -->
+    <div class="mt-8 flex items-center justify-between">
+      <h2 id="section-heading" class="font-heading text-2xl font-extrabold text-text">All Tools</h2>
+      <p id="results-count" class="text-sm font-semibold text-muted">Showing all {calculators.length} calculators</p>
+    </div>
+
+    <!-- Calculators Grid -->
+    <ul id="calculators-grid" class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {calculators.map((c) => (
+        <li
+          class="calculator-card-item transition-all duration-300 transform scale-100 opacity-100"
+          data-category={c.category}
+          data-name={c.name.toLowerCase()}
+          data-description={c.description.toLowerCase()}
+        >
+          <ToolCard name={c.name} description={c.description} href={c.href} icon={c.icon} />
+        </li>
+      ))}
+    </ul>
+
+    <!-- No results state -->
+    <div id="no-results" class="mt-16 text-center hidden">
+      <span class="inline-block text-5xl">🔍</span>
+      <h3 class="mt-4 font-heading text-lg font-bold text-text">No calculators found</h3>
+      <p class="mt-2 text-sm text-muted">Try searching with other terms or check all categories.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const tabs = document.querySelectorAll('[data-category-tab]');
+  const cards = document.querySelectorAll('.calculator-card-item');
+  const sectionHeading = document.getElementById('section-heading');
+  const resultsCount = document.getElementById('results-count');
+  const noResults = document.getElementById('no-results');
+
+  let activeCategory = 'all';
+  let searchQuery = '';
+
+  const CATEGORY_NAMES: Record<string, string> = {
+    all: 'All Tools',
+    finance: 'Finance & Money',
+    health: 'Health & Fitness',
+    math: 'Everyday Math',
+    time: 'Time & Dates'
+  };
+
+  function filter() {
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const cardEl = card as HTMLElement;
+      const category = cardEl.getAttribute('data-category');
+      const name = cardEl.getAttribute('data-name') || '';
+      const description = cardEl.getAttribute('data-description') || '';
+
+      const categoryMatch = activeCategory === 'all' || category === activeCategory;
+      const searchMatch = searchQuery === '' || name.includes(searchQuery) || description.includes(searchQuery);
+
+      if (categoryMatch && searchMatch) {
+        cardEl.classList.remove('hidden');
+        // Let's add brief animation styling
+        cardEl.style.opacity = '1';
+        cardEl.style.transform = 'scale(1)';
+        visibleCount++;
+      } else {
+        cardEl.classList.add('hidden');
+        cardEl.style.opacity = '0';
+        cardEl.style.transform = 'scale(0.95)';
+      }
+    });
+
+    // Update count & text
+    if (sectionHeading) {
+      sectionHeading.textContent = searchQuery ? 'Search Results' : CATEGORY_NAMES[activeCategory];
+    }
+    
+    if (resultsCount) {
+      if (searchQuery) {
+        resultsCount.textContent = `Found ${visibleCount} calculator${visibleCount !== 1 ? 's' : ''}`;
+      } else {
+        resultsCount.textContent = `Showing ${visibleCount} calculator${visibleCount !== 1 ? 's' : ''}`;
+      }
+    }
+
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+  }
+
+  // Handle Tab Clicks
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const targetCat = tab.getAttribute('data-category-tab') || 'all';
+      activeCategory = targetCat;
+
+      // Update styling
+      tabs.forEach((t) => {
+        const id = t.getAttribute('data-category-tab');
+        if (id === targetCat) {
+          t.className = 'category-tab inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer bg-accent text-white shadow-md shadow-accent/15';
+          const span = t.querySelector('span');
+          if (span) span.className = 'text-[10px] px-2 py-0.5 rounded-full font-bold bg-white/20 text-white';
+        } else {
+          t.className = 'category-tab inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer bg-card text-muted border border-border/80 hover:text-text hover:border-accent/30';
+          const span = t.querySelector('span');
+          if (span) span.className = 'text-[10px] px-2 py-0.5 rounded-full font-bold bg-bg text-muted';
+        }
+      });
+
+      filter();
+    });
+  });
+
+  // Handle Search Input
+  searchInput?.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    searchQuery = target.value.trim().toLowerCase();
+    filter();
+  });
+</script>

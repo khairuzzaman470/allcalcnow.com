@@ -1,0 +1,735 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'cc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+/** Major currencies shown in dropdowns (30+) */
+const currencies = [
+  { code: 'USD', name: 'US Dollar', symbol: '$' },
+  { code: 'EUR', name: 'Euro', symbol: '€' },
+  { code: 'GBP', name: 'British Pound', symbol: '£' },
+  { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+  { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF' },
+  { code: 'CAD', name: 'Canadian Dollar', symbol: 'CA$' },
+  { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+  { code: 'NZD', name: 'New Zealand Dollar', symbol: 'NZ$' },
+  { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
+  { code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+  { code: 'MXN', name: 'Mexican Peso', symbol: 'MX$' },
+  { code: 'BRL', name: 'Brazilian Real', symbol: 'R$' },
+  { code: 'KRW', name: 'South Korean Won', symbol: '₩' },
+  { code: 'SGD', name: 'Singapore Dollar', symbol: 'S$' },
+  { code: 'HKD', name: 'Hong Kong Dollar', symbol: 'HK$' },
+  { code: 'NOK', name: 'Norwegian Krone', symbol: 'kr' },
+  { code: 'SEK', name: 'Swedish Krona', symbol: 'kr' },
+  { code: 'DKK', name: 'Danish Krone', symbol: 'kr' },
+  { code: 'PLN', name: 'Polish Złoty', symbol: 'zł' },
+  { code: 'ZAR', name: 'South African Rand', symbol: 'R' },
+  { code: 'THB', name: 'Thai Baht', symbol: '฿' },
+  { code: 'TRY', name: 'Turkish Lira', symbol: '₺' },
+  { code: 'AED', name: 'UAE Dirham', symbol: 'د.إ' },
+  { code: 'SAR', name: 'Saudi Riyal', symbol: '﷼' },
+  { code: 'PHP', name: 'Philippine Peso', symbol: '₱' },
+  { code: 'IDR', name: 'Indonesian Rupiah', symbol: 'Rp' },
+  { code: 'MYR', name: 'Malaysian Ringgit', symbol: 'RM' },
+  { code: 'VND', name: 'Vietnamese Dong', symbol: '₫' },
+  { code: 'RUB', name: 'Russian Ruble', symbol: '₽' },
+  { code: 'ILS', name: 'Israeli Shekel', symbol: '₪' },
+  { code: 'CLP', name: 'Chilean Peso', symbol: 'CL$' },
+  { code: 'ARS', name: 'Argentine Peso', symbol: 'AR$' },
+  { code: 'COP', name: 'Colombian Peso', symbol: 'CO$' },
+  { code: 'PEN', name: 'Peruvian Sol', symbol: 'S/' },
+  { code: 'EGP', name: 'Egyptian Pound', symbol: 'E£' },
+  { code: 'NGN', name: 'Nigerian Naira', symbol: '₦' },
+  { code: 'PKR', name: 'Pakistani Rupee', symbol: '₨' },
+  { code: 'BDT', name: 'Bangladeshi Taka', symbol: '৳' },
+  { code: 'RON', name: 'Romanian Leu', symbol: 'lei' },
+  { code: 'CZK', name: 'Czech Koruna', symbol: 'Kč' },
+  { code: 'HUF', name: 'Hungarian Forint', symbol: 'Ft' },
+];
+
+const popularPairs = [
+  { from: 'USD', to: 'EUR', label: 'USD → EUR' },
+  { from: 'USD', to: 'GBP', label: 'USD → GBP' },
+  { from: 'USD', to: 'JPY', label: 'USD → JPY' },
+  { from: 'EUR', to: 'GBP', label: 'EUR → GBP' },
+  { from: 'GBP', to: 'INR', label: 'GBP → INR' },
+];
+
+const relatedTools = [
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
+  { name: 'Loan Calculator', icon: '💰', description: 'Monthly EMI and total interest for any loan', href: '/loan-calculator' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/currency-converter';
+const pageTitle = 'Currency Converter — Live Exchange Rates | AllCalcNow';
+const pageDescription =
+  'Free currency converter at AllCalcNow with live exchange rates. Convert between USD, GBP, EUR, JPY and 30+ currencies instantly.';
+
+const faqs = [
+  {
+    question: 'What is a currency exchange rate?',
+    answer:
+      'An exchange rate is the price of one currency expressed in another. If 1 USD = 0.92 EUR, the USD/EUR rate is 0.92. Rates reflect supply and demand in forex markets, central bank policy, inflation, and economic outlook. This converter uses live mid-market style rates for reference—not necessarily the rate you receive at a bank or airport kiosk.',
+  },
+  {
+    question: 'Why do exchange rates change every day?',
+    answer:
+      'Currencies trade around the clock on global markets. News, interest rate decisions, trade balances, and risk sentiment shift demand for each currency, so prices move continuously. Retail rates you see online or at bureaux de change lag slightly and include a spread or fee on top of the interbank reference rate.',
+  },
+  {
+    question: 'What is the strongest currency in the world?',
+    answer:
+      '“Strongest” often means highest value per unit versus others (e.g. Kuwaiti dinar, Bahraini dinar) or a currency that holds purchasing power over time. Strength is not the same as economic size—the US dollar is the main reserve currency and widely used in trade, while the euro and yen are also major benchmarks. Rankings change with market conditions.',
+  },
+  {
+    question: 'How do I get the best exchange rate when travelling?',
+    answer:
+      'Compare rates before you go: cards with low foreign transaction fees often beat airport counters. Withdraw local cash from ATMs in-country when fees are reasonable. Avoid dynamic currency conversion (paying in your home currency abroad)—choose local currency instead. For large sums, specialist forex providers or banks may beat generic kiosks.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Currency Converter', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Currency Converter', '/currency-converter', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+
+/** Server-side fetch at build/dev — works when browser fetch is blocked */
+async function fetchRatesServer(): Promise<{ rates: Record<string, number>; updated: string } | null> {
+  const sources = [
+    async () => {
+      const res = await fetch('https://open.er-api.com/v6/latest/USD');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (data.result === 'success' && data.conversion_rates) {
+        return { rates: data.conversion_rates, updated: data.time_last_update_utc || '' };
+      }
+      throw new Error('Invalid ExchangeRate-API response');
+    },
+    async () => {
+      const res = await fetch('https://api.frankfurter.app/latest?from=USD');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (data.rates) {
+        return {
+          rates: { USD: 1, ...data.rates },
+          updated: data.date ? `${data.date} (Frankfurter / ECB)` : '',
+        };
+      }
+      throw new Error('Invalid Frankfurter response');
+    },
+  ];
+
+  for (const load of sources) {
+    try {
+      return await load();
+    } catch {
+      /* try next source */
+    }
+  }
+  return null;
+}
+
+const preloaded = await fetchRatesServer();
+const initialRates = preloaded?.rates ?? null;
+const initialUpdated = preloaded?.updated ?? '';
+const hasPreloadedRates = initialRates !== null;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/currency-converter"
+  schemas={schemas}
+>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Currency Converter' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Forex
+      </span>
+      <p class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Currency Converter</p>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Convert between USD, GBP, EUR, JPY, and 30+ currencies using live exchange rates.
+      </p>
+    </header>
+
+    <div id="rates-status" class="mt-6 rounded-xl border border-border/80 bg-bg/60 px-4 py-3 text-sm text-muted" role="status">
+      <span id="rates-status-text">
+        {hasPreloadedRates
+          ? `Rates loaded. Last updated: ${initialUpdated}. Refreshing…`
+          : 'Loading live rates…'}
+      </span>
+    </div>
+
+    <div class="mt-4 flex flex-wrap gap-2" aria-label="Popular currency pairs">
+      {
+        popularPairs.map((pair) => (
+          <button
+            type="button"
+            class="pair-btn rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-text transition-colors hover:border-accent/40 hover:bg-accent/5"
+            data-from={pair.from}
+            data-to={pair.to}
+          >
+            {pair.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 grid gap-6 xl:grid-cols-12 xl:items-start">
+      <section
+        class="xl:col-span-5 rounded-2xl border border-border/80 bg-card p-6 shadow-[0_4px_24px_-4px_rgba(26,24,20,0.08)] sm:p-8"
+        aria-label="Currency conversion inputs"
+      >
+        <h2 class="text-lg font-bold text-text">Convert</h2>
+        <p class="mt-1 text-sm text-muted">Search currencies by code or name.</p>
+
+        <form id="currency-form" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="amount" class={labelClass}>Amount</label>
+            <input type="number" id="amount" value="1" min="0" step="any" class={inputClass} />
+          </div>
+
+          <div class="cc-combobox" data-role="from">
+            <label class={labelClass} for="from-search">From</label>
+            <div class="relative">
+              <input
+                type="text"
+                id="from-search"
+                class={`${inputClass} pr-10`}
+                placeholder="Search currency…"
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="from-listbox"
+                aria-expanded="false"
+              />
+              <input type="hidden" id="from-code" value="USD" />
+              <ul
+                id="from-listbox"
+                class="cc-listbox absolute z-20 mt-1 hidden max-h-48 w-full overflow-auto rounded-xl border border-border bg-card py-1 shadow-lg"
+                role="listbox"
+              ></ul>
+            </div>
+          </div>
+
+          <div class="flex justify-center">
+            <button
+              type="button"
+              id="btn-swap"
+              class="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-bg text-lg font-bold text-text transition-all hover:border-accent hover:bg-accent/10 hover:text-accent"
+              aria-label="Swap currencies"
+              title="Swap currencies"
+            >
+              ⇅
+            </button>
+          </div>
+
+          <div class="cc-combobox" data-role="to">
+            <label class={labelClass} for="to-search">To</label>
+            <div class="relative">
+              <input
+                type="text"
+                id="to-search"
+                class={`${inputClass} pr-10`}
+                placeholder="Search currency…"
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="to-listbox"
+                aria-expanded="false"
+              />
+              <input type="hidden" id="to-code" value="EUR" />
+              <ul
+                id="to-listbox"
+                class="cc-listbox absolute z-20 mt-1 hidden max-h-48 w-full overflow-auto rounded-xl border border-border bg-card py-1 shadow-lg"
+                role="listbox"
+              ></ul>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            id="btn-convert"
+            class="w-full rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!hasPreloadedRates}
+          >
+            Convert
+          </button>
+        </form>
+
+        <p class="mt-4 text-center text-xs text-muted">
+          <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+            Rates by Exchange Rate API
+          </a>
+        </p>
+      </section>
+
+      <section id="currency-results" class="space-y-5 xl:col-span-7" aria-label="Conversion results">
+        <div class="overflow-hidden rounded-2xl bg-navy text-white shadow-[0_8px_32px_-8px_rgba(26,24,20,0.35)]">
+          <div class="px-6 py-6 sm:px-8 sm:py-8">
+            <p id="result-label" class="text-xs font-semibold uppercase tracking-widest text-white/60">Converted amount</p>
+            <p id="result-amount" class="mt-2 font-heading text-4xl font-bold tracking-tight sm:text-5xl">—</p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:p-6">
+          <h3 class="text-sm font-bold text-text">Exchange rates</h3>
+          <dl class="mt-4 space-y-3">
+            <div class="rounded-lg bg-bg/60 px-4 py-3">
+              <dt class="text-xs font-medium text-muted">Direct rate</dt>
+              <dd id="rate-direct" class="mt-1 text-base font-semibold tabular-nums text-text">—</dd>
+            </div>
+            <div class="rounded-lg bg-bg/60 px-4 py-3">
+              <dt class="text-xs font-medium text-muted">Inverse rate</dt>
+              <dd id="rate-inverse" class="mt-1 text-base font-semibold tabular-nums text-text">—</dd>
+            </div>
+            <div class="rounded-lg bg-bg/60 px-4 py-3">
+              <dt class="text-xs font-medium text-muted">Last updated</dt>
+              <dd id="rate-updated" class="mt-1 text-sm tabular-nums text-muted">—</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+    </div>
+
+    <article
+      class="seo-content mt-14 max-w-3xl border-t border-border pt-10"
+      itemscope
+      itemtype="https://schema.org/Article"
+    >
+      <meta itemprop="headline" content="Currency Converter — Live Exchange Rates" />
+      <meta itemprop="description" content={pageDescription} />
+
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Currency Converter</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        A <strong class="font-semibold text-text">free currency converter</strong> with
+        <strong class="font-semibold text-text">live exchange rates</strong> helps you compare values across borders
+        before you travel, shop online, or send money abroad. Enter an amount, choose from and to currencies from more
+        than thirty majors, and see the converted total instantly—plus the direct and inverse rates and when data was
+        last updated. Rates are loaded from ExchangeRate-API on page load and refresh daily on the free tier.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-exchange-rates-work" class="text-accent hover:underline">How Exchange Rates Work</a></li>
+          <li><a href="#major-currencies" class="text-accent hover:underline">Major World Currencies Explained</a></li>
+          <li><a href="#best-exchange-rate-tips" class="text-accent hover:underline">Tips for Getting the Best Exchange Rate</a></li>
+          <li><a href="#currency-converter-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-exchange-rates-work" class="mt-10 scroll-mt-24" aria-labelledby="heading-how-rates">
+        <h2 id="heading-how-rates" class="font-heading text-xl font-bold text-text">How Exchange Rates Work</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Currencies trade in pairs: the <strong class="font-semibold text-text">exchange rate</strong> tells you how much
+          of one currency you need to buy one unit of another. If 1 USD = 0.92 EUR, converting $100 yields €92 before fees.
+          Our tool fetches reference rates with USD as the base, then computes cross-rates so any pair (e.g. GBP to INR)
+          uses the same live data.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Retail banks, card networks, and airport desks add a <strong class="font-semibold text-text">spread</strong> or
+          markup, so the number you pay may differ from the mid-market rate shown here. Use this converter for planning and
+          comparison; confirm final amounts with your provider before large transfers.
+        </p>
+      </section>
+
+      <section id="major-currencies" class="mt-10 scroll-mt-24" aria-labelledby="heading-major">
+        <h2 id="heading-major" class="font-heading text-xl font-bold text-text">Major World Currencies Explained</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          The <strong class="font-semibold text-text">US dollar (USD)</strong> is the world’s primary reserve currency and
+          appears in most commodity pricing. The <strong class="font-semibold text-text">euro (EUR)</strong> is used by twenty
+          eurozone countries. The <strong class="font-semibold text-text">British pound (GBP)</strong>, <strong class="font-semibold text-text">Japanese yen (JPY)</strong>,
+          and <strong class="font-semibold text-text">Swiss franc (CHF)</strong> are other heavily traded units. Emerging-market
+          currencies such as <strong class="font-semibold text-text">INR</strong>, <strong class="font-semibold text-text">BRL</strong>,
+          and <strong class="font-semibold text-text">MXN</strong> can be more volatile, reflecting local inflation and capital flows.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Quick-select buttons above the tool cover popular routes like USD→EUR and GBP→INR. Search the dropdown by code
+          (e.g. “SGD”) or country name (“Singapore”) to switch pairs fast.
+        </p>
+      </section>
+
+      <section id="best-exchange-rate-tips" class="mt-10 scroll-mt-24" aria-labelledby="heading-tips">
+        <h2 id="heading-tips" class="font-heading text-xl font-bold text-text">Tips for Getting the Best Exchange Rate</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Compare total cost including fees, not just the headline rate. Credit and debit cards often use network rates
+          plus a foreign transaction fee—sometimes cheaper than cash kiosks. For recurring conversions, specialist
+          money-transfer apps may beat high-street banks. Avoid paying in your home currency when abroad (dynamic currency
+          conversion); merchants may add hidden markups.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Track rates over a few days if timing is flexible; large moves often follow central bank announcements. Pair this
+          tool with our <a href="/vat-calculator" class="font-semibold text-accent hover:underline">VAT calculator</a> for
+          tax-inclusive prices in Europe, or the <a href="/loan-calculator" class="font-semibold text-accent hover:underline">loan calculator</a>
+          for borrowing costs in any currency you earn.
+        </p>
+      </section>
+
+      <section id="currency-converter-faq" class="mt-10 scroll-mt-24" aria-labelledby="heading-faq">
+        <h2 id="heading-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <p class="mt-2 text-sm text-muted">Rates, daily changes, strong currencies, and travel tips.</p>
+
+        <div class="mt-6 space-y-4">
+          {
+            faqs.map((faq, i) => (
+              <details
+                class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20"
+                id={`faq-${i + 1}`}
+                open={i === 0}
+              >
+                <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex items-center justify-between gap-3">
+                    {faq.question}
+                    <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </span>
+                </summary>
+                <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                  <p class="leading-relaxed text-muted">{faq.answer}</p>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Exchange rates are indicative and may not match bank or card rates.
+        Not financial advice.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ currencies, initialRates, initialUpdated, hasPreloadedRates }}>
+  const isLocalDev =
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_SOURCES = [
+    ...(isLocalDev ? [{ url: '/api/exchange-rates', type: 'er-api' }] : []),
+    { url: 'https://open.er-api.com/v6/latest/USD', type: 'er-api' },
+    { url: 'https://api.frankfurter.app/latest?from=USD', type: 'frankfurter' },
+  ];
+
+  const form = document.getElementById('currency-form');
+  const amountEl = document.getElementById('amount');
+  const fromCodeEl = document.getElementById('from-code');
+  const toCodeEl = document.getElementById('to-code');
+  const fromSearchEl = document.getElementById('from-search');
+  const toSearchEl = document.getElementById('to-search');
+  const fromListbox = document.getElementById('from-listbox');
+  const toListbox = document.getElementById('to-listbox');
+  const btnSwap = document.getElementById('btn-swap');
+  const btnConvert = document.getElementById('btn-convert');
+  const ratesStatus = document.getElementById('rates-status');
+  const ratesStatusText = document.getElementById('rates-status-text');
+  const resultLabel = document.getElementById('result-label');
+  const resultAmount = document.getElementById('result-amount');
+  const rateDirect = document.getElementById('rate-direct');
+  const rateInverse = document.getElementById('rate-inverse');
+  const rateUpdated = document.getElementById('rate-updated');
+
+  let rates = initialRates;
+  let lastUpdatedUtc = initialUpdated || '';
+
+  const currencyByCode = Object.fromEntries(currencies.map((c) => [c.code, c]));
+
+  function labelFor(code) {
+    const c = currencyByCode[code];
+    return c ? `${c.code} — ${c.name}` : code;
+  }
+
+  function formatAmount(value, code) {
+    try {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: code,
+        minimumFractionDigits: code === 'JPY' || code === 'KRW' || code === 'VND' ? 0 : 2,
+        maximumFractionDigits: code === 'JPY' || code === 'KRW' || code === 'VND' ? 0 : 2,
+      }).format(value);
+    } catch {
+      return `${value.toFixed(2)} ${code}`;
+    }
+  }
+
+  function formatRate(value) {
+    if (value >= 100) return value.toFixed(2);
+    if (value >= 1) return value.toFixed(4);
+    return value.toFixed(6);
+  }
+
+  function setStatus(type, message) {
+    if (!ratesStatus || !ratesStatusText) return;
+    ratesStatusText.textContent = message;
+    ratesStatus.className =
+      'mt-6 rounded-xl border px-4 py-3 text-sm ' +
+      (type === 'error'
+        ? 'border-accent/30 bg-accent/5 text-accent'
+        : type === 'success'
+          ? 'border-border/80 bg-bg/60 text-muted'
+          : 'border-border/80 bg-bg/60 text-muted');
+  }
+
+  function convertAmount(amount, from, to) {
+    if (!rates || !rates[from] || !rates[to]) return null;
+    return amount * (rates[to] / rates[from]);
+  }
+
+  function getCrossRate(from, to) {
+    if (!rates || !rates[from] || !rates[to]) return null;
+    return rates[to] / rates[from];
+  }
+
+  function renderListbox(listEl, filter, selectedCode) {
+    if (!listEl) return;
+    const q = (filter || '').toLowerCase().trim();
+    const items = currencies.filter(
+      (c) =>
+        !q ||
+        c.code.toLowerCase().includes(q) ||
+        c.name.toLowerCase().includes(q)
+    );
+    listEl.innerHTML = items
+      .map(
+        (c) =>
+          `<li role="option" data-code="${c.code}" class="cc-option cursor-pointer px-4 py-2 text-sm ${c.code === selectedCode ? 'bg-accent/10 font-semibold text-accent' : 'text-text hover:bg-bg'}">${c.code} — ${c.name}</li>`
+      )
+      .join('');
+  }
+
+  function setupCombobox(searchEl, listEl, codeEl, role) {
+    if (!searchEl || !listEl || !codeEl) return;
+
+    const open = () => {
+      renderListbox(listEl, searchEl.value, codeEl.value);
+      listEl.classList.remove('hidden');
+      searchEl.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      listEl.classList.add('hidden');
+      searchEl.setAttribute('aria-expanded', 'false');
+      const c = currencyByCode[codeEl.value];
+      if (c) searchEl.value = `${c.code} — ${c.name}`;
+    };
+
+    searchEl.addEventListener('focus', open);
+    searchEl.addEventListener('input', () => {
+      open();
+      const q = searchEl.value.toLowerCase();
+      const exact = currencies.find(
+        (c) => c.code.toLowerCase() === q || `${c.code} — ${c.name}`.toLowerCase() === q
+      );
+      if (exact) codeEl.value = exact.code;
+    });
+
+    listEl.addEventListener('click', (e) => {
+      const li = e.target.closest('[data-code]');
+      if (!li) return;
+      codeEl.value = li.getAttribute('data-code');
+      close();
+      convert();
+    });
+
+    searchEl.addEventListener('blur', () => {
+      setTimeout(close, 150);
+    });
+
+    searchEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  }
+
+  function convert() {
+    if (!rates) return;
+
+    const amount = parseFloat(amountEl?.value || '0');
+    const from = fromCodeEl?.value || 'USD';
+    const to = toCodeEl?.value || 'EUR';
+
+    if (Number.isNaN(amount) || amount < 0) {
+      setStatus('error', 'Please enter a valid amount.');
+      return;
+    }
+    if (from === to) {
+      if (resultAmount) resultAmount.textContent = formatAmount(amount, to);
+      if (rateDirect) rateDirect.textContent = `1 ${from} = 1 ${to}`;
+      if (rateInverse) rateInverse.textContent = `1 ${to} = 1 ${from}`;
+      return;
+    }
+
+    const converted = convertAmount(amount, from, to);
+    const cross = getCrossRate(from, to);
+    const inv = getCrossRate(to, from);
+
+    if (converted == null || cross == null) {
+      setStatus('error', `Rate unavailable for ${from} or ${to}. Try another pair.`);
+      return;
+    }
+
+    if (resultLabel) resultLabel.textContent = `${amount} ${from} equals`;
+    if (resultAmount) resultAmount.textContent = formatAmount(converted, to);
+    if (rateDirect) rateDirect.textContent = `1 ${from} = ${formatRate(cross)} ${to}`;
+    if (rateInverse) rateInverse.textContent = `1 ${to} = ${formatRate(inv)} ${from}`;
+    if (rateUpdated && lastUpdatedUtc) rateUpdated.textContent = lastUpdatedUtc;
+  }
+
+  function parseRateResponse(data, type) {
+    if (type === 'er-api') {
+      if (data.result === 'success' && data.conversion_rates) {
+        return {
+          rates: data.conversion_rates,
+          updated: data.time_last_update_utc || new Date().toUTCString(),
+        };
+      }
+      throw new Error(data['error-type'] || 'ExchangeRate-API error');
+    }
+    if (type === 'frankfurter' && data.rates) {
+      return {
+        rates: { USD: 1, ...data.rates },
+        updated: data.date ? `${data.date} (Frankfurter / ECB)` : new Date().toUTCString(),
+      };
+    }
+    throw new Error('Unrecognized rate format');
+  }
+
+  async function fetchFromSource(source) {
+    const res = await fetch(source.url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return parseRateResponse(data, source.type);
+  }
+
+  async function fetchRates() {
+    const hadRates = rates !== null;
+    if (!hadRates) {
+      setStatus('loading', 'Loading live rates…');
+      if (btnConvert) btnConvert.disabled = true;
+    }
+
+    let lastError = null;
+    for (const source of API_SOURCES) {
+      try {
+        const result = await fetchFromSource(source);
+        rates = result.rates;
+        lastUpdatedUtc = result.updated;
+
+        setStatus('success', `Live rates loaded. Last updated: ${lastUpdatedUtc}`);
+        if (btnConvert) btnConvert.disabled = false;
+        if (rateUpdated) rateUpdated.textContent = lastUpdatedUtc;
+        convert();
+        return;
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    if (rates) {
+      setStatus(
+        'success',
+        `Using cached rates (last updated: ${lastUpdatedUtc}). Live refresh failed—click Retry.`
+      );
+      if (btnConvert) btnConvert.disabled = false;
+      convert();
+      if (ratesStatusText) {
+        ratesStatusText.innerHTML = `${ratesStatusText.textContent} <button type="button" id="btn-retry" class="font-semibold text-accent underline">Retry</button>`;
+        document.getElementById('btn-retry')?.addEventListener('click', fetchRates);
+      }
+      return;
+    }
+
+    console.error('Currency rates fetch failed:', lastError);
+    setStatus('error', 'Could not load exchange rates. Check your connection and try again.');
+    if (ratesStatusText) {
+      ratesStatusText.innerHTML =
+        'Could not load live rates. <button type="button" id="btn-retry" class="font-semibold text-accent underline">Retry</button>';
+      document.getElementById('btn-retry')?.addEventListener('click', fetchRates);
+    }
+  }
+
+  btnSwap?.addEventListener('click', () => {
+    const f = fromCodeEl?.value;
+    const t = toCodeEl?.value;
+    if (fromCodeEl) fromCodeEl.value = t;
+    if (toCodeEl) toCodeEl.value = f;
+    if (fromSearchEl) fromSearchEl.value = labelFor(t);
+    if (toSearchEl) toSearchEl.value = labelFor(f);
+    convert();
+  });
+
+  document.querySelectorAll('.pair-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const from = btn.getAttribute('data-from');
+      const to = btn.getAttribute('data-to');
+      if (from && fromCodeEl) fromCodeEl.value = from;
+      if (to && toCodeEl) toCodeEl.value = to;
+      if (fromSearchEl) fromSearchEl.value = labelFor(from);
+      if (toSearchEl) toSearchEl.value = labelFor(to);
+      convert();
+    });
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    convert();
+  });
+
+  amountEl?.addEventListener('input', convert);
+  fromCodeEl?.addEventListener('change', convert);
+  toCodeEl?.addEventListener('change', convert);
+
+  setupCombobox(fromSearchEl, fromListbox, fromCodeEl, 'from');
+  setupCombobox(toSearchEl, toListbox, toCodeEl, 'to');
+
+  if (fromSearchEl) fromSearchEl.value = labelFor('USD');
+  if (toSearchEl) toSearchEl.value = labelFor('EUR');
+
+  if (hasPreloadedRates && rates) {
+    if (btnConvert) btnConvert.disabled = false;
+    if (rateUpdated) rateUpdated.textContent = lastUpdatedUtc;
+    convert();
+  }
+
+  fetchRates();
+</script>
+
+<style>
+  .cc-listbox .cc-option:focus {
+    outline: none;
+    background: color-mix(in srgb, var(--color-accent) 12%, white);
+  }
+  .pair-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
