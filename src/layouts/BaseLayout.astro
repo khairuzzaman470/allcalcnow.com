@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+// Note: Astro <script> blocks compile to type="module" which is deferred by default.
+// No DOMContentLoaded wrapping needed — the browser already defers them safely.
 
 interface Props {
   title: string;
@@ -21,13 +23,92 @@ const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- CRITICAL CSS: inlined so first paint needs zero external round-trips -->
+    <style>
+      /* Design tokens used above the fold */
+      :root {
+        --color-navy: #1a1814;
+        --color-bg: #f7f5f0;
+        --color-accent: #e8552c;
+        --color-text: #1a1814;
+        --color-muted: #7a7670;
+        --color-border: #e4e0d8;
+        --font-base: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      }
+      /* Box-sizing reset */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      /* Body shell */
+      html { scroll-behavior: smooth; }
+      body {
+        display: flex;
+        min-height: 100svh;
+        flex-direction: column;
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-base);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Header */
+      header { background-color: var(--color-navy); color: #fff; }
+      /* Header inner container */
+      .site-header-inner {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 72rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      @media (min-width: 640px)  { .site-header-inner { padding: 1rem 1.5rem; } }
+      @media (min-width: 1024px) { .site-header-inner { padding: 1rem 2rem; } }
+      /* Logo */
+      .site-logo {
+        font-family: var(--font-base);
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: #fff;
+        text-decoration: none;
+      }
+      @media (min-width: 640px) { .site-logo { font-size: 1.5rem; } }
+      .site-logo .logo-accent { color: var(--color-accent); }
+      /* Nav */
+      .site-nav { display: flex; align-items: center; gap: 1.5rem; font-size: 0.875rem; }
+      .site-nav a { color: rgba(255,255,255,0.8); text-decoration: none; }
+      .site-nav a.active { color: var(--color-accent); font-weight: 600; }
+      /* Main flex-grow */
+      main { flex: 1 1 0%; }
+      /* Prevent FOUT layout shift */
+      h1, h2, h3, h4 { font-family: var(--font-base); }
+    </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- DNS prefetch for external domains -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://open.er-api.com" />
+    <!-- Preconnect for Google Fonts (critical path) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Async font loading: preload → swap to stylesheet on load; noscript fallback -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      />
+    </noscript>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
@@ -48,31 +129,30 @@ const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
       ))
     }
-    <!-- Google Analytics — G-N03GK8RZF1 -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N03GK8RZF1"></script>
-    <script is:inline>
+    <!-- Google Analytics — G-N03GK8RZF1 (loaded after page render via defer) -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-N03GK8RZF1"></script>
+    <script defer is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-N03GK8RZF1');
     </script>
   </head>
-  <body class="flex min-h-screen flex-col">
-    <header class="bg-navy text-white">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <a href="/" class="font-heading text-xl font-bold tracking-tight hover:opacity-90 sm:text-2xl">
-          <span class="text-accent">All</span>CalcNow
+  <body>
+    <header>
+      <div class="site-header-inner">
+        <a href="/" class="site-logo hover:opacity-90">
+          <span class="logo-accent">All</span>CalcNow
         </a>
-        <nav class="flex items-center gap-6 text-sm" aria-label="Main">
+        <nav class="site-nav" aria-label="Main">
           {
             (() => {
               const normalizedPath = Astro.url.pathname.replace(/\/$/, '') || '/';
               return (
                 <>
-                  <a href="/" class={normalizedPath === '/' ? "text-accent font-semibold" : "text-white/80 transition-colors hover:text-white"}>All Calculators</a>
-                  <a href="/about" class={normalizedPath === '/about' ? "text-accent font-semibold" : "text-white/80 transition-colors hover:text-white"}>About</a>
-                  <a href="/contact" class={normalizedPath === '/contact' ? "text-accent font-semibold" : "text-white/80 transition-colors hover:text-white"}>Contact</a>
+                  <a href="/" class={normalizedPath === '/' ? 'active' : ''}>All Calculators</a>
+                  <a href="/about" class={normalizedPath === '/about' ? 'active' : ''}>About</a>
+                  <a href="/contact" class={normalizedPath === '/contact' ? 'active' : ''}>Contact</a>
                 </>
               );
             })()
@@ -80,7 +160,7 @@ const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
         </nav>
       </div>
     </header>
-    <main class="flex-1">
+    <main>
       <slot />
     </main>
     <footer class="border-t border-border bg-navy text-white/70">

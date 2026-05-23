@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Ensure custom fonts use swap so text is visible while fonts load */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: local('Plus Jakarta Sans');
+}
+
 @theme {
   --color-navy: #1a1814;
   --color-bg: #f7f5f0;
