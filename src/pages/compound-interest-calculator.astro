@@ -32,22 +32,32 @@ const faqs = [
   {
     question: 'What is compound interest in simple terms?',
     answer:
-      'Compound interest means you earn interest on your interest. Each period, interest is calculated on the full balance—including what you deposited and interest already earned—so growth accelerates over time. Simple interest only pays on the original principal.',
+      'Compound interest means you earn interest on your interest. Each period, interest is calculated on the full balance—including what you deposited and all interest already earned—so growth accelerates over time. For example, if you invest $1,000 at 5% annually, you earn $50 in the first year. In the second year, interest is calculated on $1,050 instead of the original $1,000, earning you $52.50. This snowball effect becomes dramatically more powerful over decades. Simple interest, by contrast, always pays only on the original principal—so $1,000 at 5% simple interest earns exactly $50 every year, never more.',
   },
   {
     question: 'How often should interest compound for best results?',
     answer:
-      'More frequent compounding (daily or monthly) slightly increases returns versus annual compounding at the same stated annual rate, because interest is reinvested sooner. The biggest drivers are the rate, time, and how much you contribute—not compounding frequency alone.',
+      'More frequent compounding (daily or monthly) slightly increases returns versus annual compounding at the same stated annual rate, because interest is reinvested sooner. For example, $10,000 at 6% compounded annually yields $10,600 after one year, while the same rate compounded monthly yields about $10,617. Over 30 years, the difference becomes more meaningful. However, the biggest drivers of final balance are the interest rate, the length of time you stay invested, and how much you contribute regularly—not compounding frequency alone.',
   },
   {
     question: 'What is the Rule of 72?',
     answer:
-      'Divide 72 by your annual interest rate (as a whole number) to estimate years to double your money. At 8% per year, 72 ÷ 8 ≈ 9 years. It is a rough mental math shortcut, not exact, but useful for planning.',
+      'Divide 72 by your annual interest rate (as a whole number) to estimate the years needed to double your money. At 8% per year, 72 ÷ 8 ≈ 9 years to double. At 6%, it takes roughly 12 years. At 12%, about 6 years. It is a mental-math shortcut, not an exact formula, but it is surprisingly accurate for rates between 4% and 15%. For very high or very low rates, the Rule of 69.3 gives a slightly more precise estimate. Either way, these rules help you quickly compare investment options without reaching for a calculator.',
   },
   {
     question: 'Is compound interest good or bad for borrowers?',
     answer:
-      'For savers and investors, compounding works in your favor. For borrowers, compounding on unpaid credit card or loan interest works against you—balances grow faster. Paying on time and reducing principal limits the compounding effect on debt.',
+      'For savers and investors, compounding works in your favor—it is the engine behind long-term wealth building. For borrowers, however, compounding on unpaid credit card or loan interest works against you, because your outstanding balance grows faster when interest is charged on previously accrued interest. Credit cards often compound daily, which can cause balances to balloon rapidly if you carry a balance. Paying on time, making more than the minimum payment, and reducing principal limits the compounding effect on debt. Use our loan calculator to see exactly how compounding affects your specific debt.',
+  },
+  {
+    question: 'What is the difference between APR and APY?',
+    answer:
+      'APR (Annual Percentage Rate) is the stated yearly interest rate without accounting for compounding. APY (Annual Percentage Yield) includes the effect of compounding and reflects what you actually earn or owe over a year. For example, a savings account with 5% APR compounded monthly has an APY of about 5.12%. When comparing investment or savings products, APY gives you a more accurate picture of real returns. Banks are required to disclose APY on deposits and APR on loans so consumers can compare products fairly.',
+  },
+  {
+    question: 'How do monthly contributions affect compound growth?',
+    answer:
+      'Regular monthly contributions supercharge compound growth because each deposit starts earning interest immediately and compounds for the remaining investment period. Even small amounts add up dramatically over time. For instance, investing $200 per month at 7% for 30 years produces roughly $227,000—yet you only contributed $72,000 out of pocket. The remaining $155,000 is pure compound interest. This is why financial advisors emphasize consistent contributions to retirement accounts like 401(k)s and IRAs, even when the monthly amount feels modest.',
   },
 ];
 
@@ -211,13 +221,19 @@ const schemas = [
         <p class="mt-3 leading-relaxed text-muted">
           <strong class="font-semibold text-text">Compound interest</strong> is interest calculated on the initial
           principal plus all accumulated interest from prior periods. Each compounding event adds to your balance, so the
-          next period’s interest is computed on a larger amount. Over decades, that snowball effect is why starting early
+          next period's interest is computed on a larger amount. Over decades, that snowball effect is why starting early
           matters more than timing the market.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
           The formula for a lump sum with no contributions: <strong class="font-semibold text-text">A = P(1 + r/n)^(nt)</strong>,
           where P is principal, r is annual rate, n is compounds per year, and t is years. Monthly contributions add more
-          moving parts—our calculator simulates each period for accuracy.
+          moving parts—our calculator simulates each period for accuracy rather than using a simplified formula.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Albert Einstein reportedly called compound interest "the eighth wonder of the world." While the attribution is
+          debatable, the math is not. A $10,000 investment at 7% annual return grows to about $76,000 in 30 years without
+          any additional contributions—a 660% increase from compounding alone. Add regular monthly deposits and the result
+          becomes even more dramatic.
         </p>
       </section>
       <section id="power-of-compounding" class="mt-10 scroll-mt-24" aria-labelledby="h-power">
@@ -225,30 +241,51 @@ const schemas = [
         <p class="mt-3 leading-relaxed text-muted">
           <strong class="font-semibold text-text">Example 1:</strong> $10,000 at 7% compounded monthly for 10 years with no
           extra deposits grows to roughly $20,000—about $10,000 in interest. Add $200 every month and the final balance
-          jumps dramatically because each deposit also compounds.
+          jumps to roughly $54,000, because each deposit also compounds for the remainder of the 10-year period.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
           <strong class="font-semibold text-text">Example 2:</strong> Two investors save $300/month at 8%. One starts at
-          25 and stops at 35; the other starts at 35 and saves until 65. The early starter often ends with more despite
-          contributing for fewer years—time in the market beats amount alone.
+          25 and stops at 35 (10 years of contributions); the other starts at 35 and saves until 65 (30 years of contributions). The early starter often ends with more money despite
+          contributing for fewer years—this powerfully demonstrates that time in the market beats contribution amount alone.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Example 3:</strong> A high-yield savings account at 4.5% compounded daily
+          with $5,000 initial and $500/month contributions reaches about $68,000 in 8 years. Of that, roughly $8,000 is
+          interest. While savings account rates are lower than stock market averages, the compounding still makes a
+          meaningful difference compared to keeping cash under your mattress.
         </p>
       </section>
       <section id="compound-vs-simple" class="mt-10 scroll-mt-24" aria-labelledby="h-vs">
         <h2 id="h-vs" class="font-heading text-xl font-bold text-text">Compound Interest vs Simple Interest</h2>
         <p class="mt-3 leading-relaxed text-muted">
           <strong class="font-semibold text-text">Simple interest</strong> applies only to the original principal: $10,000
-          at 7% simple for 10 years earns $7,000 interest ($70,000 total). <strong class="font-semibold text-text">Compound
-          interest</strong> on the same terms earns more because year-two interest builds on year-one gains. Short-term
-          products sometimes quote simple rates; long-term savings almost always compound.
+          at 7% simple for 10 years earns $7,000 interest ($17,000 total). <strong class="font-semibold text-text">Compound
+          interest</strong> on the same terms earns more because year-two interest builds on year-one gains. After 10 years
+          of monthly compounding, the total reaches about $20,000—an extra $3,000 compared to simple interest.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Short-term financial products like Treasury bills and some personal loans sometimes quote simple rates. Long-term
+          savings accounts, CDs, bonds, and investment portfolios almost always use compound rates. Knowing the difference
+          prevents you from comparing apples to oranges when evaluating different financial products.
         </p>
       </section>
       <section id="maximize-growth" class="mt-10 scroll-mt-24" aria-labelledby="h-max">
         <h2 id="h-max" class="font-heading text-xl font-bold text-text">How to Maximize Your Compound Interest Growth</h2>
         <p class="mt-3 leading-relaxed text-muted">
           Start early, contribute consistently, and avoid withdrawing gains. Choose competitive annual yields (high-yield
-          savings, bonds, diversified funds—each with different risk). Reinvest dividends. Minimize fees that drag on net
-          returns. Use our <a href="/loan-calculator" class="font-semibold text-accent hover:underline">loan calculator</a>
-          to see how compounding works against you on high-interest debt.
+          savings, bonds, diversified index funds—each with different risk profiles). Reinvest dividends and capital gains
+          rather than cashing them out. Minimize management fees that drag on net returns over time.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Tax-advantaged accounts such as 401(k)s, IRAs, and Roth IRAs amplify compounding by deferring or eliminating
+          taxes on interest and gains. Automatic contributions remove the temptation to skip a month, and dollar-cost
+          averaging smooths out market volatility over time.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Use our <a href="/loan-calculator" class="font-semibold text-accent hover:underline">loan calculator</a>
+          to see how compounding works against you on high-interest debt, and our
+          <a href="/mortgage-calculator" class="font-semibold text-accent hover:underline">mortgage calculator</a>
+          to understand how amortization schedules interact with compound interest on home loans.
         </p>
       </section>
       <section id="compound-interest-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">

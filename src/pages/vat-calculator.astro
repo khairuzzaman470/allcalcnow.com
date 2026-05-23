@@ -35,22 +35,32 @@ const faqs = [
   {
     question: 'What is the standard VAT rate in the UK?',
     answer:
-      'The standard VAT rate in the United Kingdom is 20%. It applies to most goods and services unless a reduced rate, zero rate, or exemption applies. Always confirm the correct rate for your product category with HMRC guidance or your accountant.',
+      'The standard VAT rate in the United Kingdom is 20%. It applies to most goods and services unless a reduced rate (5%), zero rate (0%), or full exemption applies. The reduced rate covers items like home energy, child car seats, and certain renovations. Zero-rated goods include most food, children\'s clothing, and books. Always confirm the correct rate for your specific product category with HMRC guidance or your accountant, as the rules are detailed and regularly updated.',
   },
   {
     question: 'How do I add 20% VAT to a price?',
     answer:
-      'Multiply the net (ex-VAT) price by 1.20. For example, £100 net becomes £120 gross, with £20 VAT. Alternatively, divide the net amount by 100 and multiply by 20 to find the VAT portion, then add it to the net figure. Use the Add VAT mode on this calculator to do it instantly.',
+      'Multiply the net (ex-VAT) price by 1.20. For example, £100 net becomes £120 gross, with £20 VAT. Alternatively, divide the net amount by 100 and multiply by 20 to find the VAT portion, then add it to the net figure. This works the same for any VAT rate—just replace 20 with your rate and 1.20 with 1 plus your rate as a decimal. Use the Add VAT mode on this calculator to do it instantly without any manual math.',
   },
   {
     question: 'How do I remove VAT from a price?',
     answer:
-      'Divide the gross (inc-VAT) price by 1 plus the VAT rate as a decimal. For 20% VAT, divide by 1.20. A £120 gross price becomes £100 net with £20 VAT. Select Remove VAT on this page and enter your gross amount—the tool splits net and VAT automatically.',
+      'Divide the gross (inc-VAT) price by 1 plus the VAT rate as a decimal. For 20% VAT, divide by 1.20. A £120 gross price becomes £100 net with £20 VAT. A common mistake is subtracting 20% of the gross price, which gives the wrong answer (£120 minus 20% = £96, not £100). Always divide by 1.20 instead of subtracting 20%. Select Remove VAT on this page and enter your gross amount—the tool splits net and VAT automatically.',
   },
   {
     question: 'Which items are VAT exempt in the UK?',
     answer:
-      'Some supplies are outside the scope of VAT or exempt, including many education, health, insurance, and financial services, plus certain residential property transactions. Zero-rated items (0% VAT) still count as taxable supplies but at 0%—such as most food, children’s clothing, and books. Rules are detailed; check HMRC for your specific case.',
+      'Some supplies are outside the scope of VAT or exempt, including many education services, healthcare, insurance, financial services, and certain residential property transactions. Zero-rated items (0% VAT) still count as taxable supplies but at 0%—such as most unprocessed food, children\'s clothing, newspapers, and books. The distinction between exempt and zero-rated matters for businesses because zero-rated traders can still reclaim input VAT, while exempt traders cannot. Rules are detailed; check HMRC for your specific case.',
+  },
+  {
+    question: 'What is the difference between VAT and sales tax?',
+    answer:
+      'VAT (Value Added Tax) is collected at every stage of the supply chain, with each business paying VAT on its purchases and charging VAT on its sales. The difference is remitted to the tax authority. Sales tax, used in the US, is collected only at the final point of sale to the consumer. The economic effect is similar—the end consumer bears the cost—but VAT offers more audit trail and reduces tax evasion. Over 170 countries use VAT; the United States is one of the few major economies that does not.',
+  },
+  {
+    question: 'What is the VAT registration threshold in the UK?',
+    answer:
+      'As of 2024, businesses must register for VAT when their taxable turnover exceeds £90,000 in any rolling 12-month period (or if you expect to exceed it in the next 30 days). Once registered, you must charge VAT on your sales, file quarterly VAT returns, and can reclaim VAT on eligible business purchases. Some businesses choose to register voluntarily below the threshold to reclaim input VAT. Check the current threshold on the HMRC website, as it is reviewed periodically.',
   },
 ];
 

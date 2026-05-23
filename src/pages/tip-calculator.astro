@@ -31,22 +31,32 @@ const faqs = [
   {
     question: 'How much should I tip at a restaurant?',
     answer:
-      'In the United States, 15–20% of the pre-tax bill is standard for sit-down restaurants with table service. 18% is a common “good” default; 20% or more for outstanding service. Fast-casual with minimal service might be 10% or a few dollars. Counter-service cafes often use a tip jar only. Adjust for local norms when travelling.',
+      'In the United States, 15–20% of the pre-tax bill is standard for sit-down restaurants with table service. 18% is a common "good" default; 20% or more signals outstanding service. Fast-casual restaurants with minimal table service might warrant 10% or a few dollars. Counter-service cafes often use a tip jar only, where tipping is optional. When in doubt, 18–20% is a safe and generous choice that servers genuinely appreciate. Adjust for local norms when travelling internationally.',
   },
   {
     question: 'Should you tip on pre-tax or post-tax amount?',
     answer:
-      'Etiquette guides often recommend tipping on the pre-tax subtotal, since tax is not part of the service. Many people tip on the post-tax total for simplicity—the difference is usually small. This calculator uses the bill amount you enter; subtract tax first if you prefer pre-tax tipping.',
+      'Etiquette guides generally recommend tipping on the pre-tax subtotal, since sales tax is not part of the service you received. However, many diners tip on the post-tax total for simplicity—the difference is usually only a dollar or two on most bills. This calculator uses the bill amount you enter directly, so subtract tax beforehand if you prefer strict pre-tax tipping. Either approach is acceptable in casual dining; the most important thing is that you tip fairly for the service received.',
   },
   {
     question: 'Is it rude not to tip?',
     answer:
-      'It depends on country and context. In the US, restaurant servers are often paid a lower base wage with tips expected—skipping tip can feel rude after good service. In Japan or South Korea, tipping may be uncommon or awkward. In parts of Europe, service is sometimes included; a small extra tip for great service is still appreciated.',
+      'It depends heavily on the country and context. In the United States, restaurant servers are often paid a lower base wage (as low as $2.13/hour in some states) with the expectation that tips will make up the difference—so skipping the tip can be seen as rude, especially after good service. In Japan or South Korea, tipping is generally uncommon and may even be considered awkward. In much of Europe, a service charge is often included in the bill; a small extra tip for exceptional service is appreciated but not mandatory. Always research local customs before traveling.',
   },
   {
     question: 'How do I split a bill when people ordered different things?',
     answer:
-      'Fair splits: each person pays for their own items plus tax and tip on those items, or use separate checks. For shared appetizers or wine, split those evenly among who participated. When amounts are similar, splitting the total evenly (what this calculator does) is quick and social. For big disparities, itemized splits or payment apps with line items work better.',
+      'For truly fair splits, each person pays for their own items plus their proportional share of tax and tip. Alternatively, use separate checks if the restaurant allows it. For shared appetizers, bottles of wine, or desserts, split those costs evenly among the people who shared them. When everyone\'s orders are similar in price, splitting the total evenly (which is what this calculator does) is the quickest and most socially smooth approach. For large groups with very different orders, payment apps with itemized splitting features can help.',
+  },
+  {
+    question: 'How much should I tip for delivery or takeout?',
+    answer:
+      'For food delivery, 15–20% of the order total is standard in the US, with a minimum of $3–5 for small orders. Delivery drivers use their own vehicle and gas in many cases, so tipping is an important part of their compensation. For takeout (where you pick up the food yourself), tipping is optional but appreciated—typically 0–10%. If the restaurant staff went out of their way (e.g., packing a large catering order carefully), a higher tip is a kind gesture.',
+  },
+  {
+    question: 'Should I tip on top of an automatic gratuity?',
+    answer:
+      'Many restaurants add an automatic gratuity (usually 18–20%) for large parties of 6 or more. Check your bill carefully—if a gratuity is already included, you are not expected to tip again, although you can add a small extra amount for exceptional service. Some diners mistake the auto-gratuity line for a suggested tip and end up double-tipping. Always read the bill before adding more.',
   },
 ];
 
@@ -254,7 +264,14 @@ const schemas = [
         </p>
         <p class="mt-3 leading-relaxed text-muted">
           Tip on the amount you are comfortable with after discounts, and remember that many workers rely on tips as part
-          of their income. This tool lets you try percentages instantly before you tap “pay” on the terminal.
+          of their income. In the US, the federal tipped minimum wage is just $2.13/hour in some states, making tips
+          essential rather than optional for servers. This tool lets you try different percentages instantly before you
+          tap “pay” on the terminal.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          A quick mental shortcut: to calculate 20%, move the decimal point one place to the left (that gives you 10%),
+          then double it. For example, on a $45 bill: 10% = $4.50, doubled = $9.00 tip. For 15%, find 10% and add half
+          of it: $4.50 + $2.25 = $6.75.
         </p>
       </section>
 
@@ -264,14 +281,20 @@ const schemas = [
           <strong class="font-semibold text-text">United States &amp; Canada:</strong> tipping is expected in restaurants,
           bars, taxis, and hotels. <strong class="font-semibold text-text">United Kingdom &amp; Ireland:</strong> 10–12.5%
           is common when service is not included; check the receipt. <strong class="font-semibold text-text">France &
-          Italy:</strong> service may be included (“service compris”); rounding up or leaving small change is typical.
-          <strong class="font-semibold text-text">Japan:</strong> tipping is often declined—excellent service is standard.
-          <strong class="font-semibold text-text">Australia:</strong> tipping is optional, not obligatory.
+          Italy:</strong> service may be included ("service compris"); rounding up or leaving small change is typical.
+          <strong class="font-semibold text-text">Japan:</strong> tipping is often declined—excellent service is considered standard.
+          <strong class="font-semibold text-text">Australia:</strong> tipping is optional, not obligatory, though it is becoming
+          more common in upscale dining.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          When abroad, watch local customs rather than defaulting to US percentages. Our
+          <strong class="font-semibold text-text">Middle East &amp; South Asia:</strong> tipping practices vary widely.
+          In the UAE, a 10% service charge is often added to restaurant bills, but an additional small tip for
+          outstanding service is common. In India, 10% is a standard restaurant tip in urban areas.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          When abroad, observe local customs rather than defaulting to US percentages. Our
           <a href="/currency-converter" class="font-semibold text-amber-700 hover:underline">currency converter</a> helps
-          if you are splitting a bill in foreign cash.
+          if you are splitting a bill in foreign currency.
         </p>
       </section>
 
@@ -285,9 +308,14 @@ const schemas = [
         </p>
         <p class="mt-3 leading-relaxed text-muted">
           Enable <strong class="font-semibold text-text">round up per person</strong> when you want whole-dollar amounts;
-          the group may pay a few cents extra total, but nobody fumbles with change. For tax math on a subtotal, try the
+          the group may pay a few cents extra total, but nobody fumbles with change. This is especially useful when
+          sending payment via apps like Venmo, Zelle, or Cash App, where round numbers make the transaction cleaner.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          For tax math on a subtotal, try the
           <a href="/vat-calculator" class="font-semibold text-amber-700 hover:underline">VAT calculator</a> or
           <a href="/percentage-calculator" class="font-semibold text-amber-700 hover:underline">percentage calculator</a>.
+          Both tools complement this tip calculator for full meal-cost breakdowns.
         </p>
       </section>
 

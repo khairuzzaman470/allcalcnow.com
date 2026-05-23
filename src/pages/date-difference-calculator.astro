@@ -26,22 +26,32 @@ const faqs = [
   {
     question: 'How do I calculate days between two dates?',
     answer:
-      'Subtract the earlier date from the later date in calendar days. Our calculator counts the span from start to end (end exclusive by default for “days between,” or inclusive depending on convention—we use inclusive calendar-day counting for totals). You also get years, months, days breakdown, weeks, hours, and minutes.',
+      'Subtract the earlier date from the later date in calendar days. Our calculator counts the span from start to end using inclusive calendar-day counting for totals, meaning both the start date and the end date are included in the count. You also get a years-months-days breakdown computed with calendar arithmetic, total weeks (as a decimal), hours, and minutes. If you enter the end date before the start date, the tool swaps them automatically so you always get a positive result.',
   },
   {
     question: 'How many working days are in a year?',
     answer:
-      'A typical full year has 260–262 working days (Monday–Friday) in the US, depending on how weekends fall and whether public holidays are excluded. This tool counts weekdays between your two dates but does not subtract public holidays unless you adjust dates manually.',
+      'A typical full year has 260–262 working days (Monday through Friday) in the US, depending on how weekends fall in that particular year. Leap years with 366 days may have one extra working day compared to a standard 365-day year. This tool counts weekdays between your two dates but does not subtract public holidays, because holiday calendars differ by country, state, and employer. If your contract references specific holidays, subtract them manually from the working day count shown here.',
   },
   {
     question: 'How do I calculate someone\'s age from their birth date?',
     answer:
-      'Set start date to their birth date and end date to today. The years, months, and days breakdown is their age. For legal or medical precision, confirm timezone and whether the birthday has occurred this year—our calculator uses calendar dates in your local timezone.',
+      'Set the start date to their birth date and the end date to today. The years, months, and days breakdown shown is effectively their age. For legal or medical precision, confirm timezone and whether the birthday has occurred this year—our calculator uses calendar dates in your browser\'s local timezone. For a more detailed age breakdown including zodiac signs and a next-birthday countdown, try our dedicated age calculator page.',
   },
   {
     question: 'What is the difference between calendar and working day?',
     answer:
-      'Calendar days include every day (weekends and holidays). Working days (business days) usually mean Monday through Friday, excluding weekends. Deadlines like “10 business days” skip Saturdays and Sundays; “10 calendar days” does not.',
+      'Calendar days include every day—weekdays, weekends, and holidays alike. Working days (also called business days) usually mean Monday through Friday, excluding weekends. When a contract says "10 business days," it skips Saturdays and Sundays, so the actual elapsed calendar time is typically 14 days. When it says "10 calendar days," weekends are included and the deadline arrives sooner. Understanding this distinction matters for shipping estimates, legal notice periods, project timelines, and payroll calculations.',
+  },
+  {
+    question: 'Does this calculator account for daylight saving time?',
+    answer:
+      'The calculator works with calendar dates (midnight to midnight), not clock hours, so daylight saving time changes do not affect the day count. Whether clocks spring forward or fall back, a day is always counted as one full calendar day. This is the standard approach used in legal and business contexts where day counts matter more than exact hour counts.',
+  },
+  {
+    question: 'Can I use this to count down to a future event?',
+    answer:
+      'Yes. Set the start date to today and the end date to your future event—a wedding, vacation, product launch, or graduation. The total days result is your countdown. You can also use the quick-select buttons for common countdowns like "Days Until Christmas" or "Days Until New Year." The working days count tells you how many business days remain, which is helpful for project planning and deadline management.',
   },
 ];
 
@@ -163,38 +173,56 @@ const schemas = [
         <h2 id="h-count" class="font-heading text-xl font-bold text-text">How to Count Days Between Two Dates</h2>
         <p class="mt-3 leading-relaxed text-muted">
           Pick a <strong class="font-semibold text-text">start date</strong> and <strong class="font-semibold text-text">end date</strong>.
-          If the end is before the start, swap them automatically. Total days is the number of 24-hour periods between
-          midnight on the start and midnight on the end (inclusive of the start day in our display). Quick buttons set
-          common ranges like “since New Year” or “days until Christmas.”
+          If the end is before the start, the tool swaps them automatically so you always get a positive result. Total days is the number of 24-hour calendar periods between
+          midnight on the start and midnight on the end, inclusive of both the start and end dates in our display. Quick buttons set
+          common ranges like "since New Year" or "days until Christmas" with a single click.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          The years/months/days breakdown uses calendar arithmetic (not fixed 30-day months), so it matches how people
-          describe age and tenure.
+          The <strong class="font-semibold text-text">years-months-days breakdown</strong> uses calendar arithmetic rather than fixed 30-day months, so it matches how people
+          naturally describe age, tenure, and durations. For instance, the span from January 31 to March 1 is counted as 1 month
+          and 1 day (not 29 or 30 days divided by 30). This method is the same one used by HR departments, legal contracts, and
+          medical records when they need a human-readable date span.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          In addition to total days, the calculator converts your span into <strong class="font-semibold text-text">weeks</strong> (shown as a
+          decimal for precision), <strong class="font-semibold text-text">total hours</strong>, and <strong class="font-semibold text-text">total minutes</strong>.
+          These granular units are useful for billing, time tracking, or simply satisfying your curiosity about how much time separates two events.
         </p>
       </section>
       <section id="working-vs-calendar" class="mt-10 scroll-mt-24" aria-labelledby="h-working">
         <h2 id="h-working" class="font-heading text-xl font-bold text-text">Working Days vs Calendar Days Explained</h2>
         <p class="mt-3 leading-relaxed text-muted">
-          <strong class="font-semibold text-text">Calendar days</strong> count every day. <strong class="font-semibold text-text">Working
-          days</strong> here mean Monday through Friday—useful for SLA timelines, shipping estimates, and payroll. Public holidays
-          are not excluded; subtract them manually if your contract references a specific holiday calendar.
+          <strong class="font-semibold text-text">Calendar days</strong> count every single day in the range, including Saturdays, Sundays, and public holidays.
+          <strong class="font-semibold text-text">Working days</strong> (also known as business days) count only Monday through Friday—this is the figure that matters
+          for SLA timelines, shipping estimates, payroll calculations, and legal notice periods. Public holidays
+          are not excluded from the working day count on this tool; subtract them manually if your contract references a specific holiday calendar.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          <strong class="font-semibold text-text">Weekend days</strong> shows how many Saturdays and Sundays fall in the range—helpful
-          when planning events or understanding why working days are fewer than total days.
+          The <strong class="font-semibold text-text">weekend days</strong> counter shows how many Saturdays and Sundays fall in the range. This helps explain
+          the gap between total days and working days. For example, a 30-day range typically contains 8–10 weekend days,
+          leaving 20–22 working days. If you are planning events, staffing, or calculating overtime, knowing the exact
+          weekend count helps you budget time and resources more accurately.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Keep in mind that different countries and industries define "business day" differently. Some Middle Eastern countries
+          observe Friday and Saturday as the weekend instead of Saturday and Sunday. This calculator uses the Saturday-Sunday
+          weekend convention, which is standard in most Western countries.
         </p>
       </section>
       <section id="common-uses" class="mt-10 scroll-mt-24" aria-labelledby="h-uses">
         <h2 id="h-uses" class="font-heading text-xl font-bold text-text">Common Uses for Date Difference Calculations</h2>
         <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
-          <li><strong class="text-text">Project management:</strong> days until launch or sprint length.</li>
-          <li><strong class="text-text">Legal &amp; HR:</strong> notice periods, probation end dates, time since hire.</li>
-          <li><strong class="text-text">Personal:</strong> days until wedding, vacation, or holiday—try quick-select buttons.</li>
-          <li><strong class="text-text">Health:</strong> days since a procedure (not a substitute for medical advice).</li>
+          <li><strong class="text-text">Project management:</strong> calculate sprint lengths, days until launch, or time between milestones to keep your team on track.</li>
+          <li><strong class="text-text">Legal &amp; HR:</strong> determine notice periods, probation end dates, time since hire, or contract duration for compliance and payroll.</li>
+          <li><strong class="text-text">Personal planning:</strong> count days until your wedding, vacation departure, or holiday—try the quick-select buttons for popular countdowns.</li>
+          <li><strong class="text-text">Health &amp; fitness:</strong> track days since a procedure, the start of a program, or a sobriety date (not a substitute for medical advice).</li>
+          <li><strong class="text-text">Education:</strong> count school days remaining, days until graduation, or the length of a semester or academic year.</li>
+          <li><strong class="text-text">Real estate &amp; finance:</strong> calculate the number of days between closing dates, interest accrual periods, or lease terms.</li>
         </ul>
         <p class="mt-3 leading-relaxed text-muted">
           Pair with our <a href="/age-calculator" class="font-semibold text-accent hover:underline">age calculator</a> for birth-date
-          scenarios described in the FAQ.
+          scenarios, or use the <a href="/percentage-calculator" class="font-semibold text-accent hover:underline">percentage calculator</a>
+          to figure out what percentage of a year or contract term has elapsed.
         </p>
       </section>
       <section id="date-difference-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">

@@ -31,22 +31,32 @@ const faqs = [
   {
     question: 'How is loan EMI calculated?',
     answer:
-      'EMI uses the standard amortizing loan formula: EMI = P × [r(1+r)^n] / [(1+r)^n − 1], where P is the loan principal, r is the monthly interest rate (annual rate ÷ 12), and n is the number of monthly payments. Each EMI pays interest on the remaining balance first; the rest reduces principal. At 0% interest, EMI is simply P ÷ n.',
+      'EMI uses the standard amortizing loan formula: EMI = P × [r(1+r)^n] / [(1+r)^n − 1], where P is the loan principal, r is the monthly interest rate (annual rate ÷ 12), and n is the number of monthly payments. Each EMI payment covers interest on the remaining balance first; the rest reduces the principal. In the early months, a larger portion of each payment goes toward interest, while later payments are predominantly principal reduction. At 0% interest, EMI is simply P ÷ n.',
   },
   {
     question: 'What is a good interest rate for a personal loan?',
     answer:
-      'Personal loan APRs vary widely by credit score, income, and lender—often roughly 6%–36% in the U.S. as of recent markets. Scores above 720 may qualify for single-digit rates; fair credit often sees mid-teens or higher. Compare offers from banks, credit unions, and online lenders on the same day, and check whether the rate is fixed or variable.',
+      'Personal loan APRs vary widely by credit score, income, loan amount, and lender—often ranging from roughly 6% to 36% in the U.S. as of recent markets. Borrowers with credit scores above 720 may qualify for single-digit rates, while fair credit (scores around 580–669) often sees mid-teen rates or higher. To find the best rate, compare offers from banks, credit unions, and online lenders on the same day, and always check whether the quoted rate is fixed or variable.',
   },
   {
     question: 'Can I pay off a loan early?',
     answer:
-      'Most personal and auto loans allow early payoff, but some charge prepayment penalties or fees—read your promissory note. Paying extra toward principal reduces total interest and shortens the term. This calculator assumes fixed payments for the full schedule; extra payments would lower your real cost below the projected total.',
+      'Most personal and auto loans allow early payoff, but some charge prepayment penalties or fees—always read your promissory note or loan agreement carefully before making extra payments. Paying extra toward principal reduces total interest and shortens the loan term, sometimes saving thousands of dollars. This calculator assumes fixed payments for the full schedule; actual extra payments would lower your real cost below the projected total interest shown here.',
   },
   {
     question: 'What happens if I miss a loan payment?',
     answer:
-      'A missed payment typically triggers a late fee and may be reported to credit bureaus after 30 days, hurting your credit score. Interest continues to accrue on the balance, and repeated misses can lead to default, collections, or repossession for secured loans. Contact your lender immediately if you expect difficulty—many offer hardship plans or modified terms.',
+      'A missed payment typically triggers a late fee (often $25–$50 or a percentage of the payment amount) and may be reported to credit bureaus after 30 days, which can significantly hurt your credit score. Interest continues to accrue on the balance during the missed period, and repeated misses can lead to default, collections, or repossession for secured loans like car loans. Contact your lender immediately if you expect difficulty—many offer hardship plans, payment deferrals, or modified terms.',
+  },
+  {
+    question: 'What is the difference between fixed and variable interest rates?',
+    answer:
+      'A fixed-rate loan keeps the same interest rate for the entire loan term, so your monthly EMI never changes—this makes budgeting predictable. A variable-rate (or adjustable-rate) loan has an interest rate that can change periodically based on a benchmark rate like the prime rate or SOFR. Variable rates often start lower than fixed rates but can increase over time, raising your monthly payment. Fixed rates are generally safer for longer loan terms, while variable rates may save money on short-term loans if rates stay stable or decline.',
+  },
+  {
+    question: 'Should I refinance my existing loan?',
+    answer:
+      'Refinancing replaces your current loan with a new one, typically at a lower interest rate. It makes sense when rates have dropped significantly since you took out your original loan, when your credit score has improved enough to qualify for better terms, or when you want to change the loan term. However, refinancing often involves fees (origination fees, closing costs) that need to be weighed against the interest savings. Use this calculator to compare the total cost of your current loan against the proposed refinanced loan to see if the savings justify the fees.',
   },
 ];
 

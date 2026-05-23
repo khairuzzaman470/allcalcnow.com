@@ -26,22 +26,32 @@ const faqs = [
   {
     question: 'How do I calculate 20% of a number?',
     answer:
-      'Multiply the number by 20 and divide by 100—or multiply by 0.20. Example: 20% of 150 = 150 × 0.20 = 30. Use Tab 1 on this page: enter 20 and 150 to get the result instantly.',
+      'Multiply the number by 20 and divide by 100—or simply multiply by 0.20. Example: 20% of 150 = 150 × 0.20 = 30. Use Tab 1 on this page: enter 20 and 150 to get the result instantly. A quick mental-math shortcut for 20% is to find 10% (move the decimal one place left) and then double it. So 10% of 150 is 15, and doubling gives you 30. This trick works for any multiple of 10%.',
   },
   {
     question: 'How do I find what percentage one number is of another?',
     answer:
-      'Divide the part by the whole, then multiply by 100. Example: 45 is what percent of 180? (45 ÷ 180) × 100 = 25%. Use Tab 2: enter 45 as the part and 180 as the whole.',
+      'Divide the part by the whole, then multiply by 100. Example: 45 is what percent of 180? (45 ÷ 180) × 100 = 25%. Use Tab 2: enter 45 as the part and 180 as the whole. This calculation is useful in many real-world situations: determining what percentage of a budget has been spent, what share of students passed an exam, or what fraction of a target has been reached. The formula is always: (Part ÷ Whole) × 100 = Percentage.',
   },
   {
     question: 'What is percentage change and how do I calculate it?',
     answer:
-      'Percentage change measures growth or decline from an original value to a new value: ((New − Original) ÷ Original) × 100. A positive result is an increase; negative is a decrease. Tab 3 computes this and shows an up or down indicator.',
+      'Percentage change measures growth or decline from an original value to a new value using the formula: ((New − Original) ÷ Original) × 100. A positive result indicates an increase; a negative result indicates a decrease. Tab 3 computes this and shows a green upward arrow for increases and a red downward arrow for decreases. This is the most common formula used in finance, economics, and business reporting to express how much something has grown or shrunk over time.',
   },
   {
     question: 'How do I calculate a discount percentage?',
     answer:
-      'If an item was $80 and is now $60, the change is −25% (a 25% discount). Enter original 80 and new 60 in Tab 3. To find the sale price after 25% off, use Tab 1 with 25% and the original price, then subtract—or multiply by 0.75.',
+      'If an item was $80 and is now $60, the change is −25% (a 25% discount). Enter original 80 and new 60 in Tab 3. To find the sale price after a known discount, use Tab 1 with the discount percentage and the original price, then subtract the result from the original. For example, 25% of $80 = $20, so the sale price is $80 − $20 = $60. Alternatively, multiply the original price by (1 − discount/100): $80 × 0.75 = $60.',
+  },
+  {
+    question: 'What is the difference between percentage points and percentages?',
+    answer:
+      'A percentage point is an absolute difference between two percentages, while a percentage is a relative measure. If an interest rate rises from 3% to 5%, that is a 2 percentage point increase but a 66.7% increase in relative terms ((5−3)/3 × 100). This distinction matters in finance, statistics, and news reporting. When someone says "unemployment rose by 2 percent," they often mean 2 percentage points, but the mathematical meaning is very different.',
+  },
+  {
+    question: 'Can percentages be greater than 100%?',
+    answer:
+      'Yes. A percentage over 100% simply means the value exceeds the reference amount. For example, if your company\'s revenue grew from $50,000 to $120,000, the percentage increase is 140%. If you scored 55 out of 50 on an extra-credit exam, that is 110%. Values above 100% are common when measuring growth, profit margins, and efficiency improvements. Tab 3 on this calculator handles values over 100% correctly.',
   },
 ];
 
@@ -207,6 +217,12 @@ const schemas = [
           and multiply: Result = Y × (X ÷ 100). Example: 15% of 80 = 80 × 0.15 = 12. The quick reference table above shows
           10%, 15%, 20%, 25%, and 50% of 50, 100, 200, 500, and 1000 for fast lookup.
         </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          This basic formula is the foundation of countless everyday calculations: sales tax, tips at restaurants,
+          exam scores, investment returns, and discount shopping. Once you internalize the pattern—divide the percent
+          by 100, then multiply—you can estimate most percentages mentally. For instance, to find 15% of any number,
+          find 10% (move the decimal point one place left) and add half of that result.
+        </p>
       </section>
       <section id="percentage-increase" class="mt-10 scroll-mt-24" aria-labelledby="h-inc">
         <h2 id="h-inc" class="font-heading text-xl font-bold text-text">How to Calculate Percentage Increase</h2>
@@ -215,6 +231,12 @@ const schemas = [
           salary rises from $50,000 to $55,000, the increase is (($55,000 − $50,000) ÷ $50,000) × 100 = 10%. Use Tab 3 with
           original and new values—the calculator shows a green upward arrow when the new value is higher.
         </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Percentage increase is commonly used to track salary raises, stock price appreciation, population growth,
+          year-over-year revenue improvements, and inflation rates. Understanding this formula helps you evaluate
+          whether a raise or return is meaningful relative to the starting point, rather than just looking at the
+          absolute dollar amount.
+        </p>
       </section>
       <section id="percentage-decrease" class="mt-10 scroll-mt-24" aria-labelledby="h-dec">
         <h2 id="h-dec" class="font-heading text-xl font-bold text-text">How to Calculate Percentage Decrease</h2>
@@ -222,6 +244,12 @@ const schemas = [
           The same formula applies; a lower new value yields a <strong class="font-semibold text-text">negative percentage</strong>.
           Price drops from $200 to $170: ((170 − 200) ÷ 200) × 100 = −15% (a 15% decrease). Tab 3 displays a red downward arrow
           for decreases—common for discounts and market dips.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          An important nuance: a 50% decrease followed by a 50% increase does <em>not</em> return you to the original
+          value. If a $100 item drops 50% to $50, then increases 50%, it only reaches $75—not $100. This asymmetry
+          is why financial analysts track losses and gains carefully, and why recovering from a large percentage
+          drop requires a proportionally larger percentage gain.
         </p>
       </section>
       <section id="percentage-formula" class="mt-10 scroll-mt-24" aria-labelledby="h-formula">
@@ -232,9 +260,17 @@ const schemas = [
           % Change = ((New − Original) / Original) × 100
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          “Percent” means per hundred. Dividing by 100 converts a percent to a proportion. For VAT or tips, try our
-          <a href="/vat-calculator" class="font-semibold text-accent hover:underline">VAT calculator</a> and
-          <a href="/tip-calculator" class="font-semibold text-accent hover:underline">tip calculator</a>.
+          “Percent” literally means “per hundred.” Dividing by 100 converts a percent to a proportion that you can
+          use in multiplication. All three formulas above are just rearrangements of the same core relationship
+          between part, whole, and percentage. Mastering these three variations covers virtually every percentage
+          question you will encounter in school, work, or daily life.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          For specialized percentage tasks, try our
+          <a href="/vat-calculator" class="font-semibold text-accent hover:underline">VAT calculator</a> (adding or removing
+          tax percentages from prices) and
+          <a href="/tip-calculator" class="font-semibold text-accent hover:underline">tip calculator</a> (splitting a bill
+          with a custom tip percentage).
         </p>
       </section>
       <section id="percentage-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">

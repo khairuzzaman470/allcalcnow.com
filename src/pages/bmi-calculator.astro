@@ -24,22 +24,32 @@ const faqs = [
   {
     question: 'What is a healthy BMI for adults?',
     answer:
-      'For most adults aged 18 and older, a BMI between 18.5 and 24.9 is considered the healthy weight range. Below 18.5 is underweight; 25.0–29.9 is overweight; 30.0 and above is obese. These cut-offs apply broadly to men and women, though individual health depends on many other factors.',
+      'For most adults aged 18 and older, a BMI between 18.5 and 24.9 is considered the healthy weight range by the World Health Organization (WHO). Below 18.5 is classified as underweight; 25.0–29.9 is overweight; 30.0 and above is obese (further divided into Class I, II, and III obesity). These cut-offs apply broadly to both men and women, though individual health depends on many other factors including body composition, fitness level, family history, and metabolic markers like blood pressure and cholesterol.',
   },
   {
     question: 'Is BMI an accurate health measurement?',
     answer:
-      'BMI is a useful screening tool for weight categories at the population level, but it does not measure body fat directly and cannot show where fat is stored. It may misclassify very muscular people as overweight or miss health risks in people with normal BMI but high visceral fat. Use it alongside waist circumference, blood pressure, blood tests, and clinical advice.',
+      'BMI is a useful screening tool for weight categories at the population level, but it does not measure body fat directly and cannot show where fat is stored. It may misclassify very muscular people as overweight or miss health risks in people with normal BMI but high visceral fat (fat stored around internal organs). For a more complete picture, use BMI alongside waist circumference, body fat percentage, blood pressure, blood glucose, cholesterol levels, and clinical advice from a healthcare provider.',
   },
   {
     question: 'Is BMI different for men and women?',
     answer:
-      'The standard adult BMI formula and WHO category thresholds are the same for men and women. Body composition differs on average—men often carry more muscle mass—but official BMI bands do not change by sex. Optional gender on this calculator is for your records only; it does not alter the BMI score.',
+      'The standard adult BMI formula and WHO category thresholds are the same for men and women. However, body composition differs on average—men typically carry more muscle mass and less body fat at the same BMI compared to women. Some research suggests that health risk thresholds may differ slightly by sex, but official BMI bands do not change. The optional gender field on this calculator is for your personal records only; it does not alter the BMI score or category.',
   },
   {
     question: 'Can BMI be misleading for athletes?',
     answer:
-      'Yes. Athletes and people with high muscle mass may have a BMI in the overweight or obese range despite low body fat. Muscle is denser than fat, so height–weight ratios overstate “excess weight.” In those cases, body fat percentage, waist-to-hip ratio, or performance and medical assessments are more informative than BMI alone.',
+      'Yes. Athletes and people with high muscle mass may have a BMI in the overweight or obese range despite having very low body fat. Muscle is denser than fat, so height–weight ratios alone overstate "excess weight" in muscular individuals. In those cases, body fat percentage (measured by skinfold calipers, DEXA scans, or bioelectric impedance), waist-to-hip ratio, or sport-specific performance assessments are more informative than BMI alone.',
+  },
+  {
+    question: 'How is BMI calculated for children and teenagers?',
+    answer:
+      'For children and teens aged 2–19, BMI is calculated with the same formula (weight ÷ height²) but interpreted differently. Instead of fixed thresholds, the result is plotted on age-and-sex-specific growth charts from the CDC or WHO to determine a percentile. A BMI at or above the 85th percentile is considered overweight; at or above the 95th percentile is obese. This age-adjusted approach accounts for the natural changes in body composition that occur during growth and puberty.',
+  },
+  {
+    question: 'Why is waist circumference important alongside BMI?',
+    answer:
+      'Waist circumference measures abdominal fat, which is strongly linked to health risks like type 2 diabetes, heart disease, and metabolic syndrome—even when BMI is in the normal range. A waist measurement above 40 inches (102 cm) for men or 35 inches (88 cm) for women indicates elevated risk. Combining BMI with waist circumference gives a much better picture of health risk than either measurement alone, which is why many health guidelines recommend tracking both.',
   },
 ];
 
