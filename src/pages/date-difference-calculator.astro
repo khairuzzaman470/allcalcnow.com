@@ -166,6 +166,7 @@ const schemas = [
           <li><a href="#how-to-count-days" class="text-accent hover:underline">How to Count Days Between Two Dates</a></li>
           <li><a href="#working-vs-calendar" class="text-accent hover:underline">Working Days vs Calendar Days Explained</a></li>
           <li><a href="#common-uses" class="text-accent hover:underline">Common Uses for Date Difference Calculations</a></li>
+          <li><a href="#edge-cases" class="text-accent hover:underline">Leap Years, Time Zones, and Edge Cases</a></li>
           <li><a href="#date-difference-faq" class="text-accent hover:underline">Frequently asked questions</a></li>
         </ol>
       </nav>
@@ -225,6 +226,26 @@ const schemas = [
           to figure out what percentage of a year or contract term has elapsed.
         </p>
       </section>
+
+      <section id="edge-cases" class="mt-10 scroll-mt-24" aria-labelledby="h-edge">
+        <h2 id="h-edge" class="font-heading text-xl font-bold text-text">Leap Years, Time Zones, and Edge Cases</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Date calculations seem straightforward, but several <strong class="font-semibold text-text">edge cases</strong> can produce
+          surprising results if not handled correctly:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Leap years</strong> — February has 29 days in leap years (divisible by 4, except centuries not divisible by 400). A span that crosses February 28–29 in a leap year contains one more day than the same span in a regular year. This calculator accounts for leap years automatically.</li>
+          <li><strong class="text-text">Time zone differences</strong> — This tool works with calendar dates (midnight-to-midnight) in your browser’s local time zone. If you need cross-timezone precision—for example, a deadline at 5 PM EST versus 10 PM GMT—you should verify the exact deadline time separately.</li>
+          <li><strong class="text-text">Month-length variation</strong> — Months range from 28 to 31 days. The span from January 31 to February 28 is "0 months 28 days" or "1 month 0 days" depending on the counting method. This calculator uses the calendar-rollback approach (the standard in HR and legal contexts), which matches how humans naturally think about months.</li>
+          <li><strong class="text-text">Inclusive vs exclusive counting</strong> — Some systems count the start date but not the end date ("fence post" counting); others include both. Legal contracts often specify which method applies. This calculator shows the inclusive count (both start and end dates), which is the most common approach for general use.</li>
+          <li><strong class="text-text">Historical dates</strong> — Dates before October 15, 1582 (the start of the Gregorian calendar) may not produce historically accurate results, since many countries used the Julian calendar before that date. For modern dates, results are fully accurate.</li>
+        </ul>
+        <p class="mt-3 leading-relaxed text-muted">
+          For age-specific calculations that factor in your birth date and zodiac signs, try our
+          <a href="/age-calculator" class="font-semibold text-accent hover:underline">age calculator</a>.
+        </p>
+      </section>
+
       <section id="date-difference-faq" class="mt-10 scroll-mt-24" aria-labelledby="h-faq">
         <h2 id="h-faq" class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
         <div class="mt-6 space-y-4">
@@ -244,7 +265,9 @@ const schemas = [
         </div>
       </section>
       <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
-        <strong class="text-text">Note:</strong> Calculations use your browser’s local date. Daylight saving does not affect day counts.
+        <strong class="text-text">Disclaimer:</strong> Calculations use your browser’s local date and do not account for
+        public holidays or non-standard work weeks. Results are for general reference only—verify critical deadlines
+        with the relevant authority.
       </p>
     </article>
 
