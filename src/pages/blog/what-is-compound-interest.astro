@@ -1,0 +1,333 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "What is Compound Interest? How Your Money Grows Over Time | AllCalcNow";
+const pageDescription = "Discover the math behind compound interest, compare simple and compound returns, understand compounding frequencies, and use our compound interest calculator.";
+const pageUrl = "https://allcalcnow.com/blog/what-is-compound-interest";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "What is Compound Interest?", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "What is Compound Interest? How Your Money Grows Over Time",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-05-23",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/what-is-compound-interest" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'What is Compound Interest?' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Finance & Money</span>
+        <span class="text-border">•</span>
+        <span>10 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        What is Compound Interest? How Your Money Grows Over Time
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Often called the eighth wonder of the world, compound interest has the power to turn modest savings into significant wealth. Learn how compounding works, the formulas involved, and how to maximize it.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published May 23, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        There is a famous quote frequently attributed to Albert Einstein: <em>"Compound interest is the eighth wonder of the world. He who understands it, earns it... he who doesn't, pays it."</em> Whether or not the theoretical physicist actually uttered those words, the sentiment is mathematically undeniable. Compound interest is the engine behind stock market portfolios, retirement accounts, and savings growth.
+      </p>
+      <p class="mb-6">
+        Conversely, it is also the mechanism that makes credit card debt and high-interest loans so dangerous. Understanding how compounding interest operates is a fundamental pillar of financial literacy. In this guide, we will contrast simple and compound interest, break down the core compound interest formula, analyze how compounding frequency shifts your earnings, and demonstrate step-by-step how wealth accumulates over time.
+      </p>
+
+      <!-- Section: Simple vs Compound -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Simple Interest vs. Compound Interest</h2>
+      <p class="mt-4 mb-6">
+        To understand compound interest, it helps to first understand simple interest. 
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Simple Interest:</strong> Interest is calculated <em>only</em> on the original principal amount. If you invest $1,000 at a 10% simple annual interest rate, you will earn $100 in Year 1, $100 in Year 2, $100 in Year 3, and so on. Your earnings are flat and linear.
+        </li>
+        <li>
+          <strong class="text-text">Compound Interest:</strong> Interest is calculated on the initial principal <em>plus</em> the interest that has accumulated in previous periods. Using the same $1,000 at 10% compound annual interest: in Year 1 you earn $100 (totaling $1,100). In Year 2, your interest is calculated on $1,100, earning you $110 (totaling $1,210). In Year 3, you earn 10% on $1,210, which is $121 (totaling $1,331). Over time, this compounding effect causes your money to grow exponentially.
+        </li>
+      </ul>
+
+      <!-- Comparison Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Growth Comparison: Simple vs. Compound ($1,000 at 10% Annually)</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">End of Year</th>
+              <th class="p-4 font-bold">Simple Interest Balance</th>
+              <th class="p-4 font-bold">Compound Interest Balance</th>
+              <th class="p-4 font-bold">The Difference</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4">Year 1</td>
+              <td class="p-4 font-mono">$1,100.00</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$1,100.00</td>
+              <td class="p-4 font-mono">$0.00</td>
+            </tr>
+            <tr>
+              <td class="p-4">Year 5</td>
+              <td class="p-4 font-mono">$1,500.00</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$1,610.51</td>
+              <td class="p-4 font-mono">+$110.51</td>
+            </tr>
+            <tr>
+              <td class="p-4">Year 10</td>
+              <td class="p-4 font-mono">$2,000.00</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$2,593.74</td>
+              <td class="p-4 font-mono">+$593.74</td>
+            </tr>
+            <tr>
+              <td class="p-4">Year 20</td>
+              <td class="p-4 font-mono">$3,000.00</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$6,727.50</td>
+              <td class="p-4 font-mono">+$3,727.50</td>
+            </tr>
+            <tr>
+              <td class="p-4">Year 30</td>
+              <td class="p-4 font-mono">$4,000.00</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$17,449.40</td>
+              <td class="p-4 font-mono">+$13,449.40</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Visualize Your Savings Growth</h3>
+        <p class="mt-2 text-sm text-muted">
+          Want to see how regular monthly deposits and compounding frequencies accelerate your savings? Use our interactive compound interest tool to project your final balance and view growth charts.
+        </p>
+        <div class="mt-4">
+          <a href="/compound-interest-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Compound Interest Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: The Formula -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Compound Interest Formula</h2>
+      <p class="mt-4 mb-6">
+        To calculate your investment growth mathematically, we use the standard compound interest formula:
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">A = P * (1 + r/n)^(n*t)</code>
+      </div>
+
+      <p class="mb-6">
+        Here is what each component represents in the equation:
+      </p>
+
+      <ul class="mb-8 space-y-3 list-none pl-4">
+        <li>
+          <span class="font-bold text-text">A:</span> The final amount of money accumulated after interest, including the initial principal.
+        </li>
+        <li>
+          <span class="font-bold text-text">P:</span> The initial principal balance (your starting investment).
+        </li>
+        <li>
+          <span class="font-bold text-text">r:</span> The annual interest rate, written as a decimal (e.g., 7% is expressed as 0.07).
+        </li>
+        <li>
+          <span class="font-bold text-text">n:</span> The compounding frequency, representing how many times interest is calculated per year (e.g., annually = 1, quarterly = 4, monthly = 12, daily = 365).
+        </li>
+        <li>
+          <span class="font-bold text-text">t:</span> The time span of the investment, expressed in years.
+        </li>
+      </ul>
+
+      <!-- Section: Step-by-Step Milestones -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Growth Over 10, 20, and 30 Years</h2>
+      <p class="mt-4 mb-6">
+        To illustrate how money grows under this formula, let's track a starting balance of <strong>$10,000</strong> at a <strong>7%</strong> annual interest rate, compounded <strong>monthly</strong> (n = 12).
+      </p>
+
+      <h3 class="mt-6 font-heading text-lg font-bold text-text">Milestone 1: 10 Years (t = 10)</h3>
+      <p class="mt-2 mb-4">
+        We plug the numbers into the formula:<br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * (1 + 0.07/12)^(12 * 10)</code><br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * (1.005833)^120</code><br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * 2.009661 = $20,096.61</code>
+      </p>
+      <p class="mb-6">
+        In 10 years, your initial $10,000 has doubled to <strong>$20,096.61</strong>. You earned $10,096.61 in interest.
+      </p>
+
+      <h3 class="mt-6 font-heading text-lg font-bold text-text">Milestone 2: 20 Years (t = 20)</h3>
+      <p class="mt-2 mb-4">
+        Let's calculate for 20 years:<br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * (1 + 0.07/12)^(12 * 20)</code><br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * (1.005833)^240</code><br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * 4.038739 = $40,387.39</code>
+      </p>
+      <p class="mb-6">
+        In 20 years, the money has quadrupled to <strong>$40,387.39</strong>. You earned $30,387.39 in interest. Notice how you earned twice as much interest in the second decade as you did in the first!
+      </p>
+
+      <h3 class="mt-6 font-heading text-lg font-bold text-text">Milestone 3: 30 Years (t = 30)</h3>
+      <p class="mt-2 mb-4">
+        Let's calculate for 30 years:<br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * (1 + 0.07/12)^(12 * 30)</code><br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * (1.005833)^360</code><br />
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">A = 10,000 * 8.116498 = $81,164.98</code>
+      </p>
+      <p class="mb-6">
+        In 30 years, the balance grows to <strong>$81,164.98</strong>. That represents a gain of over 700% on your starting money, all without adding another penny to the account. This demonstrates the accelerating nature of exponential growth.
+      </p>
+
+      <!-- Section: Compounding Frequency -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">How Compounding Frequency Affects Returns</h2>
+      <p class="mt-4 mb-6">
+        Compounding frequency is the speed at which your interest is calculated and added back to your balance. The more frequently this occurs, the faster your balance grows. Let's compare the ending balances of a <strong>$10,000</strong> principal invested at <strong>8%</strong> annual interest for <strong>10 years</strong> across different intervals:
+      </p>
+
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Compounding Schedule</th>
+              <th class="p-4 font-bold">Periods per Year (n)</th>
+              <th class="p-4 font-bold">Ending Balance (10 Years)</th>
+              <th class="p-4 font-bold">Extra Yield Gained</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4">Annually</td>
+              <td class="p-4 font-mono">1</td>
+              <td class="p-4 font-mono">$21,589.25</td>
+              <td class="p-4 font-mono">Baseline</td>
+            </tr>
+            <tr>
+              <td class="p-4">Semiannually</td>
+              <td class="p-4 font-mono">2</td>
+              <td class="p-4 font-mono">$21,911.23</td>
+              <td class="p-4 font-mono">+$321.98</td>
+            </tr>
+            <tr>
+              <td class="p-4">Quarterly</td>
+              <td class="p-4 font-mono">4</td>
+              <td class="p-4 font-mono">$22,080.40</td>
+              <td class="p-4 font-mono">+$491.15</td>
+            </tr>
+            <tr>
+              <td class="p-4">Monthly</td>
+              <td class="p-4 font-mono">12</td>
+              <td class="p-4 font-mono">$22,196.40</td>
+              <td class="p-4 font-mono">+$607.15</td>
+            </tr>
+            <tr>
+              <td class="p-4">Daily</td>
+              <td class="p-4 font-mono">365</td>
+              <td class="p-4 font-mono">$22,253.48</td>
+              <td class="p-4 font-mono">+$664.23</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mb-6">
+        As the table demonstrates, daily compounding yields an extra $664.23 compared to annual compounding. While the difference between monthly and daily compounding is relatively minor, over larger sums and decades, it adds up to thousands of dollars.
+      </p>
+
+      <!-- Section: Rule of 72 -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Rule of 72</h2>
+      <p class="mt-4 mb-6">
+        If you want to estimate your investment doubling time without opening a spreadsheet or calculator, use the <strong>Rule of 72</strong>. This simple formula estimates the number of years required to double your money at a given annual rate of return:
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Years to Double ≈ 72 / Annual Interest Rate</code>
+      </div>
+
+      <p class="mb-6">
+        Notice that you use the interest rate as a whole number (e.g., 8, not 0.08) in this specific shortcut.
+      </p>
+      <ul class="mb-8 list-disc pl-6 space-y-2">
+        <li>
+          If you earn a <strong class="text-text">6%</strong> annual return, your money will double in roughly <code class="bg-bg px-2 py-0.5 rounded text-text font-mono">72 / 6 = 12 years</code>.
+        </li>
+        <li>
+          If you earn an <strong class="text-text">8%</strong> annual return, your money will double in roughly <code class="bg-bg px-2 py-0.5 rounded text-text font-mono">72 / 8 = 9 years</code>.
+        </li>
+        <li>
+          If you earn a <strong class="text-text">12%</strong> annual return, your money will double in roughly <code class="bg-bg px-2 py-0.5 rounded text-text font-mono">72 / 12 = 6 years</code>.
+        </li>
+      </ul>
+
+      <!-- Section: Power of Starting Early -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Crucial Cost of Waiting</h2>
+      <p class="mt-4 mb-6">
+        Because compound interest grows exponentially, time is your most valuable asset. The earlier you start investing, the longer your money has to grow on the steep side of the compounding curve.
+      </p>
+      <p class="mb-6">
+        Consider two investors: <strong>Investor A</strong> and <strong>Investor B</strong>.
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li>
+          <strong>Investor A</strong> starts investing at age 25, putting $200 a month into a retirement account earning an 8% annual return. By age 65 (40 years of investing), they have contributed $96,000. Their final balance is <strong>$621,800</strong>.
+        </li>
+        <li>
+          <strong>Investor B</strong> waits until age 35 to start, investing the exact same $200 a month at the same 8% return. By age 65 (30 years of investing), they have contributed $72,000. Their final balance is <strong>$272,300</strong>.
+        </li>
+      </ul>
+      <p class="mb-6">
+        Even though Investor A only contributed $24,000 more than Investor B, they ended up with <strong>over $349,000 more in their account</strong>. The extra 10 years of compounding time at the end of the investment did the heavy lifting.
+      </p>
+      
+      <p class="mb-6">
+        Compound interest is a double-edged sword. When saving, it is your greatest ally. When borrowing, particularly with credit cards that compound daily, it is your greatest adversary. By practicing early investing and paying down compounding debts quickly, you ensure that the math works in your favor.
+      </p>
+    </div>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

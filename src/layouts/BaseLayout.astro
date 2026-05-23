@@ -151,6 +151,7 @@ const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
               return (
                 <>
                   <a href="/" class={normalizedPath === '/' ? 'active' : ''}>All Calculators</a>
+                  <a href="/blog" class={normalizedPath.startsWith('/blog') ? 'active' : ''}>Blog</a>
                   <a href="/about" class={normalizedPath === '/about' ? 'active' : ''}>About</a>
                   <a href="/contact" class={normalizedPath === '/contact' ? 'active' : ''}>Contact</a>
                 </>
