@@ -1,0 +1,46 @@
+# Netlify _headers — controls browser caching and security headers
+# Docs: https://docs.netlify.com/routing/headers/
+
+# ─── HTML pages: always revalidate ──────────────────────────────────────────
+# Browsers check for a new version every visit; Netlify CDN edge handles ETag.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ─── Static assets: cache for 1 year ────────────────────────────────────────
+# Astro appends content-hash to filenames (_astro/file.abc123.css),
+# so it's safe to cache these forever — a new build = new filename.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts, images, icons in /public served with long cache
+*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# Sitemap & robots — short cache so updates propagate quickly
+# Content-Type is required: nosniff header blocks Google if type is missing
+/sitemap*.xml
+  Cache-Control: public, max-age=86400
+  Content-Type: application/xml; charset=utf-8
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+
+# ─── Security headers (improves PageSpeed / Lighthouse audit) ────────────────
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
