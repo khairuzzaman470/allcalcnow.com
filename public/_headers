@@ -1,46 +1,18 @@
-# Netlify _headers — controls browser caching and security headers
+# Netlify _headers — per-path cache rules for HTML and robots.txt
 # Docs: https://docs.netlify.com/routing/headers/
+#
+# NOTE: Security headers, /_astro/* and /sitemap*.xml headers are defined
+# in netlify.toml [[headers]] blocks to keep everything in one place.
 
-# ─── HTML pages: always revalidate ──────────────────────────────────────────
-# Browsers check for a new version every visit; Netlify CDN edge handles ETag.
+# ─── HTML pages: revalidate on every visit ───────────────────────────────────
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
 /
   Cache-Control: public, max-age=0, must-revalidate
 
-# ─── Static assets: cache for 1 year ────────────────────────────────────────
-# Astro appends content-hash to filenames (_astro/file.abc123.css),
-# so it's safe to cache these forever — a new build = new filename.
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# Fonts, images, icons in /public served with long cache
-*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-
-*.woff
-  Cache-Control: public, max-age=31536000, immutable
-
-*.ico
-  Cache-Control: public, max-age=31536000, immutable
-
-*.svg
-  Cache-Control: public, max-age=31536000, immutable
-
-# Sitemap & robots — short cache so updates propagate quickly
-# Content-Type is required: nosniff header blocks Google if type is missing
-/sitemap*.xml
-  Cache-Control: public, max-age=86400
-  Content-Type: application/xml; charset=utf-8
-
+# ─── robots.txt — short cache, correct Content-Type ─────────────────────────
+# Content-Type must be explicit because X-Content-Type-Options: nosniff is set.
 /robots.txt
   Cache-Control: public, max-age=86400
   Content-Type: text/plain; charset=utf-8
-
-# ─── Security headers (improves PageSpeed / Lighthouse audit) ────────────────
-/*
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()

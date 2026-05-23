@@ -437,9 +437,13 @@ const hasPreloadedRates = initialRates !== null;
   const isLocalDev =
     window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const API_SOURCES = [
-    ...(isLocalDev ? [{ url: '/api/exchange-rates', type: 'er-api' }] : []),
-    { url: 'https://open.er-api.com/v6/latest/USD', type: 'er-api' },
-    { url: 'https://api.frankfurter.app/latest?from=USD', type: 'frankfurter' },
+    // /api/exchange-rates → Netlify Function in production, Vite proxy in local dev
+    { url: '/api/exchange-rates', type: 'er-api' },
+    // Direct fallbacks if the function is unavailable (e.g. cold start timeout)
+    ...(isLocalDev ? [] : [
+      { url: 'https://open.er-api.com/v6/latest/USD', type: 'er-api' },
+      { url: 'https://api.frankfurter.app/latest?from=USD', type: 'frankfurter' },
+    ]),
   ];
 
   const form = document.getElementById('currency-form');

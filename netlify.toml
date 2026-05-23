@@ -11,3 +11,33 @@
   to = "/:splat"
   status = 301
   force = false
+
+# ─── Cache: Astro hashed assets (JS/CSS) — safe to cache for 1 year ──────────
+# Astro appends a content-hash to every filename so a new build = new filename.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ─── Cache: Sitemaps — 1 hour so Google picks up updates quickly ──────────────
+[[headers]]
+  for = "/sitemap*.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/xml; charset=utf-8"
+
+# ─── Security headers (applied to every route) ───────────────────────────────
+# These are consolidated here from public/_headers to avoid duplicate headers.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # CSP covers every external domain actually used by this site:
+    #   fonts.googleapis.com / fonts.gstatic.com → Plus Jakarta Sans font
+    #   www.googletagmanager.com / google-analytics.com → GA4 analytics
+    #   open.er-api.com / api.frankfurter.app → currency converter APIs
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://open.er-api.com https://api.frankfurter.app https://www.google-analytics.com; img-src 'self' data:; frame-ancestors 'none';"
