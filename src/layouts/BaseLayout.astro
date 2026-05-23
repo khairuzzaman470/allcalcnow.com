@@ -15,7 +15,7 @@ const { title, description, canonicalPath = Astro.url.pathname, schemas = [] } =
 const siteName = 'AllCalcNow';
 const siteUrl = (Astro.site?.href ?? 'https://allcalcnow.com').replace(/\/$/, '');
 const baseTitle = title.replace(/\s*\|\s*AllCalcNow\s*$/i, '').trim();
-const fullTitle = `${baseTitle} | ${siteName}`;
+const fullTitle = baseTitle.includes(siteName) ? baseTitle : `${baseTitle} | ${siteName}`;
 const canonicalUrl = new URL(canonicalPath, `${siteUrl}/`).href;
 const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
 ---
