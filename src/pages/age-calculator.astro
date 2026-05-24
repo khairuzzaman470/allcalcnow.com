@@ -189,98 +189,189 @@ const today = new Date().toISOString().split('T')[0];
       <section id="how-to-calculate-age" class="mt-10 scroll-mt-24" aria-labelledby="heading-how-to">
         <h2 id="heading-how-to" class="font-heading text-xl font-bold text-text">How Age is Calculated</h2>
         <p class="mt-3 leading-relaxed text-muted">
-          Your <strong class="font-semibold text-text">chronological age</strong> is calculated by incrementing years on each anniversary of your birthday. When calculating
-          age in months and days, the varying number of days in each calendar month is factored in carefully. For example, moving from
-          January 15 to February 15 represents exactly one month, despite January having 31 days and February only 28 or 29.
+          Your <strong class="font-semibold text-text">chronological age</strong> is the exact measure of time that has elapsed since your birth. While it sounds simple, calculating age in years, months, and days requires calendar-aware arithmetic. Because calendar months vary in length (from 28 to 31 days) and leap years insert an extra day every four years, you cannot simply divide the total number of elapsed days by a fixed average like 30 or 365 without introducing cumulative errors.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          The core algorithm works in three passes. First, it counts complete years from your birth date to the target date.
-          Then it counts remaining complete months. Finally, it counts the leftover days. This is more accurate than simply dividing
-          total days by 365 or 30, because those shortcut methods ignore the real lengths of months and the position of your birthday
-          within the year. Banks, insurance companies, medical records, and legal documents all use this calendar-accurate method
-          to determine someone's exact age at any point in time.
+          To calculate age accurately, standard programming libraries and legal systems use a three-step calendar comparison algorithm:
         </p>
-        <p class="mt-3 leading-relaxed text-muted">
-          In addition to years, months, and days, this tool also calculates your total age expressed as
-          <strong class="font-semibold text-text">weeks, days, hours, minutes, and seconds</strong> lived. These totals
-          are derived from the exact millisecond difference between midnight on your birth date and midnight on the target date.
-          The result is a complete picture of how much time has passed since you were born.
+
+        <!-- Algorithm Card -->
+        <div class="my-6 rounded-2xl border border-border/80 bg-card p-6 shadow-sm">
+          <h3 class="font-heading text-lg font-bold text-text mb-4">The Calendar-Accurate Age Algorithm</h3>
+          <ol class="space-y-3 list-decimal pl-5 text-sm text-muted">
+            <li>
+              <strong class="text-text">Count Full Years:</strong> Subtract the birth year from the target year. If the target month and day fall before the birth month and day in the calendar year, subtract 1 from the year count (since the birthday has not yet occurred in the target year).
+            </li>
+            <li>
+              <strong class="text-text">Count Remaining Months:</strong> Subtract the birth month from the target month. If the target day is less than the birth day, subtract 1 from the month count (since a full month hasn't been completed yet) and adjust the day calculation.
+            </li>
+            <li>
+              <strong class="text-text">Count Remaining Days:</strong> If the target day is greater than or equal to the birth day, the day difference is simply the target day minus the birth day. If it is less, we borrow days from the preceding month by finding the total number of days in that month, adding it to the target day, and then subtracting the birth day.
+            </li>
+          </ol>
+        </div>
+
+        <h3 class="font-heading text-lg font-semibold text-text mt-6">Step-by-Step Example Calculation</h3>
+        <p class="mt-2 leading-relaxed text-muted">
+          Let's see how this works in practice with two real-world examples:
         </p>
+
+        <div class="my-6 space-y-4">
+          <div class="rounded-xl border border-accent/15 bg-accent/5 p-5">
+            <h4 class="font-bold text-text text-sm">Example A: Birthday Has Not Passed Yet</h4>
+            <ul class="mt-2 list-none space-y-2 text-sm text-muted pl-0">
+              <li><span class="font-bold text-text">Birth Date:</span> October 15, 1998</li>
+              <li><span class="font-bold text-text">Target Date:</span> May 24, 2026</li>
+              <li class="pt-2">
+                <span class="font-semibold text-text">1. Years:</span> 2026 - 1998 = 28 years. However, since May 24 is before October 15, we decrement by 1. <strong class="text-accent">Completed Years = 27</strong>.
+              </li>
+              <li>
+                <span class="font-semibold text-text">2. Months:</span> Moving from October 15, 2025 (at age 27) to May 24, 2026. The full months are October to April (6 months) plus April 15 to May 15 (1 month). <strong class="text-accent">Completed Months = 7</strong>.
+              </li>
+              <li>
+                <span class="font-semibold text-text">3. Days:</span> The remaining days from May 15 to May 24. 24 - 15 = <strong class="text-accent">9 Days</strong>.
+              </li>
+              <li class="border-t border-accent/20 pt-2 font-bold text-text text-xs uppercase tracking-wider">
+                Exact Age: 27 Years, 7 Months, and 9 Days.
+              </li>
+            </ul>
+          </div>
+
+          <div class="rounded-xl border border-border/85 bg-bg/50 p-5">
+            <h4 class="font-bold text-text text-sm">Example B: Target Day is Less Than Birth Day (Borrowing Days)</h4>
+            <ul class="mt-2 list-none space-y-2 text-sm text-muted pl-0">
+              <li><span class="font-bold text-text">Birth Date:</span> January 28, 2000</li>
+              <li><span class="font-bold text-text">Target Date:</span> March 15, 2024 (Leap Year)</li>
+              <li class="pt-2">
+                <span class="font-semibold text-text">1. Years:</span> 2024 - 2000 = 24 years. Since March 15 is after January 28, the birthday has passed. <strong class="text-accent">Completed Years = 24</strong>.
+              </li>
+              <li>
+                <span class="font-semibold text-text">2. Months:</span> From Jan 28 to March 15. Jan 28 to Feb 28 is 1 month. Feb 28 to March 15 is less than a month, so we stick to <strong class="text-accent">Completed Months = 1</strong>.
+              </li>
+              <li>
+                <span class="font-semibold text-text">3. Days:</span> We need the remaining days from Feb 28 to March 15. The previous month (February 2024) had 29 days because of the leap year. We calculate: 15 (target day) + 29 (days in Feb) - 28 (birth day) = <strong class="text-accent">16 Days</strong>.
+              </li>
+              <li class="border-t border-border/80 pt-2 font-bold text-text text-xs uppercase tracking-wider">
+                Exact Age: 24 Years, 1 Month, and 16 Days.
+              </li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section id="leap-years-and-months" class="mt-10 scroll-mt-24" aria-labelledby="heading-leap">
         <h2 id="heading-leap" class="font-heading text-xl font-bold text-text">Leap Years and Day Counts</h2>
         <p class="mt-3 leading-relaxed text-muted">
-          <strong class="font-semibold text-text">Leap years</strong> occur once every four years (with minor exceptions every 100 and 400 years), adding a 29th day
-          to February. This matters significantly for age calculations because the total number of days in a year shifts between
-          365 and 366. Our tool automatically accounts for every leap year in your lifespan when computing total days lived.
+          A standard calendar year lasts 365 days. However, the Earth takes approximately 365.2422 days to complete its orbit around the Sun. To align the calendar year with solar cycles, we insert an extra day—February 29—into the calendar every four years, creating a 366-day <strong class="font-semibold text-text">leap year</strong>.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          People born on February 29—sometimes called <strong class="font-semibold text-text">"leaplings"</strong>—face a
-          special case: their exact birthday only appears on the calendar every four years. In non-leap years, most countries
-          legally recognize February 28 or March 1 as their birthday for age-of-consent or driving license purposes, depending
-          on local law. This calculator uses February 28 in non-leap years for the next-birthday countdown when your birthday
-          falls on February 29, which matches the most common legal convention.
+          To maintain synchronization, the Gregorian calendar uses a precise leap year rule: a year is a leap year if it is divisible by 4, except for end-of-century years (ending in 00), which must also be divisible by 400. For instance, the year 2000 was a leap year, but 1900 was not, and 2100 will not be a leap year. This calculator automatically applies these rules across your entire lifespan, ensuring that every leap day is counted when detailing your total hours, minutes, and seconds lived.
         </p>
-        <p class="mt-3 leading-relaxed text-muted">
-          Because a year is not exactly 365.25 days and months range from 28 to 31 days, any age calculator that uses
-          fixed averages will accumulate small errors over long lifespans. Our tool avoids this by working directly with
-          calendar dates for years and months, and switching to raw day counts only for the granular breakdown fields.
+
+        <h3 class="font-heading text-lg font-semibold text-text mt-6">The Leapling Dilemma: Born on February 29</h3>
+        <p class="mt-2 leading-relaxed text-muted">
+          People born on February 29 are affectionately known as <strong class="font-semibold text-text">"leaplings"</strong> or <strong class="font-semibold text-text">"leap-year babies"</strong>. Because their birthday only appears on the calendar once every four years, determining their legal age during non-leap years is a unique challenge. Different legal systems around the world resolve this differently when a person reaches milestones like driving or drinking eligibility:
         </p>
+
+        <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+          <table class="w-full text-left border-collapse text-sm bg-card">
+            <thead>
+              <tr class="bg-bg text-text border-b border-border/80">
+                <th class="p-4 font-bold">Country / Region</th>
+                <th class="p-4 font-bold">Legal Birthday (Non-Leap Years)</th>
+                <th class="p-4 font-bold">Legal Basis / Ordinance</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border/60 text-muted">
+              <tr>
+                <td class="p-4 font-semibold text-text">United Kingdom</td>
+                <td class="p-4">March 1st</td>
+                <td class="p-4 font-mono text-xs">Family Law Reform Act 1969, s. 9</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-semibold text-text">United States</td>
+                <td class="p-4">February 28th</td>
+                <td class="p-4">Common law / DMV administrative policies</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-semibold text-text">Hong Kong</td>
+                <td class="p-4">March 1st</td>
+                <td class="p-4 font-mono text-xs">Interpretation & General Clauses Ord., s. 67</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-semibold text-text">Taiwan (R.O.C.)</td>
+                <td class="p-4">February 28th</td>
+                <td class="p-4 font-mono text-xs">Civil Code, Article 124</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-semibold text-text">New Zealand</td>
+                <td class="p-4">March 1st</td>
+                <td class="p-4">Standard administrative custom</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section id="zodiac-symbols" class="mt-10 scroll-mt-24" aria-labelledby="heading-zodiac">
         <h2 id="heading-zodiac" class="font-heading text-xl font-bold text-text">Western &amp; Chinese Zodiac Signs</h2>
         <p class="mt-3 leading-relaxed text-muted">
-          In addition to numerical breakdowns, the calculator derives your <strong class="font-semibold text-text">Western sun sign</strong> (the sign used in Western astrology)
-          and your <strong class="font-semibold text-text">Chinese lunar zodiac animal</strong> based on traditional year definitions.
-          The Western zodiac divides the calendar year into twelve signs: Aries, Taurus, Gemini, Cancer, Leo, Virgo,
-          Libra, Scorpio, Sagittarius, Capricorn, Aquarius, and Pisces. Your sign is determined by the calendar month
-          and day of your birth, with each sign covering roughly 30 days.
+          Your birth date also links you to traditional astronomical and cultural classification systems. This calculator determines both your Western astrological sun sign and your Chinese lunar zodiac animal.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          The <strong class="font-semibold text-text">Chinese zodiac</strong> operates on a 12-year cycle, with each year
-          associated with an animal: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, and Pig.
-          Traditionally, the cycle resets on the Chinese Lunar New Year, which falls between late January and mid-February
-          each year. This calculator uses a simplified solar year assignment (birth year modulo 12) as a quick reference,
-          which is accurate for most birth years but may differ by one sign for those born in January or early February,
-          depending on when the Lunar New Year falls in their birth year.
+          The <strong class="font-semibold text-text">Western Zodiac</strong> is based on the Sun's position relative to the celestial sphere along the ecliptic path at the time of your birth. The year is divided into twelve 30-day sectors, each represented by a sign: Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, and Pisces. This calculator references your birth month and day to assign your sun sign.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          Both zodiac systems are provided for fun and cultural interest—they are not meant as predictions. Whether you are
-          a fiery Aries or a wise Dragon, the real insight from this page is knowing exactly how many days, hours, and
-          minutes you have experienced so far in your life.
+          The <strong class="font-semibold text-text">Chinese Zodiac</strong> (Shengxiao) is a classification system based on a 12-year cycle, with each year associated with an animal sign: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, and Pig. Traditionally, the Chinese Zodiac is determined by the Lunar Calendar, meaning the zodiac year starts on the Chinese Lunar New Year (which falls between January 21 and February 20). 
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          For simplicity, most online tools map zodiac signs purely to the Gregorian solar calendar year (using a basic year modulo 12 calculation). While this is accurate for most of the year, it can misclassify individuals born in late January or early February whose birth dates precede that year's Lunar New Year. True traditional Chinese astrology resolves this by referencing lunar tables or the "Lichun" solar term (the beginning of spring, usually February 4th).
         </p>
       </section>
 
       <section id="practical-uses" class="mt-10 scroll-mt-24" aria-labelledby="heading-practical">
         <h2 id="heading-practical" class="font-heading text-xl font-bold text-text">Practical Uses for Knowing Your Exact Age</h2>
         <p class="mt-3 leading-relaxed text-muted">
-          Knowing your <strong class="font-semibold text-text">precise age in years, months, and days</strong> is more than trivia—it has
-          real-world applications across legal, medical, financial, and personal planning contexts.
+          Knowing your exact age in years, months, and days is highly useful across multiple fields:
         </p>
-        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
-          <li><strong class="text-text">Legal milestones</strong> — Driving licence eligibility, voting registration, legal drinking age, and retirement age all depend on your exact date of birth. Many jurisdictions require you to be a certain age <em>on the day</em>, not simply in the same calendar year.</li>
-          <li><strong class="text-text">Insurance &amp; finance</strong> — Life insurance premiums, pension contributions, and annuity payouts are calculated based on your age at the policy start date. Even a one-day difference in age can shift you into a different rate bracket.</li>
-          <li><strong class="text-text">Medical records</strong> — Paediatric growth charts, vaccine schedules, and geriatric screenings all use age in months or even weeks. Healthcare providers rely on precise age to determine medication dosages for children and assess developmental milestones.</li>
-          <li><strong class="text-text">Immigration &amp; visas</strong> — Many work-permit and visa categories have strict age cut-offs (e.g., working-holiday visas often require applicants to be under 31). Knowing your exact age helps you plan applications before a deadline passes.</li>
-          <li><strong class="text-text">Education enrollment</strong> — School and university admission dates often require children to reach a specific age by a cut-off date, meaning a few days can determine whether a child starts school this year or next.</li>
+        <ul class="mt-4 list-disc space-y-3 pl-5 text-muted leading-relaxed">
+          <li>
+            <strong class="text-text">Pediatrics &amp; Child Development:</strong> During infancy and early childhood, developmental changes happen weekly. Pediatricians use exact age in months to evaluate growth charts and determine immunization schedules. Crucially, pediatric medication dosages are often calculated using age in weeks or weight-clearing tables where a small age difference changes the recommended dosage.
+          </li>
+          <li>
+            <strong class="text-text">Pensions &amp; Retirement Planning:</strong> Governments and financial institutions use exact age to calculate retirement payouts. For instance, the United States Social Security Administration determines benefits based on the exact month of retirement (e.g., claiming benefits at age 62 and 2 months vs. age 66 and 8 months yields a permanent difference in monthly payouts).
+          </li>
+          <li>
+            <strong class="text-text">Actuarial Science &amp; Insurance Premiums:</strong> Insurance companies calculate life and health insurance risk profiles using your exact chronological age. Some insurers apply the "age nearest" method (rounding your age to the nearest full year), meaning that once you are 6 months past your birthday, your premium rate class changes.
+          </li>
+          <li>
+            <strong class="text-text">Immigration &amp; Visa Deadlines:</strong> Many work-holiday, skilled worker, and student visas have strict age limits (often under 31 or 36 years). Being even one day past the cutoff date at the time of official application submission can lead to automatic visa rejection.
+          </li>
         </ul>
-        <p class="mt-3 leading-relaxed text-muted">
-          Whether you are planning a retirement date, applying for a visa, or simply curious how many hours you have lived,
-          this free calculator gives you the exact answer instantly. For date-span calculations between any two dates (not just birth dates),
-          try our <a href="/date-difference-calculator" class="font-semibold text-accent hover:underline">date difference calculator</a>.
-        </p>
       </section>
 
       <section id="cultural-differences" class="mt-10 scroll-mt-24" aria-labelledby="heading-cultural">
         <h2 id="heading-cultural" class="font-heading text-xl font-bold text-text">Cultural Differences in Counting Age</h2>
         <p class="mt-3 leading-relaxed text-muted">
-          While standard international systems count age starting at zero from the date of birth, other traditions have historically used different methods. In the <strong class="font-semibold text-text">traditional East Asian age reckoning system</strong> (often called "nominal age" or "Korean age"), a person is considered one year old at birth because the time spent in the womb is rounded up. Furthermore, everyone's age increments by one year on New Year's Day (either the Lunar New Year or solar January 1st), rather than on their actual birthday. Under this traditional system, a baby born on the day before New Year would become two years old the very next day, despite having lived for only two days.
+          The international standard calculates age by starting at zero at birth and incrementing by one year on each subsequent anniversary of the birth date. However, various cultural traditions calculate age differently.
         </p>
         <p class="mt-3 leading-relaxed text-muted">
-          Most countries have modernized and standardized legal ages for passports, contracts, and legal status to follow the international system. In June 2023, South Korea officially abolished the traditional system for most administrative and legal purposes, standardizing on the birth-date-based system to reduce social confusion and administrative costs. However, cultural traditions still influence how birthdays are celebrated and discussed informally in various regions around the world.
+          In the <strong class="font-semibold text-text">Traditional East Asian Age System</strong> (historically used in China, Korea, Japan, and Vietnam, and often known as "Korean Age"), a person is considered one year old at birth to reflect the time spent in the womb. Additionally, a person's age does not increase on their birthday, but rather on New Year's Day (solar January 1st or Lunar New Year). 
         </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          This system creates situations where a baby born on December 31st is considered 1 year old at birth. The next day, on January 1st, the baby turns 2 years old, despite having lived for only two calendar days. To eliminate administrative and social confusion, South Korea officially standardized all judicial and administrative processes on the international birthdate-based age system in June 2023.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Other calendars also alter age calculations:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>
+            <strong class="text-text">Islamic (Hijri) Calendar:</strong> A purely lunar calendar consisting of 12 lunar months in a year of 354 or 355 days. Because a Hijri year is roughly 11 days shorter than a Gregorian year, chronological age calculated under the Hijri calendar advances faster. For example, 100 solar Gregorian years corresponds to approximately 103 Hijri lunar years.
+          </li>
+          <li>
+            <strong class="text-text">Hindu Calendar:</strong> A lunisolar calendar that adds an extra intercalary month (Adhik Maas) approximately every three years to realign with the seasons. Traditional religious birthdays in Hindu cultures are celebrated based on the lunar tithi (day) rather than the Gregorian date, meaning the celebration date shifts on the Gregorian calendar each year.
+          </li>
+        </ul>
       </section>
 
       <section id="age-calculator-faq" class="mt-10 scroll-mt-24" aria-labelledby="heading-faq">
