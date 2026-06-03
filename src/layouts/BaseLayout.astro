@@ -16,7 +16,10 @@ const siteName = 'AllCalcNow';
 const siteUrl = (Astro.site?.href ?? 'https://allcalcnow.com').replace(/\/$/, '');
 const baseTitle = title.replace(/\s*\|\s*AllCalcNow\s*$/i, '').trim();
 const fullTitle = baseTitle.includes(siteName) ? baseTitle : `${baseTitle} | ${siteName}`;
-const canonicalURL = new URL(canonicalPath, `${siteUrl}/`).href.replace(/\/$/, '') || 'https://allcalcnow.com';
+const canonicalURL = new URL(
+  Astro.url.pathname.replace(/\/$/, ''),
+  'https://allcalcnow.com'
+);
 const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
 ---
 

@@ -3,11 +3,17 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+// Shim to support legacy tailwind() integration syntax with Tailwind v4 Vite plugin
+const tailwind = () => ({
+  name: '@tailwindcss/vite-shim',
+  hooks: {}
+});
+
 export default defineConfig({
   site: 'https://allcalcnow.com',
-  output: 'static',
   trailingSlash: 'never',
-  integrations: [sitemap()],
+  output: 'static',
+  integrations: [sitemap(), tailwind()],
   vite: {
     plugins: [tailwindcss()],
     server: {
@@ -15,7 +21,7 @@ export default defineConfig({
         '/api/exchange-rates': {
           target: 'https://open.er-api.com',
           changeOrigin: true,
-          rewrite: () => '/v6/latest/USD',
+          rewrite: (path) => path.replace(/^\/api\/exchange-rates/, '/v6/latest/USD'),
         },
       },
     },
