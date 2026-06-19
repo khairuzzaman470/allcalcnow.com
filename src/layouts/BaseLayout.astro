@@ -167,41 +167,174 @@ const ogImageUrl = new URL('/favicon.svg', `${siteUrl}/`).href;
     <main>
       <slot />
     </main>
-    <footer class="border-t border-border bg-navy text-white/70">
-      <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <!-- Column 1 -->
-          <div>
-            <p class="font-heading text-lg font-bold text-white"><span class="text-accent">All</span>CalcNow</p>
-            <p class="mt-2 text-sm">All Calculators. All Free. Right Now.</p>
-            <p class="mt-4 text-xs text-white/50">
-              &copy; {new Date().getFullYear()} AllCalcNow.com. All rights reserved.
+    <footer class="border-t border-border/10 bg-[#11100e] text-white/60 transition-colors duration-300">
+      <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <!-- Column 1: Brand Info -->
+          <div class="lg:col-span-1">
+            <a href="/" class="font-heading text-xl font-bold tracking-tight text-white hover:opacity-90 transition-opacity duration-200">
+              <span class="text-accent">All</span>CalcNow
+            </a>
+            <p class="mt-3 text-sm leading-relaxed text-white/50">
+              Fast, private, and accurate online calculators. All free, all the time.
+            </p>
+            <p class="mt-6 text-xs text-white/30">
+              &copy; {new Date().getFullYear()} AllCalcNow.com.<br />
+              All rights reserved.
             </p>
           </div>
-          <!-- Column 2 -->
+
+          <!-- Column 2: Finance & Money -->
           <div>
-            <p class="font-heading text-sm font-bold uppercase tracking-wider text-white">Popular Calculators</p>
-            <ul class="mt-3 space-y-2 text-sm">
-              <li><a href="/age-calculator" class="transition-colors hover:text-white hover:underline">Age Calculator</a></li>
-              <li><a href="/mortgage-calculator" class="transition-colors hover:text-white hover:underline">Mortgage Calculator</a></li>
-              <li><a href="/bmi-calculator" class="transition-colors hover:text-white hover:underline">BMI Calculator</a></li>
-              <li><a href="/loan-calculator" class="transition-colors hover:text-white hover:underline">Loan Calculator</a></li>
-              <li><a href="/compound-interest-calculator" class="transition-colors hover:text-white hover:underline">Compound Interest Calculator</a></li>
+            <p class="font-heading text-xs font-bold uppercase tracking-wider text-white/90">Finance & Money</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li>
+                <a href="/mortgage-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Mortgage Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/loan-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Loan Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/compound-interest-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Compound Interest
+                </a>
+              </li>
+              <li>
+                <a href="/currency-converter" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Currency Converter
+                </a>
+              </li>
+              <li>
+                <a href="/vat-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  VAT Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/salary-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Salary Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/retirement-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Retirement Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/electricity-bill-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Electricity Bill
+                </a>
+              </li>
             </ul>
           </div>
-          <!-- Column 3 -->
+
+          <!-- Column 3: Everyday Math -->
           <div>
-            <p class="font-heading text-sm font-bold uppercase tracking-wider text-white">Company</p>
-            <ul class="mt-3 space-y-2 text-sm">
-              <li><a href="/about" class="transition-colors hover:text-white hover:underline">About</a></li>
-              <li><a href="/contact" class="transition-colors hover:text-white hover:underline">Contact</a></li>
-              <li><a href="/privacy-policy" class="transition-colors hover:text-white hover:underline">Privacy Policy</a></li>
+            <p class="font-heading text-xs font-bold uppercase tracking-wider text-white/90">Everyday Math</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li>
+                <a href="/percentage-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Percentage Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/discount-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Discount Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/unit-converter" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Unit Converter
+                </a>
+              </li>
+              <li>
+                <a href="/fuel-cost-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Fuel Cost Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/gpa-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  GPA Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/tip-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Tip Calculator
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Health & Time -->
+          <div>
+            <p class="font-heading text-xs font-bold uppercase tracking-wider text-white/90">Health & Time</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li>
+                <a href="/bmi-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  BMI Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/body-fat-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Body Fat Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/age-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Age Calculator
+                </a>
+              </li>
+              <li>
+                <a href="/date-difference-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Date Difference
+                </a>
+              </li>
+              <li>
+                <a href="/due-date-calculator" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Due Date Calculator
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 5: Company & Resources -->
+          <div>
+            <p class="font-heading text-xs font-bold uppercase tracking-wider text-white/90">Company</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li>
+                <a href="/blog" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Blog & Articles
+                </a>
+              </li>
+              <li>
+                <a href="/about" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/contact" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Contact
+                </a>
+              </li>
+              <li>
+                <a href="/privacy-policy" class="transition-all duration-200 hover:text-white hover:translate-x-1 inline-block">
+                  Privacy Policy
+                </a>
+              </li>
             </ul>
           </div>
         </div>
-        <!-- Bottom Bar -->
-        <div class="mt-8 border-t border-white/10 pt-6 text-center text-xs text-white/40">
-          All calculations on AllCalcNow are for reference purposes only. Always consult a professional for financial and medical decisions.
+
+        <!-- Bottom Bar / Disclaimer -->
+        <div class="mt-12 border-t border-white/5 pt-8 text-center text-xs text-white/40 leading-relaxed">
+          <p class="max-w-3xl mx-auto">
+            Disclaimer: All calculations on AllCalcNow.com are for reference purposes only. 
+            We make no representations or warranties of any kind concerning the accuracy of the calculations. 
+            Always consult a qualified professional before making financial, medical, or legal decisions.
+          </p>
         </div>
       </div>
     </footer>
