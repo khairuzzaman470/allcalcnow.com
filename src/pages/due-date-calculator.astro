@@ -1,0 +1,401 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Age Calculator', icon: '🎂', description: 'Find your exact age in years, months, days, and count down to your next birthday.', href: '/age-calculator' },
+  { name: 'Date Difference Calculator', icon: '📅', description: 'Calculate years, months, weeks, and days between any two dates.', href: '/date-difference-calculator' },
+  { name: 'BMI Calculator', icon: '⚖️', description: 'Find your Body Mass Index (BMI) and check your healthy weight range.', href: '/bmi-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/due-date-calculator';
+const pageTitle = 'Due Date Calculator — Pregnancy Due Date Estimator | AllCalcNow';
+const pageDescription =
+  'Free pregnancy due date calculator at AllCalcNow. Estimate your baby\'s due date from your last period or conception date.';
+
+const faqs = [
+  {
+    question: 'How accurate is a due date calculator?',
+    answer:
+      'A due date calculator provides an estimation. Only about 4% of babies are born exactly on their estimated due date (EDD). Most babies arrive within 10 days before or after their EDD. Ultrasound measurements taken by your healthcare provider in the first trimester are considered the most accurate method to estimate your due date.',
+  },
+  {
+    question: 'What is Naegele\'s Rule?',
+    answer:
+      'Naegele\'s Rule is a standard way of calculating a due date based on the Last Menstrual Period (LMP). It assumes a standard 28-day menstrual cycle. To calculate: add 7 days to the first day of your LMP, subtract 3 months, and add 1 year. This is mathematically equivalent to adding 280 days to the LMP.',
+  },
+  {
+    question: 'Can my due date change during pregnancy?',
+    answer:
+      'Yes. If an early ultrasound (especially in the first trimester) shows the baby is significantly larger or smaller than expected based on your LMP, your doctor or midwife may adjust your official due date to match the ultrasound findings.',
+  },
+  {
+    question: 'What is the difference between gestational and fetal age?',
+    answer:
+      'Gestational age measures the pregnancy starting from the first day of your last menstrual period (LMP), which is about two weeks before conception actually occurs. This is the standard timeline used by healthcare providers. Fetal age (conception age) measures the actual age of the growing baby starting from the date of conception.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Due Date Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Due Date Calculator', '/due-date-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/due-date-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Due Date Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Health & Fitness
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Due Date Calculator</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Estimate your baby's due date, track gestational progress, and view your trimester timeline instantly.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="p-6 lg:p-8">
+        <div class="grid gap-8 lg:grid-cols-12">
+          <!-- Inputs Column -->
+          <div class="lg:col-span-5 space-y-5">
+            <div>
+              <label for="calc-method" class={labelClass}>Calculation Method</label>
+              <select id="calc-method" class={inputClass}>
+                <option value="lmp" selected>Last Period (LMP)</option>
+                <option value="conception">Conception Date</option>
+                <option value="ivf">IVF Transfer Date</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="input-date" class={labelClass} id="date-label">First Day of Last Period</label>
+              <input type="date" id="input-date" class={inputClass} />
+            </div>
+
+            <div id="ivf-wrapper" class="hidden">
+              <label for="ivf-type" class={labelClass}>Embryo Age</label>
+              <select id="ivf-type" class={inputClass}>
+                <option value="3day" selected>3-Day Transfer</option>
+                <option value="5day">5-Day Transfer</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Results Column -->
+          <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-navy p-6 text-white sm:p-8 font-medium">
+            <div class="space-y-6">
+              <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Pregnancy Projections</p>
+              
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Estimated Due Date</p>
+                <p id="result-due-date" class="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl text-white mt-1">—</p>
+                <p id="result-countdown" class="text-sm font-semibold mt-1 text-green-400">—</p>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Current Progress</p>
+                  <p id="result-current-week" class="font-heading text-2xl font-bold text-white mt-1">—</p>
+                </div>
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Current Trimester</p>
+                  <p id="result-trimester" class="font-heading text-2xl font-bold text-green-400 mt-1">—</p>
+                </div>
+              </div>
+
+              <div class="border-t border-white/10 pt-6 space-y-3">
+                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Trimester Timelines</p>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                  <div class="p-2.5 rounded bg-white/5">
+                    <p class="text-white/50">1st Trimester Ends</p>
+                    <p id="t1-end" class="font-bold mt-1 text-white">—</p>
+                  </div>
+                  <div class="p-2.5 rounded bg-white/5">
+                    <p class="text-white/50">2nd Trimester Ends</p>
+                    <p id="t2-end" class="font-bold mt-1 text-white">—</p>
+                  </div>
+                  <div class="p-2.5 rounded bg-white/5">
+                    <p class="text-white/50">Estimated Due Date</p>
+                    <p id="t3-end" class="font-bold mt-1 text-white">—</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-white/10 pt-4">
+              <p class="rounded-xl bg-white/5 px-4 py-2.5 text-xs leading-relaxed text-white/70">
+                <strong class="text-white">Disclaimer:</strong> This is an estimate only. Always consult your doctor or midwife for medical advice.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Due Date Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Due Date Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        Embarking on the journey of pregnancy brings excitement, anticipation, and many questions. The <strong class="font-semibold text-text">Due Date Calculator</strong> helps you estimate your baby\'s due date using the Last Menstrual Period (LMP), Conception Date, or In-Vitro Fertilization (IVF) transfer details. Along with your projected due date, this estimator outlines your pregnancy trimesters and tracks how far along you are.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-is-due-date-calculated" class="text-accent hover:underline">How is a Pregnancy Due Date Calculated?</a></li>
+          <li><a href="#pregnancy-trimesters-explained" class="text-accent hover:underline">Pregnancy Trimesters Explained</a></li>
+          <li><a href="#what-to-expect-in-each-trimester" class="text-accent hover:underline">What to Expect in Each Trimester</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-is-due-date-calculated" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How is a Pregnancy Due Date Calculated?</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          A standard pregnancy lasts approximately 280 days (40 weeks) from the first day of your last menstrual period (LMP). Since conception typically occurs about two weeks after the start of your period, the actual gestation period of the baby is about 266 days (38 weeks).
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Healthcare providers commonly estimate due dates using **Naegele\'s Rule**:
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Due Date = First day of LMP + 7 days − 3 months + 1 year
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          For IVF transfers, the calculation is adjusted according to the date of the transfer and the age of the embryo (typically 3-day or 5-day transfer), aligning the timeline with precise accuracy.
+        </p>
+      </section>
+
+      <section id="pregnancy-trimesters-explained" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Pregnancy Trimesters Explained</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Pregnancy is divided into three distinct phases called trimesters, each lasting roughly 12 to 14 weeks:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">First Trimester (Weeks 1 – 13):</strong> Spans from the first day of your LMP until the end of week 13. This is the period of rapid development where the baby\'s major organs begin to form.</li>
+          <li><strong class="text-text">Second Trimester (Weeks 14 – 27):</strong> Spans from week 14 through week 27. Often described as the most comfortable phase, morning sickness usually subsides and energy levels begin to return.</li>
+          <li><strong class="text-text">Third Trimester (Weeks 28 – 40+):</strong> Begins at week 28 and continues until birth. Physical changes accelerate as the baby grows rapidly, preparing for labor and delivery.</li>
+        </ul>
+      </section>
+
+      <section id="what-to-expect-in-each-trimester" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">What to Expect in Each Trimester</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Each trimester brings unique changes, adjustments, and developmental milestones:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">First Trimester:</strong> Expect bodily adaptations such as fatigue, morning sickness, tender breasts, and frequent urination. Early prenatal doctor visits start during this time.</li>
+          <li><strong class="text-text">Second Trimester:</strong> Your body begins showing a baby bump. You will likely feel the baby\'s first movements (quickening). The mid-pregnancy anatomy scan is typically scheduled around week 20.</li>
+          <li><strong class="text-text">Third Trimester:</strong> Fatigue might return due to carrying additional weight. You may experience mild contractions (Braxton Hicks), heartburn, and sleeping difficulties. Regular checkups increase as your due date approaches.</li>
+        </ul>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const calcMethodSelect = document.getElementById('calc-method');
+  const inputDateEl = document.getElementById('input-date') as HTMLInputElement;
+  const ivfWrapper = document.getElementById('ivf-wrapper');
+  const ivfTypeSelect = document.getElementById('ivf-type');
+
+  const dateLabel = document.getElementById('date-label');
+
+  const resultDueDateEl = document.getElementById('result-due-date');
+  const resultCountdownEl = document.getElementById('result-countdown');
+  const resultCurrentWeekEl = document.getElementById('result-current-week');
+  const resultTrimesterEl = document.getElementById('result-trimester');
+
+  const t1EndEl = document.getElementById('t1-end');
+  const t2EndEl = document.getElementById('t2-end');
+  const t3EndEl = document.getElementById('t3-end');
+
+  // Set default date to today
+  if (inputDateEl) {
+    const today = new Date();
+    inputDateEl.value = today.toISOString().split('T')[0];
+  }
+
+  function handleMethodChange() {
+    const method = calcMethodSelect?.value || 'lmp';
+    if (ivfWrapper) {
+      ivfWrapper.classList.toggle('hidden', method !== 'ivf');
+    }
+
+    if (dateLabel) {
+      if (method === 'lmp') dateLabel.textContent = 'First Day of Last Period';
+      else if (method === 'conception') dateLabel.textContent = 'Conception Date';
+      else if (method === 'ivf') dateLabel.textContent = 'IVF Transfer Date';
+    }
+  }
+
+  function formatDate(d) {
+    return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(d);
+  }
+
+  function calculate() {
+    const method = calcMethodSelect?.value || 'lmp';
+    const dateVal = inputDateEl?.value;
+
+    if (!dateVal) {
+      [resultDueDateEl, resultCountdownEl, resultCurrentWeekEl, resultTrimesterEl, t1EndEl, t2EndEl, t3EndEl].forEach((el) => {
+        if (el) el.textContent = '—';
+      });
+      return;
+    }
+
+    const inputDate = new Date(dateVal + 'T00:00:00');
+    let dueDate = new Date();
+    let lmpDate = new Date();
+
+    if (method === 'lmp') {
+      lmpDate = new Date(inputDate);
+      dueDate = new Date(lmpDate);
+      dueDate.setDate(dueDate.getDate() + 280); // 40 weeks
+    } else if (method === 'conception') {
+      const conceptionDate = new Date(inputDate);
+      dueDate = new Date(conceptionDate);
+      dueDate.setDate(dueDate.getDate() + 266); // 38 weeks from conception
+      lmpDate = new Date(conceptionDate);
+      lmpDate.setDate(lmpDate.getDate() - 14); // estimate LMP 2 weeks prior
+    } else if (method === 'ivf') {
+      const transferDate = new Date(inputDate);
+      const ivfType = ivfTypeSelect?.value || '3day';
+      dueDate = new Date(transferDate);
+
+      if (ivfType === '3day') {
+        dueDate.setDate(dueDate.getDate() + 263); // 266 - 3 days
+        lmpDate = new Date(transferDate);
+        lmpDate.setDate(lmpDate.getDate() - 17); // 14 + 3 days
+      } else {
+        dueDate.setDate(dueDate.getDate() + 261); // 266 - 5 days
+        lmpDate = new Date(transferDate);
+        lmpDate.setDate(lmpDate.getDate() - 19); // 14 + 5 days
+      }
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Calculate Gestational Age
+    const timeDiff = today.getTime() - lmpDate.getTime();
+    const daysElapsed = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    
+    let ageText = '';
+    let trimesterText = '';
+    
+    if (daysElapsed < 0) {
+      ageText = 'Not started yet';
+      trimesterText = '—';
+    } else if (daysElapsed > 294) {
+      ageText = 'Post-term / Born';
+      trimesterText = 'Delivered';
+    } else {
+      const weeks = Math.floor(daysElapsed / 7);
+      const days = daysElapsed % 7;
+      ageText = `${weeks} Weeks ${days > 0 ? `and ${days} Days` : ''}`;
+
+      if (weeks < 14) trimesterText = '1st Trimester';
+      else if (weeks < 28) trimesterText = '2nd Trimester';
+      else trimesterText = '3rd Trimester';
+    }
+
+    // Countdown details
+    const timeToDue = dueDate.getTime() - today.getTime();
+    const daysToDue = Math.ceil(timeToDue / (1000 * 60 * 60 * 24));
+    let countdownText = '';
+    if (daysToDue > 0) {
+      countdownText = `${daysToDue} days remaining until due date`;
+    } else if (daysToDue === 0) {
+      countdownText = 'Today is the due date! 🎉';
+    } else {
+      countdownText = `Passed due date by ${Math.abs(daysToDue)} day(s)`;
+    }
+
+    // Trimester timeline dates
+    const t1EndDate = new Date(lmpDate);
+    t1EndDate.setDate(t1EndDate.getDate() + 97); // 13 weeks + 6 days = 97 days
+    
+    const t2EndDate = new Date(lmpDate);
+    t2EndDate.setDate(t2EndDate.getDate() + 195); // 27 weeks + 6 days = 195 days
+
+    // Update displays
+    if (resultDueDateEl) resultDueDateEl.textContent = formatDate(dueDate);
+    if (resultCountdownEl) resultCountdownEl.textContent = countdownText;
+    if (resultCurrentWeekEl) resultCurrentWeekEl.textContent = ageText;
+    if (resultTrimesterEl) resultTrimesterEl.textContent = trimesterText;
+
+    if (t1EndEl) t1EndEl.textContent = formatDate(t1EndDate);
+    if (t2EndEl) t2EndEl.textContent = formatDate(t2EndDate);
+    if (t3EndEl) t3EndEl.textContent = formatDate(dueDate);
+  }
+
+  // Bind events
+  [calcMethodSelect, ivfTypeSelect].forEach((el) => {
+    el?.addEventListener('change', () => {
+      handleMethodChange();
+      calculate();
+    });
+  });
+
+  inputDateEl?.addEventListener('input', calculate);
+
+  // Init
+  handleMethodChange();
+  calculate();
+</script>

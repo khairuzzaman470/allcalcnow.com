@@ -1,0 +1,445 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
+  { name: 'Tip Calculator', icon: '🍽️', description: 'Split bill and calculate tip instantly', href: '/tip-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/discount-calculator';
+const pageTitle = 'Discount Calculator — Calculate Sale Price and Savings | AllCalcNow';
+const pageDescription =
+  'Free discount calculator at AllCalcNow. Find the sale price, savings amount and percentage discount on any item instantly.';
+
+const faqs = [
+  {
+    question: 'How do I calculate 20% off a price?',
+    answer:
+      'To calculate 20% off a price, multiply the original price by 20 and divide by 100—or multiply by 0.20 to find the savings, then subtract that amount from the original price. Alternatively, multiply the original price by 0.80 (which is 100% minus 20%). For example, if an item is $50, 20% off is $10 ($50 × 0.20), making the final sale price $40 ($50 − $10). Finding 20% off is easy with a mental shortcut: shift the decimal point one place to the left to find 10% ($5), then double it to get 20% ($10).',
+  },
+  {
+    question: 'How do I find what percentage discount I received?',
+    answer:
+      'Subtract the sale price from the original price to find the absolute dollar savings. Then, divide the savings by the original price and multiply by 100. The mathematical formula is: ((Original Price − Sale Price) ÷ Original Price) × 100. For example, if the original price was $80 and you paid $60, you saved $20. So, ($20 ÷ $80) × 100 = 0.25 × 100 = 25% discount. This calculation is ideal for verifying store markdowns or tracking seasonal sale percentages.',
+  },
+  {
+    question: 'Is a percentage or dollar discount better?',
+    answer:
+      'It depends on the original price of the item. Retailers often use the "Rule of 100" to choose which discount to promote. For items under $100, a percentage discount (e.g., 25% off a $20 shirt) sounds larger than the dollar amount ($5 savings). For items over $100, a dollar discount (e.g., $100 off a $500 appliance) sounds more compelling than a percentage (20% off). To see which is better, convert the percentage discount to a dollar amount: if the percentage discount in dollars is larger than the flat rate discount, go with the percentage.',
+  },
+  {
+    question: 'How do stores calculate sale prices?',
+    answer:
+      'Stores calculate sale prices by applying a markdown percentage to the original price: Sale Price = Original Price × (1 − (Discount % ÷ 100)). If an item has multiple discounts, such as "30% off plus an extra 10% off for loyalty members," they are calculated sequentially rather than added together. First, a 30% discount is applied to the original price. Then, the 10% discount is applied to that new, lower sale price, resulting in a total discount of 37% instead of 40%.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Discount Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Discount Calculator', '/discount-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/discount-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Discount Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Everyday Math
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Discount Calculator</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Calculate final sale prices, total dollar savings, and markdown percentages instantly.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="flex flex-wrap gap-1 border-b border-border bg-bg/50 p-2" role="tablist" aria-label="Calculator mode">
+        <button type="button" role="tab" id="tab-btn-1" aria-selected="true" aria-controls="tab-panel-1" data-tab="1" class="pc-tab segment-active flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all sm:flex-none">
+          Find Sale Price
+        </button>
+        <button type="button" role="tab" id="tab-btn-2" aria-selected="false" aria-controls="tab-panel-2" data-tab="2" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          Find Discount %
+        </button>
+      </div>
+
+      <div class="grid gap-8 p-6 lg:grid-cols-2 lg:p-8">
+        <div>
+          <!-- Tab 1 Panel -->
+          <div id="tab-panel-1" role="tabpanel" aria-labelledby="tab-btn-1" class="tab-panel space-y-5">
+            <p class="text-sm text-muted">Enter the original price and the discount percentage to find the sale price.</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="t1-original" class={labelClass}>Original Price ($)</label>
+                <input type="number" id="t1-original" value="100" min="0" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="t1-discount" class={labelClass}>Discount (%)</label>
+                <input type="number" id="t1-discount" value="20" min="0" max="100" step="any" class={inputClass} />
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-muted/80 mb-2">Quick Presets:</p>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="5">5%</button>
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="10">10%</button>
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="15">15%</button>
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="20">20%</button>
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="25">25%</button>
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="30">30%</button>
+                <button type="button" class="quick-btn rounded-lg bg-bg px-3 py-1.5 text-sm font-semibold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer" data-value="50">50%</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2 Panel -->
+          <div id="tab-panel-2" role="tabpanel" aria-labelledby="tab-btn-2" class="tab-panel hidden space-y-5">
+            <p class="text-sm text-muted">Enter the original price and the sale price to find the discount percentage.</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="t2-original" class={labelClass}>Original Price ($)</label>
+                <input type="number" id="t2-original" value="100" min="0" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="t2-sale" class={labelClass}>Sale Price ($)</label>
+                <input type="number" id="t2-sale" value="80" min="0" step="any" class={inputClass} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="flex flex-col justify-center rounded-2xl bg-navy p-6 text-white sm:p-8">
+          <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Calculated Results</p>
+          
+          <div class="mt-6 space-y-6">
+            <div>
+              <p class="text-xs font-medium uppercase tracking-wider text-white/60">Sale Price After Discount</p>
+              <p id="result-sale-price" class="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl text-white mt-1">$0.00</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Amount Saved</p>
+                <p id="result-amount-saved" class="font-heading text-2xl font-bold text-green-400 mt-1">$0.00</p>
+              </div>
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Percentage Saved</p>
+                <p id="result-pct-saved" class="font-heading text-2xl font-bold text-green-400 mt-1">0%</p>
+              </div>
+            </div>
+          </div>
+
+          <p id="result-detail" class="mt-6 border-t border-white/10 pt-4 text-sm text-white/80 leading-relaxed">
+            —
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Reference Section -->
+    <section class="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="border-b border-border bg-bg/50 px-6 py-4">
+        <h2 class="text-lg font-bold text-text">Discount Quick Reference Table</h2>
+        <p class="mt-1 text-sm text-muted">See final sale prices and total savings for common discounts at a glance.</p>
+      </div>
+      <div class="overflow-auto">
+        <table class="w-full min-w-[500px] text-left text-sm">
+          <thead class="bg-navy text-xs uppercase tracking-wider text-white/85">
+            <tr>
+              <th class="px-6 py-3.5 font-semibold">Original Price</th>
+              <th class="px-6 py-3.5 text-right font-semibold">10% Off</th>
+              <th class="px-6 py-3.5 text-right font-semibold">20% Off</th>
+              <th class="px-6 py-3.5 text-right font-semibold">30% Off</th>
+              <th class="px-6 py-3.5 text-right font-semibold">40% Off</th>
+              <th class="px-6 py-3.5 text-right font-semibold">50% Off</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[10, 20, 50, 100, 200, 500].map((price, i) => (
+              <tr class={`border-b border-border/40 ${i % 2 === 0 ? 'bg-white' : 'bg-bg/40'}`}>
+                <td class="px-6 py-3.5 font-bold text-text">${price}</td>
+                {[10, 20, 30, 40, 50].map((discount) => {
+                  const saved = price * (discount / 100);
+                  const sale = price - saved;
+                  return (
+                    <td class="px-6 py-3.5 text-right tabular-nums text-muted">
+                      <span class="text-text font-medium">${sale.toFixed(2)}</span>
+                      <br />
+                      <span class="text-xs text-green-600 font-semibold">Save ${saved.toFixed(2)}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Discount Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Discount Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        Shopping during sales or evaluating price markdowns requires quick, accurate calculations. The <strong class="font-semibold text-text">Discount Calculator</strong> helps you instantly determine the final sale price, total dollar savings, and percentage savings. Featuring two interactive modes, it covers both common discount scenarios: finding out how much you will pay after a markdown, or finding the percentage saved based on the original and sale prices.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-calculate-a-discount" class="text-accent hover:underline">How to Calculate a Discount</a></li>
+          <li><a href="#how-to-calculate-percentage-savings" class="text-accent hover:underline">How to Calculate Percentage Savings</a></li>
+          <li><a href="#shopping-tips-to-maximize-discounts" class="text-accent hover:underline">Shopping Tips to Maximize Discounts</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-to-calculate-a-discount" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Calculate a Discount</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Calculating a discount is a two-step process. First, determine the dollar amount of the savings by multiplying the original price by the discount percentage (converted to a decimal). Second, subtract the savings from the original price to find the final sale price.
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          1. Savings Amount = Original Price × (Discount % ÷ 100)<br />
+          2. Sale Price = Original Price − Savings Amount
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          For example, if you find a winter coat originally priced at <strong class="text-text">$150</strong> marked with a <strong class="text-text">30% discount</strong>, you can calculate the final price as follows:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Convert 30% to a decimal: 30 ÷ 100 = 0.30</li>
+          <li>Calculate the savings: $150 × 0.30 = $45.00</li>
+          <li>Calculate the final sale price: $150.00 − $45.00 = $105.00</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          Alternatively, a faster mental shortcut is to calculate the remaining percentage you need to pay. If the discount is 30%, you will pay 70% of the original price (100% − 30% = 70%). Thus, $150 × 0.70 = $105.00. This single-step method is ideal for calculating sales on the go.
+        </p>
+      </section>
+
+      <section id="how-to-calculate-percentage-savings" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Calculate Percentage Savings</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          If a store provides the original price and the final sale price, but does not display the percentage discount, you can determine the discount percentage using a simple formula. Subtract the sale price from the original price to find the absolute dollar savings, then divide that savings by the original price and multiply by 100.
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          1. Savings Amount = Original Price − Sale Price<br />
+          2. Discount Percentage = (Savings Amount ÷ Original Price) × 100
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          Suppose a smartphone originally retailing at <strong class="text-text">$800</strong> is offered at a sale price of <strong class="text-text">$640</strong>. You can find the percentage discount using the steps below:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Find the savings amount: $800 − $640 = $160</li>
+          <li>Divide the savings by the original price: $160 ÷ $800 = 0.20</li>
+          <li>Multiply by 100 to get the percentage: 0.20 × 100 = 20%</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          Calculating the percentage saved allows you to compare markdown levels across different retailers, validating whether an advertised deal is as good as it claims to be.
+        </p>
+      </section>
+
+      <section id="shopping-tips-to-maximize-discounts" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Shopping Tips to Maximize Discounts</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Getting the best deal involves more than just reading the red markdown tags. Smarter consumers use strategic techniques to maximize their savings:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Understand Double/Stacking Discounts:</strong> When stores advertise "20% off, plus an extra 10% off for loyalty members," they do not simply add up to a 30% discount. The second discount is applied sequentially to the already-discounted price. For instance, a $100 item becomes $80 after the 20% discount. The extra 10% discount is applied to the $80, saving an additional $8, resulting in a final price of $72. The actual total discount is 28%.</li>
+          <li><strong class="text-text">Compare Unit Prices:</strong> A massive discount percentage on a premium brand might still be more expensive than a store brand at regular price. Always look at the cost per unit (ounce, gram, or piece) to evaluate true value.</li>
+          <li><strong class="text-text">Check for false "original" prices:</strong> Some retailers artificially inflate their original prices right before a sale to make the discount percentage appear larger than it actually is. Use tracking tools or compare prices across different sites to make sure the base price is genuine.</li>
+          <li><strong class="text-text">Know the Clearance Schedule:</strong> Brick-and-mortar stores usually follow weekly markdown schedules for clearance items. Knowing which days items are marked down (often Tuesdays or Thursdays) can help you grab the highest discounts before inventory is gone.</li>
+        </ul>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> The results provided by this calculator are for educational and general reference purposes only. While we endeavor to make calculations as precise as possible, always double-check prices at the register or with the seller before making a purchase.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  let activeTab = 1;
+
+  const resultSalePrice = document.getElementById('result-sale-price');
+  const resultAmountSaved = document.getElementById('result-amount-saved');
+  const resultPctSaved = document.getElementById('result-pct-saved');
+  const resultDetail = document.getElementById('result-detail');
+
+  const fmtCurrency = (n) => {
+    if (!Number.isFinite(n) || isNaN(n)) return '$—';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  };
+  
+  const fmtPct = (n) => {
+    if (!Number.isFinite(n) || isNaN(n)) return '—%';
+    return new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(n) + '%';
+  };
+
+  function setTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.pc-tab').forEach((btn) => {
+      const on = Number(btn.getAttribute('data-tab')) === tab;
+      btn.classList.toggle('segment-active', on);
+      btn.classList.toggle('text-muted', !on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+      panel.classList.toggle('hidden', i + 1 !== tab);
+    });
+    calculate();
+  }
+
+  function calculate() {
+    if (activeTab === 1) {
+      const original = parseFloat(document.getElementById('t1-original')?.value || '0');
+      const discount = parseFloat(document.getElementById('t1-discount')?.value || '0');
+
+      if (original < 0 || discount < 0) {
+        if (resultSalePrice) resultSalePrice.textContent = '$—';
+        if (resultAmountSaved) resultAmountSaved.textContent = '$—';
+        if (resultPctSaved) resultPctSaved.textContent = '—%';
+        if (resultDetail) resultDetail.textContent = 'Values cannot be negative.';
+        return;
+      }
+
+      const saved = original * (discount / 100);
+      const salePrice = original - saved;
+
+      if (resultSalePrice) resultSalePrice.textContent = fmtCurrency(salePrice);
+      if (resultAmountSaved) resultAmountSaved.textContent = fmtCurrency(saved);
+      if (resultPctSaved) resultPctSaved.textContent = fmtPct(discount);
+      if (resultDetail) {
+        resultDetail.textContent = `You save ${fmtCurrency(saved)} (${fmtPct(discount)}) on a ${fmtCurrency(original)} purchase.`;
+      }
+      return;
+    }
+
+    if (activeTab === 2) {
+      const original = parseFloat(document.getElementById('t2-original')?.value || '0');
+      const sale = parseFloat(document.getElementById('t2-sale')?.value || '0');
+
+      if (original < 0 || sale < 0) {
+        if (resultSalePrice) resultSalePrice.textContent = '$—';
+        if (resultAmountSaved) resultAmountSaved.textContent = '$—';
+        if (resultPctSaved) resultPctSaved.textContent = '—%';
+        if (resultDetail) resultDetail.textContent = 'Values cannot be negative.';
+        return;
+      }
+
+      if (original === 0) {
+        if (resultSalePrice) resultSalePrice.textContent = '$—';
+        if (resultAmountSaved) resultAmountSaved.textContent = '$—';
+        if (resultPctSaved) resultPctSaved.textContent = '—%';
+        if (resultDetail) resultDetail.textContent = 'Original price cannot be zero.';
+        return;
+      }
+
+      if (sale > original) {
+        if (resultSalePrice) resultSalePrice.textContent = '$—';
+        if (resultAmountSaved) resultAmountSaved.textContent = '$—';
+        if (resultPctSaved) resultPctSaved.textContent = '—%';
+        if (resultDetail) resultDetail.textContent = 'Sale price cannot be greater than original price.';
+        return;
+      }
+
+      const saved = original - sale;
+      const discount = (saved / original) * 100;
+
+      if (resultSalePrice) resultSalePrice.textContent = fmtCurrency(sale);
+      if (resultAmountSaved) resultAmountSaved.textContent = fmtCurrency(saved);
+      if (resultPctSaved) resultPctSaved.textContent = fmtPct(discount);
+      if (resultDetail) {
+        resultDetail.textContent = `A markdown from ${fmtCurrency(original)} to ${fmtCurrency(sale)} is a ${fmtPct(discount)} discount.`;
+      }
+      return;
+    }
+  }
+
+  // Quick buttons handler
+  document.querySelectorAll('.quick-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const val = btn.getAttribute('data-value');
+      const input = document.getElementById('t1-discount');
+      if (input && val) {
+        input.value = val;
+        calculate();
+      }
+    });
+  });
+
+  document.querySelectorAll('.pc-tab').forEach((btn) => {
+    btn.addEventListener('click', () => setTab(Number(btn.getAttribute('data-tab'))));
+  });
+
+  document.querySelectorAll('#tab-panel-1 input, #tab-panel-2 input').forEach((el) => {
+    el.addEventListener('input', calculate);
+  });
+
+  // Run calculation initially
+  setTab(1);
+</script>
+
+<style>
+  .pc-tab.segment-active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+</style>

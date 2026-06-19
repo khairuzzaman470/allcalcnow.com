@@ -1,0 +1,387 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Discount Calculator', icon: '🏷️', description: 'Find final sale prices, total savings, and percentage discounts instantly', href: '/discount-calculator' },
+  { name: 'Loan Calculator', icon: '💰', description: 'Determine monthly EMI, total interest, and view loan payoff timelines', href: '/loan-calculator' },
+  { name: 'Compound Interest Calculator', icon: '📈', description: 'See how savings grow with compounding', href: '/compound-interest-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/salary-calculator';
+const pageTitle = 'Salary Calculator — Annual to Monthly to Hourly Pay | AllCalcNow';
+const pageDescription =
+  'Free salary calculator at AllCalcNow. Convert annual salary to monthly, weekly, daily and hourly pay. Calculate take-home pay after tax.';
+
+const faqs = [
+  {
+    question: 'How do I convert annual salary to hourly rate?',
+    answer:
+      'To convert an annual salary to an hourly rate, divide the annual gross salary by the number of hours worked per year. For a standard 40-hour work week over 52 weeks, this is 2,080 hours. For example, if you earn $50,000 annually: $50,000 ÷ 2,080 ≈ $24.04 per hour. If you work 35 hours per week, divide by 1,820 hours (35 × 52): $50,000 ÷ 1,820 ≈ $27.47 per hour.',
+  },
+  {
+    question: 'What is the difference between gross and net pay?',
+    answer:
+      'Gross pay is the total amount of money you earn before any deductions are made. Net pay, also known as take-home pay, is the amount of money you actually receive after taxes, retirement contributions, health insurance premiums, and other voluntary or involuntary deductions are subtracted from your gross earnings.',
+  },
+  {
+    question: 'How many hours do you work per year?',
+    answer:
+      'The number of hours you work per year depends on your weekly work schedule. For a standard full-time employee working 40 hours per week, there are 2,080 work hours in a 52-week year (40 × 52 = 2,080). If you work 35 hours per week, you work 1,820 hours per year. If you work 30 hours per week, you work 1,560 hours per year. These figures do not account for paid time off (PTO), holidays, or sick leave, which vary by employer.',
+  },
+  {
+    question: 'How do I calculate my take-home pay?',
+    answer:
+      'To calculate your take-home (net) pay, start with your gross earnings for the pay period. Deduct federal, state, and local income taxes, FICA taxes (Social Security and Medicare), and any pre-tax benefits (like health insurance premiums or 401(k) contributions). Our calculator estimates this by applying a flat optional tax rate to your gross salary, giving you a quick approximation of your take-home earnings.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Salary Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Salary Calculator', '/salary-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/salary-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Salary Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Everyday Math
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Salary Calculator</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Convert gross pay between annual, monthly, weekly, daily, and hourly rates, and calculate take-home pay after tax.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="p-6 lg:p-8">
+        <div class="grid gap-8 lg:grid-cols-12">
+          <!-- Inputs Column -->
+          <div class="lg:col-span-5 space-y-5">
+            <div>
+              <label for="salary-amount" class={labelClass}>Salary Amount ($)</label>
+              <input type="number" id="salary-amount" value="50000" min="0" step="any" class={inputClass} />
+            </div>
+
+            <div>
+              <label for="pay-frequency" class={labelClass}>Pay Frequency</label>
+              <select id="pay-frequency" class={inputClass}>
+                <option value="annual" selected>Annual</option>
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
+                <option value="hourly">Hourly</option>
+              </select>
+            </div>
+
+            <div id="hours-wrapper">
+              <label for="hours-per-week" class={labelClass}>Hours per Week</label>
+              <input type="number" id="hours-per-week" value="40" min="1" max="168" class={inputClass} />
+            </div>
+
+            <div>
+              <label for="tax-rate" class={labelClass}>Estimated Tax Rate (%) <span class="text-xs font-normal text-muted">(Optional)</span></label>
+              <input type="number" id="tax-rate" value="15" min="0" max="100" step="any" placeholder="e.g. 15" class={inputClass} />
+            </div>
+          </div>
+
+          <!-- Results Column -->
+          <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-navy p-6 text-white sm:p-8">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Estimated Breakdown</p>
+              
+              <div class="mt-6 overflow-auto">
+                <table class="w-full text-left text-sm text-white/80">
+                  <thead>
+                    <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-white/60">
+                      <th class="pb-3 font-semibold">Pay Period</th>
+                      <th class="pb-3 text-right font-semibold">Gross Pay</th>
+                      <th class="pb-3 text-right font-semibold">Net Pay (Take-Home)</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5 font-medium">
+                    <tr>
+                      <td class="py-3">Annual</td>
+                      <td id="gross-annual" class="py-3 text-right tabular-nums text-white">$0.00</td>
+                      <td id="net-annual" class="py-3 text-right tabular-nums text-green-400">$0.00</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3">Monthly</td>
+                      <td id="gross-monthly" class="py-3 text-right tabular-nums text-white">$0.00</td>
+                      <td id="net-monthly" class="py-3 text-right tabular-nums text-green-400">$0.00</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3">Weekly</td>
+                      <td id="gross-weekly" class="py-3 text-right tabular-nums text-white">$0.00</td>
+                      <td id="net-weekly" class="py-3 text-right tabular-nums text-green-400">$0.00</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3">Daily</td>
+                      <td id="gross-daily" class="py-3 text-right tabular-nums text-white">$0.00</td>
+                      <td id="net-daily" class="py-3 text-right tabular-nums text-green-400">$0.00</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3">Hourly</td>
+                      <td id="gross-hourly" class="py-3 text-right tabular-nums text-white">$0.00</td>
+                      <td id="net-hourly" class="py-3 text-right tabular-nums text-green-400">$0.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-white/10 pt-6">
+              <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Summary</p>
+              <p id="salary-summary-text" class="mt-2 text-sm leading-relaxed text-white/80">
+                —
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Salary Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Salary Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        Whether you are negotiating a new job offer, planning your household budget, or comparing full-time salaries against hourly contract opportunities, a reliable <strong class="font-semibold text-text">Salary Calculator</strong> simplifies the mathematics. This tool converts any gross salary amount into corresponding annual, monthly, weekly, daily, and hourly rates, allowing you to estimate take-home earnings after accounting for a custom income tax rate.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-convert-annual-salary-to-hourly-rate" class="text-accent hover:underline">How to Convert Annual Salary to Hourly Rate</a></li>
+          <li><a href="#understanding-your-pay-slip" class="text-accent hover:underline">Understanding Your Pay Slip</a></li>
+          <li><a href="#gross-pay-vs-net-pay" class="text-accent hover:underline">Gross Pay vs Net Pay</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-to-convert-annual-salary-to-hourly-rate" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Convert Annual Salary to Hourly Rate</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Converting an annual salary into an hourly wage is a standard calculation used to measure absolute earning power. To perform this calculation manually, you must first determine the total number of working hours in a year.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          For a standard full-time employee working 40 hours per week across 52 weeks in a calendar year, the total number of hours is <strong class="text-text">2,080 hours</strong> (40 × 52 = 2,080).
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Hourly Rate = Annual Salary ÷ (Hours per Week × 52)
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          For example, if you receive a gross annual salary of <strong class="text-text">$50,000</strong> and work 40 hours per week:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Total annual working hours: 40 × 52 = 2,080</li>
+          <li>Hourly wage: $50,000 ÷ 2,080 = $24.04 per hour</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          If you work a part-time schedule of 30 hours per week, the annual hours drop to 1,560. A $50,000 salary for this schedule results in a higher hourly rate: $50,000 ÷ 1,560 = $32.05 per hour.
+        </p>
+      </section>
+
+      <section id="understanding-your-pay-slip" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Understanding Your Pay Slip</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          A pay slip (or pay stub) details the path from your raw earnings to the funds deposited in your bank account. Reviewing it regularly helps verify that tax withholdings and deductions are accurate:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Gross Earnings:</strong> The total amount earned before any deductions are made. This is based on your base salary or hourly rate.</li>
+          <li><strong class="text-text">Pre-Tax Deductions:</strong> Amounts subtracted before income tax is calculated. Examples include traditional 401(k) contributions, Health Savings Account (HSA) allocations, and medical insurance premiums.</li>
+          <li><strong class="text-text">Tax Withholdings:</strong> Federal, state, and local income taxes, plus FICA contributions (Social Security at 6.2% and Medicare at 1.45% in the U.S.).</li>
+          <li><strong class="text-text">Post-Tax Deductions:</strong> Deductions taken after taxes are assessed, such as Roth IRA contributions or union dues.</li>
+          <li><strong class="text-text">Net Pay:</strong> Your final take-home earnings.</li>
+        </ul>
+      </section>
+
+      <section id="gross-pay-vs-net-pay" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Gross Pay vs Net Pay</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          The difference between gross and net pay is the most common source of confusion when evaluating salaries.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Gross Pay</strong> is the official compensation figure listed in your job offer or contract. It represents the money your employer pays for your labor before any withholding.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          <strong class="font-semibold text-text">Net Pay</strong> is your actual take-home income—the cash that hit your checking account. Net pay varies significantly based on geographic location (as state/local income taxes range from 0% in states like Texas and Florida to over 10% in states like California and New York) and voluntary deduction selections. Setting an estimated average tax rate in our calculator helps you model different take-home income scenarios.
+        </p>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> The conversions and tax estimations provided by this tool are for general illustrative and educational purposes only. They do not account for progressive tax brackets, tax credits, filing statuses, or specific pre-tax deductions. Consult a certified financial planner or tax professional for definitive calculations.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const salaryAmountInput = document.getElementById('salary-amount');
+  const payFrequencyInput = document.getElementById('pay-frequency');
+  const hoursPerWeekInput = document.getElementById('hours-per-week');
+  const taxRateInput = document.getElementById('tax-rate');
+
+  const grossAnnualEl = document.getElementById('gross-annual');
+  const netAnnualEl = document.getElementById('net-annual');
+  const grossMonthlyEl = document.getElementById('gross-monthly');
+  const netMonthlyEl = document.getElementById('net-monthly');
+  const grossWeeklyEl = document.getElementById('gross-weekly');
+  const netWeeklyEl = document.getElementById('net-weekly');
+  const grossDailyEl = document.getElementById('gross-daily');
+  const netDailyEl = document.getElementById('net-daily');
+  const grossHourlyEl = document.getElementById('gross-hourly');
+  const netHourlyEl = document.getElementById('net-hourly');
+  
+  const summaryEl = document.getElementById('salary-summary-text');
+
+  const fmtCurrency = (n) => {
+    if (!Number.isFinite(n) || isNaN(n)) return '$—';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  };
+
+  function calculate() {
+    const amount = parseFloat(salaryAmountInput?.value || '0');
+    const frequency = payFrequencyInput?.value || 'annual';
+    const hoursPerWeek = parseFloat(hoursPerWeekInput?.value || '40');
+    const taxRate = parseFloat(taxRateInput?.value || '0');
+
+    if (amount < 0 || hoursPerWeek <= 0 || taxRate < 0 || taxRate > 100) {
+      [grossAnnualEl, netAnnualEl, grossMonthlyEl, netMonthlyEl, grossWeeklyEl, netWeeklyEl, grossDailyEl, netDailyEl, grossHourlyEl, netHourlyEl].forEach(el => {
+        if (el) el.textContent = '$—';
+      });
+      if (summaryEl) summaryEl.textContent = 'Please enter valid inputs.';
+      return;
+    }
+
+    let grossAnnual = 0;
+
+    switch (frequency) {
+      case 'annual':
+        grossAnnual = amount;
+        break;
+      case 'monthly':
+        grossAnnual = amount * 12;
+        break;
+      case 'weekly':
+        grossAnnual = amount * 52;
+        break;
+      case 'daily':
+        grossAnnual = amount * 260; // Assuming 260 working days per year (5 days * 52 weeks)
+        break;
+      case 'hourly':
+        grossAnnual = amount * hoursPerWeek * 52;
+        break;
+    }
+
+    const netAnnual = grossAnnual * (1 - taxRate / 100);
+
+    const grossMonthly = grossAnnual / 12;
+    const netMonthly = netAnnual / 12;
+
+    const grossWeekly = grossAnnual / 52;
+    const netWeekly = netAnnual / 52;
+
+    const grossDaily = grossAnnual / 260;
+    const netDaily = netAnnual / 260;
+
+    const grossHourly = grossAnnual / (52 * hoursPerWeek);
+    const netHourly = netAnnual / (52 * hoursPerWeek);
+
+    // Update fields
+    if (grossAnnualEl) grossAnnualEl.textContent = fmtCurrency(grossAnnual);
+    if (netAnnualEl) netAnnualEl.textContent = fmtCurrency(netAnnual);
+
+    if (grossMonthlyEl) grossMonthlyEl.textContent = fmtCurrency(grossMonthly);
+    if (netMonthlyEl) netMonthlyEl.textContent = fmtCurrency(netMonthly);
+
+    if (grossWeeklyEl) grossWeeklyEl.textContent = fmtCurrency(grossWeekly);
+    if (netWeeklyEl) netWeeklyEl.textContent = fmtCurrency(netWeekly);
+
+    if (grossDailyEl) grossDailyEl.textContent = fmtCurrency(grossDaily);
+    if (netDailyEl) netDailyEl.textContent = fmtCurrency(netDaily);
+
+    if (grossHourlyEl) grossHourlyEl.textContent = fmtCurrency(grossHourly);
+    if (netHourlyEl) netHourlyEl.textContent = fmtCurrency(netHourly);
+
+    // Update summary text
+    if (summaryEl) {
+      if (taxRate > 0) {
+        summaryEl.textContent = `A gross annual salary of ${fmtCurrency(grossAnnual)} results in an estimated annual take-home (net) pay of ${fmtCurrency(netAnnual)} after a ${taxRate}% tax rate. This breaks down to a monthly net pay of ${fmtCurrency(netMonthly)} and an hourly net rate of ${fmtCurrency(netHourly)}.`;
+      } else {
+        summaryEl.textContent = `A gross annual salary of ${fmtCurrency(grossAnnual)} equates to ${fmtCurrency(grossMonthly)} per month, ${fmtCurrency(grossWeekly)} per week, and ${fmtCurrency(grossHourly)} per hour. Enter an estimated tax rate to view take-home figures.`;
+      }
+    }
+  }
+
+  // Bind event listeners
+  [salaryAmountInput, payFrequencyInput, hoursPerWeekInput, taxRateInput].forEach((el) => {
+    if (el) el.addEventListener('input', calculate);
+  });
+
+  // Toggle hourly option visibility details if needed (always calculate is fine)
+  if (payFrequencyInput) {
+    payFrequencyInput.addEventListener('change', () => {
+      const isHourly = payFrequencyInput.value === 'hourly';
+      // We can keep it visible always since it determines conversion either way
+    });
+  }
+
+  // Trigger initial calculation
+  calculate();
+</script>

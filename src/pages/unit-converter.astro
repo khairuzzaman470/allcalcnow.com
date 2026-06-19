@@ -1,0 +1,443 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'Discount Calculator', icon: '🏷️', description: 'Find final sale prices, total savings, and percentage discounts instantly', href: '/discount-calculator' },
+  { name: 'Salary Calculator', icon: '💼', description: 'Convert salary between annual, monthly, weekly, and hourly pay, and estimate tax withholding.', href: '/salary-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/unit-converter';
+const pageTitle = 'Unit Converter — Length, Weight, Temperature and More | AllCalcNow';
+const pageDescription =
+  'Free unit converter at AllCalcNow. Convert length, weight, temperature, volume and area between metric and imperial units instantly.';
+
+const faqs = [
+  {
+    question: 'How do I convert kg to pounds?',
+    answer:
+      'To convert kilograms (kg) to pounds (lb), multiply the weight in kilograms by the conversion factor 2.20462. For example, to convert 10 kg to pounds: 10 × 2.20462 = 22.0462 lbs. To convert pounds to kilograms, divide the weight in pounds by 2.20462 (or multiply by 0.45359).',
+  },
+  {
+    question: 'How do I convert Celsius to Fahrenheit?',
+    answer:
+      'To convert temperatures from Celsius (°C) to Fahrenheit (°F), multiply the temperature in Celsius by 9/5 (or 1.8) and then add 32. The formula is: °F = (°C × 1.8) + 32. For example, to convert 20°C to Fahrenheit: (20 × 1.8) + 32 = 36 + 32 = 68°F. To go from Fahrenheit to Celsius, subtract 32 and multiply by 5/9: °C = (°F − 32) × 5/9.',
+  },
+  {
+    question: 'How many feet are in a meter?',
+    answer:
+      'There are exactly 3.28084 feet in one meter. To convert meters to feet, multiply the length in meters by 3.28084. For example, 5 meters is equal to 16.4042 feet (5 × 3.28084). To convert feet to meters, multiply the length in feet by 0.3048.',
+  },
+  {
+    question: 'How do I convert liters to gallons?',
+    answer:
+      'To convert liters (L) to US gallons (gal), multiply the volume in liters by 0.264172 (or divide by 3.78541). For example, 10 liters is approximately 2.64 US gallons (10 × 0.264172). Note that UK/Imperial gallons are larger: 1 liter equals 0.219969 UK gallons.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Unit Converter', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Unit Converter', '/unit-converter', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/unit-converter" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Unit Converter' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Everyday Math
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Unit Converter</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Convert measurement units instantly between metric and imperial scales across five popular categories.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="flex flex-wrap gap-1 border-b border-border bg-bg/50 p-2" role="tablist" aria-label="Converter category">
+        <button type="button" role="tab" id="tab-btn-length" aria-selected="true" data-category="length" class="pc-tab segment-active flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all sm:flex-none">
+          Length
+        </button>
+        <button type="button" role="tab" id="tab-btn-weight" aria-selected="false" data-category="weight" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          Weight
+        </button>
+        <button type="button" role="tab" id="tab-btn-temperature" aria-selected="false" data-category="temperature" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          Temperature
+        </button>
+        <button type="button" role="tab" id="tab-btn-volume" aria-selected="false" data-category="volume" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          Volume
+        </button>
+        <button type="button" role="tab" id="tab-btn-area" aria-selected="false" data-category="area" class="pc-tab flex-1 rounded-xl px-4 py-3 text-sm font-bold text-muted transition-all hover:text-text sm:flex-none">
+          Area
+        </button>
+      </div>
+
+      <div class="grid gap-8 p-6 lg:grid-cols-2 lg:p-8">
+        <div class="space-y-5">
+          <div>
+            <label for="convert-amount" class={labelClass}>Amount</label>
+            <input type="number" id="convert-amount" value="1" step="any" class={inputClass} />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="from-unit" class={labelClass}>From</label>
+              <select id="from-unit" class={inputClass}>
+                <!-- Populate default length options for SSR -->
+                <option value="m">Meters (m)</option>
+                <option value="km">Kilometers (km)</option>
+                <option value="cm">Centimeters (cm)</option>
+                <option value="mm">Millimeters (mm)</option>
+                <option value="mi">Miles (mi)</option>
+                <option value="yd">Yards (yd)</option>
+                <option value="ft">Feet (ft)</option>
+                <option value="in">Inches (in)</option>
+              </select>
+            </div>
+            <div>
+              <label for="to-unit" class={labelClass}>To</label>
+              <select id="to-unit" class={inputClass}>
+                <option value="m">Meters (m)</option>
+                <option value="km">Kilometers (km)</option>
+                <option value="cm">Centimeters (cm)</option>
+                <option value="mm">Millimeters (mm)</option>
+                <option value="mi">Miles (mi)</option>
+                <option value="yd">Yards (yd)</option>
+                <option value="ft" selected>Feet (ft)</option>
+                <option value="in">Inches (in)</option>
+              </select>
+            </div>
+          </div>
+          
+          <button type="button" id="swap-units-btn" class="inline-flex items-center gap-2 rounded-xl bg-bg px-4 py-2.5 text-sm font-bold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer">
+            🔄 Swap Units
+          </button>
+        </div>
+
+        <!-- Results Card -->
+        <div class="flex flex-col justify-center rounded-2xl bg-navy p-6 text-white sm:p-8">
+          <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Result</p>
+          
+          <div class="mt-4">
+            <p id="conversion-result-value" class="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl text-white">3.2808 ft</p>
+          </div>
+
+          <p id="conversion-detail" class="mt-6 border-t border-white/10 pt-4 text-sm text-white/80 leading-relaxed">
+            1 meter = 3.28084 feet
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Unit Converter" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Unit Converter</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        In our interconnected world, we constantly navigate between different systems of measurement. The <strong class="font-semibold text-text">Unit Converter</strong> provides an instant, accurate solution for converting values across five essential categories: length, weight, temperature, volume, and area. Whether you are translating cooking recipes, working on engineering blueprints, traveling abroad, or solving school math problems, this tool provides real-time conversions between metric and imperial scales.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#metric-vs-imperial-units-explained" class="text-accent hover:underline">Metric vs Imperial Units Explained</a></li>
+          <li><a href="#common-unit-conversions-you-should-know" class="text-accent hover:underline">Common Unit Conversions You Should Know</a></li>
+          <li><a href="#how-to-convert-celsius-to-fahrenheit" class="text-accent hover:underline">How to Convert Celsius to Fahrenheit</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="metric-vs-imperial-units-explained" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Metric vs Imperial Units Explained</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Measurements are divided into two main frameworks: the **Metric System** (International System of Units, or SI) and the **Imperial System** (primarily used in the United States, Liberia, and Myanmar).
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          The **Metric System** is built on a logical base-10 structure. Units scale up or down by powers of ten (e.g., 100 centimeters in a meter, 1,000 meters in a kilometer), making calculations and scaling extremely simple. Prefix markers like milli-, centi-, kilo-, and mega- make the scale of the unit immediately clear.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          In contrast, the **Imperial System** relies on historical and localized definitions. For example, there are 12 inches in a foot, 3 feet in a yard, and 5,280 feet in a mile. Weights are measured in ounces, pounds, and stones, which do not scale by tens. While metric is standard globally and in scientific disciplines, imperial units remain prevalent in daily life and industrial applications within the United States.
+        </p>
+      </section>
+
+      <section id="common-unit-conversions-you-should-know" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Common Unit Conversions You Should Know</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Having a basic grasp of common conversion factors helps you estimate measurements without looking them up every time:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Length:</strong> 1 inch is exactly 2.54 centimeters. A mile is approximately 1.61 kilometers, and a meter is roughly 3.28 feet.</li>
+          <li><strong class="text-text">Weight:</strong> 1 kilogram is about 2.20 pounds. An ounce corresponds to approximately 28.35 grams.</li>
+          <li><strong class="text-text">Volume:</strong> A US gallon is about 3.79 liters. 1 fluid ounce is roughly 29.57 milliliters.</li>
+          <li><strong class="text-text">Area:</strong> 1 hectare equals 10,000 square meters or about 2.47 acres.</li>
+        </ul>
+      </section>
+
+      <section id="how-to-convert-celsius-to-fahrenheit" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Convert Celsius to Fahrenheit</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Unlike lengths or weights, which use simple multipliers, temperature scales have different starting points (freezing is 0°C but 32°F) and increment sizes. A change of 1°C is equivalent to a change of 1.8°F.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          To convert Celsius to Fahrenheit, multiply the Celsius temperature by 9/5 (or 1.8) and add 32:
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Fahrenheit = (Celsius × 1.8) + 32
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          For instance, if it is 25°C outside, the temperature in Fahrenheit is:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Multiply by 1.8: 25 × 1.8 = 45</li>
+          <li>Add 32: 45 + 32 = 77°F</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          To perform the reverse conversion from Fahrenheit to Celsius, subtract 32 first, then multiply by 5/9 (or divide by 1.8):
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Celsius = (Fahrenheit − 32) ÷ 1.8
+        </div>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> The conversions provided by this tool use standard global conversion constants. Minor rounding differences might occur. For high-precision scientific applications or legal measurements, double-check values with official conversion standards.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  // Conversion factors and unit labels mapping
+  const units = {
+    length: [
+      { value: 'm', label: 'Meters (m)', factor: 1 },
+      { value: 'km', label: 'Kilometers (km)', factor: 1000 },
+      { value: 'cm', label: 'Centimeters (cm)', factor: 0.01 },
+      { value: 'mm', label: 'Millimeters (mm)', factor: 0.001 },
+      { value: 'mi', label: 'Miles (mi)', factor: 1609.344 },
+      { value: 'yd', label: 'Yards (yd)', factor: 0.9144 },
+      { value: 'ft', label: 'Feet (ft)', factor: 0.3048 },
+      { value: 'in', label: 'Inches (in)', factor: 0.0254 }
+    ],
+    weight: [
+      { value: 'kg', label: 'Kilograms (kg)', factor: 1 },
+      { value: 'g', label: 'Grams (g)', factor: 0.001 },
+      { value: 'mg', label: 'Milligrams (mg)', factor: 0.000001 },
+      { value: 'lb', label: 'Pounds (lb)', factor: 0.45359237 },
+      { value: 'oz', label: 'Ounces (oz)', factor: 0.028349523125 },
+      { value: 'st', label: 'Stones (st)', factor: 6.35029318 }
+    ],
+    temperature: [
+      { value: 'c', label: 'Celsius (°C)' },
+      { value: 'f', label: 'Fahrenheit (°F)' },
+      { value: 'k', label: 'Kelvin (K)' }
+    ],
+    volume: [
+      { value: 'l', label: 'Liters (L)', factor: 1 },
+      { value: 'ml', label: 'Milliliters (mL)', factor: 0.001 },
+      { value: 'gal', label: 'Gallons (US) (gal)', factor: 3.785411784 },
+      { value: 'qt', label: 'Quarts (US) (qt)', factor: 0.946352946 },
+      { value: 'pt', label: 'Pints (US) (pt)', factor: 0.473176473 },
+      { value: 'cup', label: 'Cups (US) (cup)', factor: 0.2365882365 },
+      { value: 'floz', label: 'Fluid Ounces (US) (fl oz)', factor: 0.0295735295625 }
+    ],
+    area: [
+      { value: 'm2', label: 'Square Meters (m²)', factor: 1 },
+      { value: 'km2', label: 'Square Kilometers (km²)', factor: 1000000 },
+      { value: 'mi2', label: 'Square Miles (mi²)', factor: 2589988.110336 },
+      { value: 'ac', label: 'Acres (ac)', factor: 4046.8564224 },
+      { value: 'ha', label: 'Hectares (ha)', factor: 10000 },
+      { value: 'ft2', label: 'Square Feet (ft²)', factor: 0.09290304 },
+      { value: 'in2', label: 'Square Inches (in²)', factor: 0.00064516 }
+    ]
+  };
+
+  let currentCategory = 'length';
+
+  const amountInput = document.getElementById('convert-amount');
+  const fromSelect = document.getElementById('from-unit');
+  const toSelect = document.getElementById('to-unit');
+  const swapBtn = document.getElementById('swap-units-btn');
+
+  const resultValueEl = document.getElementById('conversion-result-value');
+  const resultDetailEl = document.getElementById('conversion-detail');
+
+  function setCategory(category) {
+    currentCategory = category;
+
+    // Highlight active tab
+    document.querySelectorAll('.pc-tab').forEach((btn) => {
+      const active = btn.getAttribute('data-category') === category;
+      btn.classList.toggle('segment-active', active);
+      btn.classList.toggle('text-muted', !active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    // Repopulate select fields
+    const options = units[category];
+    if (fromSelect && toSelect) {
+      fromSelect.innerHTML = '';
+      toSelect.innerHTML = '';
+      
+      options.forEach((unit, idx) => {
+        const optFrom = document.createElement('option');
+        optFrom.value = unit.value;
+        optFrom.textContent = unit.label;
+        fromSelect.appendChild(optFrom);
+
+        const optTo = document.createElement('option');
+        optTo.value = unit.value;
+        optTo.textContent = unit.label;
+        if (idx === 1) optTo.selected = true; // Set second item as default destination
+        toSelect.appendChild(optTo);
+      });
+    }
+
+    calculate();
+  }
+
+  function calculate() {
+    const amount = parseFloat(amountInput?.value || '0');
+    const fromUnit = fromSelect?.value;
+    const toUnit = toSelect?.value;
+
+    if (isNaN(amount) || !fromUnit || !toUnit) {
+      if (resultValueEl) resultValueEl.textContent = '—';
+      if (resultDetailEl) resultDetailEl.textContent = 'Please enter a valid amount.';
+      return;
+    }
+
+    const catUnits = units[currentCategory];
+    const fromObj = catUnits.find(u => u.value === fromUnit);
+    const toObj = catUnits.find(u => u.value === toUnit);
+
+    if (!fromObj || !toObj) return;
+
+    let result = 0;
+    let detailText = '';
+
+    const formatNum = (val) => {
+      return new Intl.NumberFormat('en-US', { maximumFractionDigits: 6 }).format(val);
+    };
+
+    if (currentCategory === 'temperature') {
+      // Temperature conversion logic
+      let cVal = 0;
+      if (fromUnit === 'c') cVal = amount;
+      else if (fromUnit === 'f') cVal = (amount - 32) * 5/9;
+      else if (fromUnit === 'k') cVal = amount - 273.15;
+
+      if (toUnit === 'c') result = cVal;
+      else if (toUnit === 'f') result = cVal * 9/5 + 32;
+      else if (toUnit === 'k') result = cVal + 273.15;
+
+      // Detail formula
+      if (fromUnit === 'c' && toUnit === 'f') detailText = `(${formatNum(amount)}°C × 9/5) + 32 = ${formatNum(result)}°F`;
+      else if (fromUnit === 'f' && toUnit === 'c') detailText = `(${formatNum(amount)}°F − 32) × 5/9 = ${formatNum(result)}°C`;
+      else detailText = `Formula: Custom offset applied for temperature conversion.`;
+    } else {
+      // General multiplicative conversions using factor mapping
+      const baseValue = amount * fromObj.factor;
+      result = baseValue / toObj.factor;
+
+      const oneFromInTo = fromObj.factor / toObj.factor;
+      detailText = `1 ${fromUnit} = ${formatNum(oneFromInTo)} ${toUnit}`;
+    }
+
+    if (resultValueEl) {
+      resultValueEl.textContent = `${formatNum(result)} ${toUnit}`;
+    }
+    if (resultDetailEl) {
+      resultDetailEl.textContent = detailText;
+    }
+  }
+
+  // Swap handler
+  if (swapBtn && fromSelect && toSelect) {
+    swapBtn.addEventListener('click', () => {
+      const temp = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = temp;
+      calculate();
+    });
+  }
+
+  // Event bindings
+  document.querySelectorAll('.pc-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.getAttribute('data-category');
+      if (cat) setCategory(cat);
+    });
+  });
+
+  [amountInput, fromSelect, toSelect].forEach((el) => {
+    if (el) el.addEventListener('change', calculate);
+    if (el) el.addEventListener('input', calculate);
+  });
+
+  // Init
+  setCategory('length');
+</script>
+
+<style>
+  .pc-tab.segment-active {
+    background: var(--color-accent);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+</style>

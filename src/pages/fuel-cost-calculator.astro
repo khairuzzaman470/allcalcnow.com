@@ -1,0 +1,403 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Unit Converter', icon: '📏', description: 'Convert length, weight, temperature, volume, and area between metric and imperial scales.', href: '/unit-converter' },
+  { name: 'Percentage Calculator', icon: '％', description: 'Three ways to calculate any percentage', href: '/percentage-calculator' },
+  { name: 'Discount Calculator', icon: '🏷️', description: 'Find final sale prices, total savings, and percentage discounts instantly', href: '/discount-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/fuel-cost-calculator';
+const pageTitle = 'Fuel Cost Calculator — Calculate Trip Fuel Cost | AllCalcNow';
+const pageDescription =
+  'Free fuel cost calculator at AllCalcNow. Calculate how much fuel your trip will cost based on distance, efficiency and fuel price.';
+
+const faqs = [
+  {
+    question: 'How do I calculate fuel cost for a trip?',
+    answer:
+      'Divide the trip distance by your car\'s fuel efficiency (MPG) to find the total gallons of fuel needed. Then, multiply the gallons by the fuel price per gallon. If you use metric units, divide the distance in kilometers by 100, multiply by the L/100km efficiency rate to find the total liters, and multiply by the price per liter.',
+  },
+  {
+    question: 'What is good fuel economy?',
+    answer:
+      'For a standard petrol-powered passenger car, a fuel economy above 30 MPG (combined city/highway) is considered good. For hybrid vehicles, good fuel economy is typically 50 MPG or higher. In metric terms, a consumption of less than 6.0 liters per 100km (L/100km) is considered highly efficient.',
+  },
+  {
+    question: 'How can I reduce fuel costs?',
+    answer:
+      'You can reduce fuel costs by maintaining your vehicle (keeping tires properly inflated, changing air filters), driving smoothly (avoiding rapid acceleration and heavy braking), reducing excess weight in the trunk, limiting the use of roof racks (which increase aerodynamic drag), and using apps to find the cheapest fuel prices in your area.',
+  },
+  {
+    question: 'How do I convert MPG to liters per 100km?',
+    answer:
+      'To convert US MPG to liters per 100 kilometers (L/100km), divide 235.215 by the MPG figure. For example, 30 US MPG = 235.215 ÷ 30 ≈ 7.84 L/100km. For UK (Imperial) MPG, divide 282.481 by the MPG figure: 40 UK MPG = 282.481 ÷ 40 ≈ 7.06 L/100km.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Fuel Cost Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Fuel Cost Calculator', '/fuel-cost-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/fuel-cost-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Fuel Cost Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Everyday Math
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Fuel Cost Calculator</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Estimate fuel consumption and total expenses for road trips, daily commutes, or holiday travel.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="p-6 lg:p-8">
+        <div class="grid gap-8 lg:grid-cols-12">
+          <!-- Inputs Column -->
+          <div class="lg:col-span-5 space-y-5">
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="sm:col-span-2">
+                <label for="trip-distance" class={labelClass}>Trip Distance</label>
+                <input type="number" id="trip-distance" value="100" min="0" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="distance-unit" class={labelClass}>Unit</label>
+                <select id="distance-unit" class={inputClass}>
+                  <option value="miles" selected>Miles</option>
+                  <option value="km">Km</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="sm:col-span-2">
+                <label for="fuel-efficiency" class={labelClass}>Fuel Efficiency</label>
+                <input type="number" id="fuel-efficiency" value="25" min="0" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="efficiency-unit" class={labelClass}>Unit</label>
+                <select id="efficiency-unit" class={inputClass}>
+                  <option value="mpg_us" selected>MPG (US)</option>
+                  <option value="mpg_uk">MPG (UK)</option>
+                  <option value="l100k">L/100km</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="sm:col-span-2">
+                <label for="fuel-price" class={labelClass}>Fuel Price ($)</label>
+                <input type="number" id="fuel-price" value="3.50" min="0" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="price-unit" class={labelClass}>Per</label>
+                <select id="price-unit" class={inputClass}>
+                  <option value="gallon_us" selected>Gallon (US)</option>
+                  <option value="gallon_uk">Gallon (UK)</option>
+                  <option value="liter">Liter</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="num-trips" class={labelClass}>Number of Trips <span class="text-xs font-normal text-muted">(e.g. 10 for weekly round commute)</span></label>
+              <input type="number" id="num-trips" value="1" min="1" step="1" class={inputClass} />
+            </div>
+          </div>
+
+          <!-- Results Column -->
+          <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-navy p-6 text-white sm:p-8 font-medium">
+            <div class="space-y-6">
+              <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Calculation Results</p>
+              
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Total Cost</p>
+                <p id="result-total-cost" class="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl text-white mt-1">$0.00</p>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Fuel Needed</p>
+                  <p id="result-fuel-needed" class="font-heading text-xl font-bold text-green-400 mt-1">0.00 Gal</p>
+                </div>
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Cost per Mile / Km</p>
+                  <p id="result-cost-per-unit" class="font-heading text-xl font-bold text-green-400 mt-1">$0.00</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Weekly Cost <span class="text-[10px] font-normal text-white/40">(Commute based)</span></p>
+                  <p id="result-weekly-cost" class="font-heading text-xl font-bold text-white mt-1">$0.00</p>
+                </div>
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Monthly Cost <span class="text-[10px] font-normal text-white/40">(Commute based)</span></p>
+                  <p id="result-monthly-cost" class="font-heading text-xl font-bold text-white mt-1">$0.00</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-white/10 pt-4">
+              <p id="result-detail" class="text-sm text-white/80 leading-relaxed">
+                —
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Fuel Cost Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Fuel Cost Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        Taking a road trip, managing a daily work commute, or mapping out fleet logistics requires keeping close track of transportation expenses. The <strong class="font-semibold text-text">Fuel Cost Calculator</strong> helps you estimate the total fuel volume needed and corresponding expenses for any journey. Integrating distance inputs, efficiency rates, fuel prices, and trip repetitions, this tool provides real-time conversions for metric and imperial setups.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-calculate-fuel-cost" class="text-accent hover:underline">How to Calculate Fuel Cost for a Road Trip</a></li>
+          <li><a href="#how-to-improve-car-fuel-efficiency" class="text-accent hover:underline">How to Improve Your Car Fuel Efficiency</a></li>
+          <li><a href="#electric-vs-petrol-car-running-costs" class="text-accent hover:underline">Electric vs Petrol Car Running Costs</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-to-calculate-fuel-cost" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Calculate Fuel Cost for a Road Trip</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Calculating trip fuel expenses manually involves three variables: distance, fuel efficiency, and fuel pricing. 
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          First, calculate the volume of fuel required by dividing the trip distance by your vehicle\'s average fuel economy. Second, multiply that volume by the local fuel price:
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          1. Fuel Needed (Gallons) = Distance (Miles) ÷ Fuel Efficiency (MPG)<br />
+          2. Total Cost = Fuel Needed (Gallons) × Price per Gallon
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          For example, if you plan a road trip covering <strong class="text-text">300 miles</strong> in a car that averages <strong class="text-text">30 MPG</strong>, with fuel priced at <strong class="text-text">$3.50 per gallon</strong>:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Fuel needed: 300 miles ÷ 30 MPG = 10 gallons</li>
+          <li>Total expense: 10 gallons × $3.50 = $35.00</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          For metric calculations (using kilometers, liters, and L/100km), divide the distance by 100, multiply by the efficiency rate, then multiply by the price per liter.
+        </p>
+      </section>
+
+      <section id="how-to-improve-car-fuel-efficiency" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Improve Your Car Fuel Efficiency</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Optimizing your vehicle\'s fuel consumption reduces emissions and saves money at the pump. Simple adjustments to driving habits and car maintenance can result in significant improvements:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Drive Smoothly:</strong> Rapid acceleration and hard braking can lower your gas mileage by up to 33% at highway speeds. Use cruise control on flat highways to maintain a steady speed.</li>
+          <li><strong class="text-text">Maintain Tire Pressure:</strong> Underinflated tires increase rolling resistance, making your engine work harder. Keep your tires inflated to the manufacturer\'s recommended PSI to improve mileage by up to 3%.</li>
+          <li><strong class="text-text">Reduce Weight and Drag:</strong> Extra cargo adds weight, demanding more fuel. Roof racks, cargo boxes, or bicycle mounts create significant aerodynamic drag. Remove them when not in use.</li>
+          <li><strong class="text-text">Avoid Excessive Idling:</strong> Idling can consume a quarter to a half-gallon of fuel per hour. Turn off your engine if you are waiting for more than a minute.</li>
+        </ul>
+      </section>
+
+      <section id="electric-vs-petrol-car-running-costs" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Electric vs Petrol Car Running Costs</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Comparing electric vehicles (EVs) against traditional internal combustion engines (ICE) is a key consideration for modern car buyers. While EVs often carry a higher initial purchase price, their operational running costs are typically lower.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Electricity is generally cheaper than gasoline or diesel per mile traveled. An average EV achieves roughly 3 to 4 miles per kilowatt-hour (kWh). If electricity costs $0.16 per kWh, driving 100 miles costs roughly $4.00 to $5.33. Conversely, a petrol car averaging 30 MPG with fuel at $3.50 per gallon costs $11.67 to cover the same 100 miles. Over years of commuting, this gap results in substantial savings.
+        </p>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Trip calculations are estimates based on input averages. Actual fuel efficiency fluctuates due to road conditions, traffic patterns, elevation changes, air conditioning usage, and individual driving styles.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const distanceInput = document.getElementById('trip-distance');
+  const distanceUnitSelect = document.getElementById('distance-unit');
+  const efficiencyInput = document.getElementById('fuel-efficiency');
+  const efficiencyUnitSelect = document.getElementById('efficiency-unit');
+  const priceInput = document.getElementById('fuel-price');
+  const priceUnitSelect = document.getElementById('price-unit');
+  const tripsInput = document.getElementById('num-trips');
+
+  const totalCostEl = document.getElementById('result-total-cost');
+  const fuelNeededEl = document.getElementById('result-fuel-needed');
+  const costPerUnitEl = document.getElementById('result-cost-per-unit');
+  const weeklyCostEl = document.getElementById('result-weekly-cost');
+  const monthlyCostEl = document.getElementById('result-monthly-cost');
+  const detailEl = document.getElementById('result-detail');
+
+  const fmtCurrency = (n) => {
+    if (!Number.isFinite(n) || isNaN(n)) return '$—';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  };
+
+  function calculate() {
+    const rawDistance = parseFloat(distanceInput?.value || '0');
+    const distUnit = distanceUnitSelect?.value || 'miles';
+    const rawEfficiency = parseFloat(efficiencyInput?.value || '0');
+    const effUnit = efficiencyUnitSelect?.value || 'mpg_us';
+    const rawPrice = parseFloat(priceInput?.value || '0');
+    const priceUnit = priceUnitSelect?.value || 'gallon_us';
+    const trips = parseFloat(tripsInput?.value || '1');
+
+    if (rawDistance < 0 || rawEfficiency <= 0 || rawPrice < 0 || trips < 1) {
+      [totalCostEl, fuelNeededEl, costPerUnitEl, weeklyCostEl, monthlyCostEl].forEach((el) => {
+        if (el) el.textContent = '—';
+      });
+      if (detailEl) detailEl.textContent = 'Please enter valid positive values.';
+      return;
+    }
+
+    // Convert distance to base: Kilometers
+    let distanceKm = rawDistance;
+    if (distUnit === 'miles') {
+      distanceKm = rawDistance * 1.609344;
+    }
+
+    // Convert price to base: Price per Liter
+    let pricePerLiter = rawPrice;
+    if (priceUnit === 'gallon_us') {
+      pricePerLiter = rawPrice / 3.785411784;
+    } else if (priceUnit === 'gallon_uk') {
+      pricePerLiter = rawPrice / 4.54609;
+    }
+
+    // Convert efficiency to base: Liters per Kilometer (L/km)
+    let litersPerKm = 0;
+    if (effUnit === 'l100k') {
+      litersPerKm = rawEfficiency / 100;
+    } else if (effUnit === 'mpg_us') {
+      litersPerKm = 2.352145833 / rawEfficiency;
+    } else if (effUnit === 'mpg_uk') {
+      litersPerKm = 2.824809363 / rawEfficiency;
+    }
+
+    // Calculations
+    const fuelNeededLiters = distanceKm * litersPerKm * trips;
+    const totalCost = fuelNeededLiters * pricePerLiter;
+
+    // Cost per unit distance
+    let costPerUnitDistance = 0;
+    let costUnitLabel = '';
+    if (distUnit === 'miles') {
+      costPerUnitDistance = totalCost / (rawDistance * trips || 1);
+      costUnitLabel = 'mile';
+    } else {
+      costPerUnitDistance = totalCost / (rawDistance * trips || 1);
+      costUnitLabel = 'km';
+    }
+
+    // Weekly and Monthly Commute Costs
+    // Assuming tripsInput is the weekly trips (or total trips). Let's represent trips as the trip count.
+    // Weekly cost: Cost of the trips executed
+    const weeklyCost = totalCost; // The inputs default to showing trips count (e.g. 10 per week)
+    const monthlyCost = weeklyCost * 4.3333;
+
+    // Fuel display unit matching input or fallback
+    let fuelDisplay = '';
+    if (priceUnit.includes('gallon')) {
+      const fuelNeededGallons = fuelNeededLiters * 0.2641720524;
+      fuelDisplay = `${fuelNeededGallons.toFixed(2)} Gal`;
+    } else {
+      fuelDisplay = `${fuelNeededLiters.toFixed(2)} L`;
+    }
+
+    // Update UI elements
+    if (totalCostEl) totalCostEl.textContent = fmtCurrency(totalCost);
+    if (fuelNeededEl) fuelNeededEl.textContent = fuelDisplay;
+    if (costPerUnitEl) costPerUnitEl.textContent = `${fmtCurrency(costPerUnitDistance)} / ${costUnitLabel}`;
+    if (weeklyCostEl) weeklyCostEl.textContent = fmtCurrency(weeklyCost);
+    if (monthlyCostEl) monthlyCostEl.textContent = fmtCurrency(monthlyCost);
+
+    if (detailEl) {
+      detailEl.textContent = `A journey of ${rawDistance} ${distUnit} at ${rawEfficiency} ${effUnit.replace('_', ' ').toUpperCase()} requires ${fuelDisplay} of fuel. At ${fmtCurrency(rawPrice)} per ${priceUnit.replace('_', ' ')}, the total cost for ${trips} trip(s) is ${fmtCurrency(totalCost)}.`;
+    }
+  }
+
+  // Bind inputs
+  [
+    distanceInput,
+    distanceUnitSelect,
+    efficiencyInput,
+    efficiencyUnitSelect,
+    priceInput,
+    priceUnitSelect,
+    tripsInput,
+  ].forEach((el) => {
+    if (el) {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    }
+  });
+
+  // Calculate initially
+  calculate();
+</script>

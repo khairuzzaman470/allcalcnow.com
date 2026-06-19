@@ -12,9 +12,9 @@ const quickAmounts = [50, 100, 200, 500, 1000];
 const quickPcts = [10, 15, 20, 25, 50];
 
 const relatedTools = [
+  { name: 'Discount Calculator', icon: '🏷️', description: 'Find final sale prices, total savings, and percentage discounts instantly', href: '/discount-calculator' },
   { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
   { name: 'Tip Calculator', icon: '🍽️', description: 'Split bill and calculate tip instantly', href: '/tip-calculator' },
-  { name: 'Compound Interest Calculator', icon: '📈', description: 'See how savings grow with compounding', href: '/compound-interest-calculator' },
 ];
 
 const pageUrl = 'https://allcalcnow.com/percentage-calculator';
@@ -268,8 +268,9 @@ const schemas = [
         </p>
         <p class="mt-3 leading-relaxed text-muted">
           For specialized percentage tasks, try our
+          <a href="/discount-calculator" class="font-semibold text-accent hover:underline">discount calculator</a> (finding final prices and savings),
           <a href="/vat-calculator" class="font-semibold text-accent hover:underline">VAT calculator</a> (adding or removing
-          tax percentages from prices) and
+          tax percentages from prices), and
           <a href="/tip-calculator" class="font-semibold text-accent hover:underline">tip calculator</a> (splitting a bill
           with a custom tip percentage).
         </p>

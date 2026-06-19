@@ -1,0 +1,464 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Salary Calculator', icon: '💼', description: 'Convert salary between annual, monthly, weekly, and hourly pay, and estimate tax withholding.', href: '/salary-calculator' },
+  { name: 'Compound Interest Calculator', icon: '📈', description: 'See how savings grow with compounding', href: '/compound-interest-calculator' },
+  { name: 'Loan Calculator', icon: '💰', description: 'Determine monthly EMI, total interest, and view loan payoff timelines', href: '/loan-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/retirement-calculator';
+const pageTitle = 'Retirement Calculator — How Much Do You Need to Retire? | AllCalcNow';
+const pageDescription =
+  'Free retirement calculator at AllCalcNow. Find out how much you need to save to retire comfortably. Plan your retirement savings today.';
+
+const faqs = [
+  {
+    question: 'How much should I save for retirement?',
+    answer:
+      'A common target is to save 10 to 15 times your peak annual income by the time you retire. Alternatively, you can calculate your target savings based on your expected annual retirement expenses using the "Rule of 25," which suggests saving 25 times your annual expenses. For example, if you expect to spend $40,000 per year in retirement, your target nest egg should be $1 million ($40,000 × 25).',
+  },
+  {
+    question: 'What is a good age to start saving?',
+    answer:
+      'The best age to start saving is as early as possible. Starting in your early 20s allows compound interest to do most of the heavy lifting. For example, if you start saving $300 a month at age 25, you could accumulate over $1 million by age 65 (assuming a 7% average annual return). If you wait until age 35 to start, you would need to save over $650 a month to reach the same goal.',
+  },
+  {
+    question: 'What is the 4% rule?',
+    answer:
+      'The 4% rule is a widely used guideline for retirement withdrawals. It suggests that if you withdraw 4% of your total retirement nest egg in the first year of retirement, and then adjust that amount for inflation in subsequent years, your savings have a very high probability of lasting at least 30 years. It provides a simple way to convert a target lump sum into a sustainable monthly or annual income.',
+  },
+  {
+    question: 'How does inflation affect retirement savings?',
+    answer:
+      'Inflation erodes the purchasing power of your money over time. If inflation averages 2.5% per year, the cost of goods and services will double in approximately 28 years. This means a retirement nest egg of $1 million will only have the purchasing power of about $500,000 in today\'s dollars after 28 years. To protect your retirement, you must invest in assets like equities that historically outpace inflation, and adjust your savings goals upward over time.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Retirement Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Retirement Calculator', '/retirement-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/retirement-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Retirement Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Finance
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Retirement Calculator</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Estimate your accumulated nest egg at retirement, check how long it will last, and see if you are on track.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="p-6 lg:p-8">
+        <div class="grid gap-8 lg:grid-cols-12">
+          <!-- Inputs Column -->
+          <div class="lg:col-span-5 space-y-5">
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="current-age" class={labelClass}>Current Age</label>
+                <input type="number" id="current-age" value="30" min="1" max="100" class={inputClass} />
+              </div>
+              <div>
+                <label for="retirement-age" class={labelClass}>Retirement Age</label>
+                <input type="number" id="retirement-age" value="65" min="1" max="100" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="current-savings" class={labelClass}>Current Savings ($)</label>
+                <input type="number" id="current-savings" value="10000" min="0" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="monthly-contribution" class={labelClass}>Monthly Savings ($)</label>
+                <input type="number" id="monthly-contribution" value="500" min="0" step="any" class={inputClass} />
+              </div>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="expected-return" class={labelClass}>Expected Return (%)</label>
+                <input type="number" id="expected-return" value="7" min="0" max="30" step="any" class={inputClass} />
+              </div>
+              <div>
+                <label for="expected-inflation" class={labelClass}>Annual Inflation (%)</label>
+                <input type="number" id="expected-inflation" value="2.5" min="0" max="15" step="any" class={inputClass} />
+              </div>
+            </div>
+
+            <div>
+              <label for="monthly-expenses" class={labelClass}>Monthly Expenses in Retirement ($)</label>
+              <input type="number" id="monthly-expenses" value="3000" min="0" step="any" class={inputClass} />
+            </div>
+          </div>
+
+          <!-- Results Column -->
+          <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-navy p-6 text-white sm:p-8">
+            <div class="space-y-6">
+              <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Your Retirement Plan</p>
+              
+              <div class="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Nest Egg at Retirement</p>
+                  <p id="nest-egg-value" class="font-heading text-3xl font-extrabold text-white mt-1">$0.00</p>
+                  <p id="nest-egg-real" class="text-xs text-white/60 mt-1">($0.00 in today's dollars)</p>
+                </div>
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60 font-semibold">Safe Monthly Withdrawal</p>
+                  <p id="safe-monthly-income" class="font-heading text-3xl font-extrabold text-green-400 mt-1">$0.00</p>
+                  <p class="text-xs text-white/60 mt-1">(Using the 4% rule)</p>
+                </div>
+              </div>
+
+              <div class="grid gap-6 sm:grid-cols-2 border-t border-white/10 pt-6">
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">How Long Money Will Last</p>
+                  <p id="money-last-value" class="font-heading text-2xl font-bold mt-1">—</p>
+                </div>
+                <div>
+                  <p class="text-xs font-medium uppercase tracking-wider text-white/60">Target Nest Egg Needed</p>
+                  <p id="target-nest-egg" class="font-heading text-2xl font-bold mt-1">$0.00</p>
+                </div>
+              </div>
+
+              <!-- Track Indicator Card -->
+              <div class="border-t border-white/10 pt-6">
+                <div class="p-4 rounded-xl bg-white/5 flex items-center justify-between border border-white/10" id="status-card">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Plan Status</p>
+                    <p id="status-badge" class="font-heading text-base font-bold mt-1 text-yellow-400">—</p>
+                  </div>
+                  <div class="h-3 w-32 bg-white/10 rounded-full overflow-hidden">
+                    <div id="status-bar" class="h-full bg-yellow-400 transition-all duration-500" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-white/10 pt-4">
+              <p id="retirement-summary-text" class="text-sm leading-relaxed text-white/80">
+                —
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Retirement Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Retirement Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        Planning for your financial future is one of the most critical endeavors you will undertake. The <strong class="font-semibold text-text">Retirement Calculator</strong> is a comprehensive financial tool designed to help you project how much your current savings and monthly contributions will grow by your target retirement age. Adjusting for expected returns and annual inflation, this calculator provides a clear analysis of whether your projected nest egg will sustain your expected monthly expenses throughout your retirement years.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-much-do-you-need-to-retire" class="text-accent hover:underline">How Much Do You Need to Retire?</a></li>
+          <li><a href="#the-4-percent-rule-explained" class="text-accent hover:underline">The 4% Rule for Retirement Explained</a></li>
+          <li><a href="#how-to-start-saving-for-retirement" class="text-accent hover:underline">How to Start Saving for Retirement</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-much-do-you-need-to-retire" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How Much Do You Need to Retire?</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          The amount required to retire comfortably depends on your lifestyle, geographic location, health status, and retirement goals. A classic method for estimating this is to target an income replacement rate of 70% to 80% of your pre-retirement annual salary.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          To calculate the absolute minimum savings target, financial advisors recommend the **Rule of 25**. Multiply your expected annual retirement expenses (in today's dollars) by 25.
+        </p>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Required Nest Egg = Expected Annual Expenses × 25
+        </div>
+        <p class="mt-4 leading-relaxed text-muted">
+          For instance, if you expect your annual living expenses (housing, utilities, food, healthcare, and leisure) in retirement to be <strong class="text-text">$48,000</strong> (which is $4,000 per month), your required savings nest egg is:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>$48,000 × 25 = $1,200,000</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          Remember that inflation will steadily erode the value of your dollar. A monthly expense of $4,000 today might require double that nominal amount in 30 years. Consequently, estimating your savings needs using real, inflation-adjusted rates of return is crucial to avoid underestimating your savings targets.
+        </p>
+      </section>
+
+      <section id="the-4-percent-rule-explained" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">The 4% Rule for Retirement Explained</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          The **4% rule** is a benchmark strategy designed to prevent retirees from running out of money. Originating from the Trinity Study (conducted by professors at Trinity University), the rule asserts that a retiree can safely withdraw 4% of their total investment portfolio during the first year of retirement. In each subsequent year, the withdrawal amount is adjusted upward by the rate of inflation.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          According to historical market behavior, a balanced portfolio (composed of 50% equities and 50% bonds) following this strategy has a 95% probability of lasting at least 30 years without depleting the principal.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          To check what a portfolio of <strong class="text-text">$1,000,000</strong> generates using the 4% rule:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Year 1 Withdrawal: $1,000,000 × 0.04 = $40,000</li>
+          <li>Monthly Income equivalent: $40,000 ÷ 12 = $3,333.33</li>
+          <li>Year 2 Withdrawal (assuming 3% inflation): $40,000 × 1.03 = $41,200</li>
+        </ul>
+        <p class="mt-4 leading-relaxed text-muted">
+          While the 4% rule provides a solid starting point, it is not foolproof. Market downturns early in retirement (sequence of returns risk) or extended lifespans exceeding 30 years might require a lower withdrawal rate, such as 3% or 3.5%.
+        </p>
+      </section>
+
+      <section id="how-to-start-saving-for-retirement" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Start Saving for Retirement</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Building a substantial nest egg requires consistency and smart investment decisions. Consider the following steps to start your retirement savings plan:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Utilize Tax-Advantaged Accounts:</strong> Contribute to employer-sponsored plans like a 401(k) or 403(b), especially if your employer offers a matching contribution (which represents free money). If you do not have an employer plan, set up an Individual Retirement Account (IRA) or Roth IRA.</li>
+          <li><strong class="text-text">Automate Your Savings:</strong> Treat savings as a fixed expense. Set up automatic bank transfers to move a portion of your income into your retirement accounts as soon as you get paid.</li>
+          <li><strong class="text-text">Focus on Compound Growth:</strong> Reinvest all dividends and capital gains. Compounding interest accelerates your portfolio growth exponentially over long horizons.</li>
+          <li><strong class="text-text">Keep Fees Low:</strong> Pick index funds or Exchange-Traded Funds (ETFs) with low expense ratios. High management fees eat into your returns significantly over 30 to 40 years.</li>
+        </ul>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="mt-10 rounded-xl bg-accent/5 px-4 py-3 text-sm leading-relaxed text-muted ring-1 ring-accent/20">
+        <strong class="text-text">Disclaimer:</strong> Projections provided by this retirement calculator are estimates only and are not financial advice. Real-world market returns fluctuate year-over-year, and tax rates and laws are subject to change. Always consult a certified fiduciary financial advisor before making major retirement planning decisions.
+      </p>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const currentAgeInput = document.getElementById('current-age');
+  const retirementAgeInput = document.getElementById('retirement-age');
+  const currentSavingsInput = document.getElementById('current-savings');
+  const monthlyContributionInput = document.getElementById('monthly-contribution');
+  const expectedReturnInput = document.getElementById('expected-return');
+  const expectedInflationInput = document.getElementById('expected-inflation');
+  const monthlyExpensesInput = document.getElementById('monthly-expenses');
+
+  const nestEggValueEl = document.getElementById('nest-egg-value');
+  const nestEggRealEl = document.getElementById('nest-egg-real');
+  const safeMonthlyIncomeEl = document.getElementById('safe-monthly-income');
+  const moneyLastValueEl = document.getElementById('money-last-value');
+  const targetNestEggEl = document.getElementById('target-nest-egg');
+
+  const statusBadge = document.getElementById('status-badge');
+  const statusBar = document.getElementById('status-bar');
+  const summaryEl = document.getElementById('retirement-summary-text');
+
+  const fmtCurrency = (n) => {
+    if (!Number.isFinite(n) || isNaN(n)) return '$—';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+  };
+
+  function calculate() {
+    const currentAge = parseFloat(currentAgeInput?.value || '30');
+    const retirementAge = parseFloat(retirementAgeInput?.value || '65');
+    const currentSavings = parseFloat(currentSavingsInput?.value || '0');
+    const monthlyContribution = parseFloat(monthlyContributionInput?.value || '0');
+    const expectedReturn = parseFloat(expectedReturnInput?.value || '0');
+    const expectedInflation = parseFloat(expectedInflationInput?.value || '0');
+    const monthlyExpenses = parseFloat(monthlyExpensesInput?.value || '0');
+
+    if (
+      currentAge < 0 ||
+      retirementAge <= currentAge ||
+      currentSavings < 0 ||
+      monthlyContribution < 0 ||
+      expectedReturn < 0 ||
+      expectedInflation < 0 ||
+      monthlyExpenses < 0
+    ) {
+      [nestEggValueEl, nestEggRealEl, safeMonthlyIncomeEl, moneyLastValueEl, targetNestEggEl].forEach((el) => {
+        if (el) el.textContent = '—';
+      });
+      if (statusBadge) statusBadge.textContent = 'Invalid inputs';
+      if (statusBar) statusBar.style.width = '0%';
+      if (summaryEl) summaryEl.textContent = 'Please make sure retirement age is greater than current age and all values are non-negative.';
+      return;
+    }
+
+    const yearsToRetire = retirementAge - currentAge;
+    const monthsToRetire = yearsToRetire * 12;
+
+    const monthlyReturnRate = expectedReturn / 100 / 12;
+    const monthlyInflationRate = expectedInflation / 100 / 12;
+
+    // Simulate accumulation phase (nominal values)
+    let nominalBalance = currentSavings;
+    for (let i = 0; i < monthsToRetire; i++) {
+      nominalBalance = nominalBalance * (1 + monthlyReturnRate) + monthlyContribution;
+    }
+
+    // Adjust nest egg at retirement for inflation (today's purchasing power)
+    const realBalance = nominalBalance / ((1 + expectedInflation / 100) ** yearsToRetire);
+
+    // Safe Monthly Withdrawal under the 4% rule (in today's dollars)
+    const safeMonthlyWithdrawal = (realBalance * 0.04) / 12;
+
+    // Target nest egg needed to support retirement expenses (Assuming 30 years in retirement in today's dollars)
+    // We compute the present value of 360 monthly withdrawals of monthlyExpenses, growing at real rate
+    const realAnnualReturn = ((1 + expectedReturn / 100) / (1 + expectedInflation / 100)) - 1;
+    const realMonthlyReturnRate = ((1 + realAnnualReturn) ** (1 / 12)) - 1;
+
+    let targetNestEgg = 0;
+    const retirementMonths = 360; // 30 years standard
+    if (realMonthlyReturnRate === 0) {
+      targetNestEgg = monthlyExpenses * retirementMonths;
+    } else {
+      targetNestEgg = monthlyExpenses * ((1 - ((1 + realMonthlyReturnRate) ** -retirementMonths)) / realMonthlyReturnRate);
+    }
+
+    // Simulate drawdown phase in real terms to see how long money lasts
+    let drawdownBalance = realBalance;
+    let monthsLasted = 0;
+    const maxMonths = 1200; // 100 years cap
+
+    if (monthlyExpenses <= 0) {
+      monthsLasted = Infinity;
+    } else if (drawdownBalance * realMonthlyReturnRate >= monthlyExpenses) {
+      monthsLasted = Infinity; // Interest covers expenses, balance grows or stays flat
+    } else {
+      while (drawdownBalance > 0 && monthsLasted < maxMonths) {
+        drawdownBalance = drawdownBalance * (1 + realMonthlyReturnRate) - monthlyExpenses;
+        if (drawdownBalance >= 0) {
+          monthsLasted++;
+        } else {
+          break;
+        }
+      }
+    }
+
+    let longevityText = '';
+    if (monthsLasted === Infinity) {
+      longevityText = 'Indefinitely (Returns cover expenses)';
+    } else {
+      const years = Math.floor(monthsLasted / 12);
+      const remainingMonths = monthsLasted % 12;
+      longevityText = `${years} years${remainingMonths > 0 ? ` and ${remainingMonths} months` : ''}`;
+    }
+
+    // Update result fields
+    if (nestEggValueEl) nestEggValueEl.textContent = fmtCurrency(nominalBalance);
+    if (nestEggRealEl) nestEggRealEl.textContent = `(${fmtCurrency(realBalance)} in today's dollars)`;
+    if (safeMonthlyIncomeEl) safeMonthlyIncomeEl.textContent = fmtCurrency(safeMonthlyWithdrawal);
+    if (moneyLastValueEl) moneyLastValueEl.textContent = longevityText;
+    if (targetNestEggEl) targetNestEggEl.textContent = fmtCurrency(targetNestEgg);
+
+    // Track status indicator
+    let statusText = 'Off Track';
+    let statusColor = 'text-red-500';
+    let barColor = 'bg-red-500';
+    let pctOnTrack = (realBalance / (targetNestEgg || 1)) * 100;
+    if (pctOnTrack > 100) pctOnTrack = 100;
+    if (pctOnTrack < 0) pctOnTrack = 0;
+
+    if (realBalance >= targetNestEgg) {
+      statusText = 'On Track 🎉';
+      statusColor = 'text-green-400';
+      barColor = 'bg-green-400';
+    } else if (realBalance >= targetNestEgg * 0.8) {
+      statusText = 'Close / Caution ⚠️';
+      statusColor = 'text-yellow-400';
+      barColor = 'bg-yellow-400';
+    } else {
+      statusText = 'Off Track 🛑';
+      statusColor = 'text-red-500';
+      barColor = 'bg-red-500';
+    }
+
+    if (statusBadge) {
+      statusBadge.textContent = `${statusText} (${Math.round(pctOnTrack)}%)`;
+      statusBadge.className = `font-heading text-base font-bold mt-1 ${statusColor}`;
+    }
+    if (statusBar) {
+      statusBar.className = `h-full ${barColor} transition-all duration-500`;
+      statusBar.style.width = `${pctOnTrack}%`;
+    }
+
+    // Summary text
+    if (summaryEl) {
+      if (realBalance >= targetNestEgg) {
+        summaryEl.textContent = `Excellent! Your projected nest egg at retirement is ${fmtCurrency(nominalBalance)} (worth ${fmtCurrency(realBalance)} in today's purchasing power). This exceeds your target of ${fmtCurrency(targetNestEgg)} required to support a ${fmtCurrency(monthlyExpenses)} monthly lifestyle for 30 years.`;
+      } else {
+        const gap = targetNestEgg - realBalance;
+        summaryEl.textContent = `You are currently projected to accumulate a real nest egg of ${fmtCurrency(realBalance)}, which is short of your ${fmtCurrency(targetNestEgg)} target by ${fmtCurrency(gap)}. To fill the gap, consider increasing your monthly contribution, raising retirement age, or aiming for higher-yielding investments.`;
+      }
+    }
+  }
+
+  // Bind inputs
+  [
+    currentAgeInput,
+    retirementAgeInput,
+    currentSavingsInput,
+    monthlyContributionInput,
+    expectedReturnInput,
+    expectedInflationInput,
+    monthlyExpensesInput,
+  ].forEach((el) => {
+    if (el) el.addEventListener('input', calculate);
+  });
+
+  // Calculate initially
+  calculate();
+</script>

@@ -1,0 +1,341 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { webApplicationSchema } from '../lib/seo';
+
+const inputClass =
+  'pc-input w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-base text-text shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15';
+const labelClass = 'mb-2 block text-sm font-semibold tracking-tight text-text';
+
+const relatedTools = [
+  { name: 'Salary Calculator', icon: '💼', description: 'Convert salary between annual, monthly, weekly, and hourly pay, and estimate tax withholding.', href: '/salary-calculator' },
+  { name: 'VAT Calculator', icon: '🧾', description: 'Add or remove VAT from any price instantly', href: '/vat-calculator' },
+  { name: 'Fuel Cost Calculator', icon: '⛽', description: 'Calculate trip fuel costs, needed volumes, and commute budgets based on efficiency rates.', href: '/fuel-cost-calculator' },
+];
+
+const pageUrl = 'https://allcalcnow.com/electricity-bill-calculator';
+const pageTitle = 'Electricity Bill Calculator — Estimate Your Power Cost | AllCalcNow';
+const pageDescription =
+  'Free electricity bill calculator at AllCalcNow. Find out how much any appliance costs to run per month and per year.';
+
+const faqs = [
+  {
+    question: 'How is electricity measured in kWh?',
+    answer:
+      'Electricity consumption is measured in kilowatt-hours (kWh). One kWh represents the amount of energy consumed by a 1,000-watt appliance running continuously for one hour. For example, if you run a 100-watt light bulb for 10 hours, it consumes 1 kWh of electricity (100 × 10 = 1,000 watt-hours = 1 kWh).',
+  },
+  {
+    question: 'How do I calculate the cost of running an appliance?',
+    answer:
+      'To calculate the running cost, multiply the appliance power rating (in kilowatts) by the operating hours, and then multiply by your local electricity rate per kWh. For example, a 1500W space heater is 1.5 kW. Running it for 4 hours at a rate of $0.15 per kWh costs: 1.5 kW × 4 hours × $0.15 = $0.90.',
+  },
+  {
+    question: 'What appliances use the most electricity?',
+    answer:
+      'Heating and cooling systems (central air conditioners, heat pumps, space heaters) consume the most electricity by far, representing nearly 50% of an average home\'s energy bill. Other high-consumption appliances include water heaters, clothes dryers, electric ovens, refrigerators, and pool pumps.',
+  },
+  {
+    question: 'How can I reduce my electricity bill?',
+    answer:
+      'You can reduce your electricity bill by installing a programmable thermostat, switching to LED light bulbs, unplugging unused electronics (preventing phantom loads), running washing machines and dishwashers only with full loads, and upgrading to Energy Star certified appliances.',
+  },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://allcalcnow.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Electricity Bill Calculator', item: pageUrl },
+    ],
+  },
+  webApplicationSchema('Electricity Bill Calculator', '/electricity-bill-calculator', pageDescription),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/electricity-bill-calculator" schemas={schemas}>
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Electricity Bill Calculator' }]} />
+
+    <header class="mt-6">
+      <span class="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+        Everyday Math
+      </span>
+      <h1 class="mt-3 font-heading text-3xl font-bold tracking-tight text-text sm:text-4xl">Electricity Bill Calculator</h1>
+      <p class="mt-2 max-w-2xl text-base leading-relaxed text-muted">
+        Estimate your monthly and annual power costs by building a customized list of home appliances.
+      </p>
+    </header>
+
+    <div class="mt-10 rounded-2xl border border-border/80 bg-card shadow-sm">
+      <div class="p-6 lg:p-8">
+        <!-- Global Rate Settings -->
+        <div class="mb-6 max-w-sm">
+          <label for="global-kwh-cost" class={labelClass}>Electricity Cost per kWh ($)</label>
+          <input type="number" id="global-kwh-cost" value="0.15" min="0" step="0.01" class={inputClass} />
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-12">
+          <!-- Left: Appliances List -->
+          <div class="lg:col-span-8 space-y-4">
+            <p class="text-sm text-muted">Add appliances, input power ratings, usage hours, and custom days active per month.</p>
+            
+            <div id="appliances-container" class="space-y-4">
+              <!-- Appliance Row template will go here -->
+            </div>
+
+            <button type="button" id="add-appliance-btn" class="inline-flex items-center gap-2 rounded-xl bg-bg px-4 py-2.5 text-sm font-bold text-text border border-border/80 transition-all hover:bg-accent/10 hover:text-accent hover:border-accent/30 cursor-pointer">
+              ➕ Add Appliance
+            </button>
+          </div>
+
+          <!-- Right: Total Bill Card -->
+          <div class="lg:col-span-4 flex flex-col justify-center rounded-2xl bg-navy p-6 text-white sm:p-8 font-medium">
+            <div class="space-y-6">
+              <p class="text-xs font-semibold uppercase tracking-widest text-white/50">Total Bill Estimate</p>
+              
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Estimated Monthly Cost</p>
+                <p id="total-monthly-cost" class="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl text-white mt-1">$0.00</p>
+              </div>
+
+              <div class="border-t border-white/10 pt-6">
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Estimated Annual Cost</p>
+                <p id="total-annual-cost" class="font-heading text-2xl font-bold text-green-400 mt-1">$0.00</p>
+              </div>
+
+              <div class="border-t border-white/10 pt-6">
+                <p class="text-xs font-medium uppercase tracking-wider text-white/60">Total Monthly Energy</p>
+                <p id="total-monthly-kwh" class="font-heading text-xl font-semibold mt-1">0.00 kWh</p>
+              </div>
+            </div>
+
+            <div class="mt-6 border-t border-white/10 pt-4">
+              <p id="bill-summary-text" class="text-sm text-white/80 leading-relaxed">
+                —
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Section -->
+    <article class="seo-content mt-14 max-w-3xl border-t border-border pt-10" itemscope itemtype="https://schema.org/Article">
+      <meta itemprop="headline" content="Electricity Bill Calculator" />
+      <meta itemprop="description" content={pageDescription} />
+      
+      <h1 class="font-heading text-2xl font-bold text-text sm:text-3xl" itemprop="name">Electricity Bill Calculator</h1>
+      <p class="mt-4 text-base leading-relaxed text-muted" itemprop="description">
+        Utility bills can often feel unpredictable, especially during extreme seasonal temperatures. The <strong class="font-semibold text-text">Electricity Bill Calculator</strong> lets you track and estimate the running costs of individual household appliances. By listing your electronics, setting operational usage metrics, and applying local utility rates, you can see where your power goes.
+      </p>
+
+      <nav class="mt-6 rounded-xl border border-border/80 bg-bg/60 p-4" aria-label="Table of contents">
+        <p class="text-xs font-bold uppercase tracking-wider text-muted">On this page</p>
+        <ol class="mt-2 list-inside list-decimal space-y-1 text-sm font-medium text-text">
+          <li><a href="#how-to-calculate-your-electricity-bill" class="text-accent hover:underline">How to Calculate Your Electricity Bill</a></li>
+          <li><a href="#most-energy-hungry-appliances" class="text-accent hover:underline">Most Energy Hungry Appliances at Home</a></li>
+          <li><a href="#how-to-reduce-your-electricity-bill" class="text-accent hover:underline">How to Reduce Your Electricity Bill</a></li>
+          <li><a href="#frequently-asked-questions" class="text-accent hover:underline">Frequently Asked Questions</a></li>
+        </ol>
+      </nav>
+
+      <section id="how-to-calculate-your-electricity-bill" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Calculate Your Electricity Bill</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Your utility company bills you based on the total number of kilowatt-hours (kWh) consumed. Calculating the running cost of any appliance requires three steps:
+        </p>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-muted leading-relaxed">
+          <li>Find the power rating in watts (listed on the manufacturer label) and divide by 1,000 to convert to kilowatts (kW).</li>
+          <li>Multiply the kilowatts by the number of hours the appliance runs per day to find daily kWh.</li>
+          <li>Multiply daily kWh by the number of days in the billing cycle, then multiply by your local utility rate per kWh.</li>
+        </ol>
+        <div class="mt-4 rounded-xl bg-bg px-4 py-3 font-mono text-sm text-text ring-1 ring-border/60" role="note">
+          Cost = (Watts × Hours per Day × Days per Month ÷ 1000) × Price per kWh
+        </div>
+      </section>
+
+      <section id="most-energy-hungry-appliances" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Most Energy Hungry Appliances at Home</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          While small electronics (like phone chargers or LED bulbs) consume very little power, thermal appliances designed to heat or cool air or water require large amounts of energy:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">HVAC Systems:</strong> Air conditioners and heaters pull between 1,000 and 5,000 watts, representing the largest share of household consumption.</li>
+          <li><strong class="text-text">Water Heaters:</strong> Standard hybrid or resistance water heaters run at 4,000 watts, running several hours a day to keep water warm.</li>
+          <li><strong class="text-text">Refrigerators:</strong> Although newer models are highly efficient, refrigerators run 24/7, averaging 100 to 200 kWh per month.</li>
+          <li><strong class="text-text">Tumble Dryers:</strong> Electric clothes dryers operate at around 3,000 to 5,000 watts per cycle.</li>
+        </ul>
+      </section>
+
+      <section id="how-to-reduce-your-electricity-bill" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">How to Reduce Your Electricity Bill</h2>
+        <p class="mt-3 leading-relaxed text-muted">
+          Lowering your monthly electricity bill involves a combination of small behavioral changes and energy-efficient investments:
+        </p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-muted leading-relaxed">
+          <li><strong class="text-text">Install a Smart Thermostat:</strong> Scheduling temperature setbacks when you are sleeping or away from home can save up to 10% annually on heating and cooling costs.</li>
+          <li><strong class="text-text">Switch to LED Bulbs:</strong> LEDs use 75% less energy and last 25 times longer than traditional incandescent light bulbs.</li>
+          <li><strong class="text-text">Avoid Phantom Loads:</strong> Electronics like game consoles, TVs, and microwave clocks draw standby power even when turned off. Plug them into smart power strips to cut power completely.</li>
+        </ul>
+      </section>
+
+      <section id="frequently-asked-questions" class="mt-10 scroll-mt-24">
+        <h2 class="font-heading text-xl font-bold text-text">Frequently Asked Questions</h2>
+        <div class="mt-6 space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="group rounded-xl border border-border/80 bg-card open:ring-2 open:ring-accent/20" open={i === 0}>
+              <summary class="cursor-pointer list-none px-5 py-4 font-heading text-base font-bold text-text marker:content-none [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center justify-between gap-3">
+                  {faq.question}
+                  <span class="shrink-0 text-accent transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </span>
+              </summary>
+              <div class="border-t border-border/60 px-5 pb-4 pt-2">
+                <p class="leading-relaxed text-muted">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </article>
+
+    <section class="mt-14 border-t border-border pt-10">
+      <h2 class="font-heading text-xl font-bold text-text">More Free Calculators on AllCalcNow</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {relatedTools.map((tool) => (
+          <li><ToolCard name={tool.name} description={tool.description} href={tool.href} icon={tool.icon} /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const appliancesContainer = document.getElementById('appliances-container');
+  const addApplianceBtn = document.getElementById('add-appliance-btn');
+  const globalKwhCostInput = document.getElementById('global-kwh-cost');
+
+  const totalMonthlyCostEl = document.getElementById('total-monthly-cost');
+  const totalAnnualCostEl = document.getElementById('total-annual-cost');
+  const totalMonthlyKwhEl = document.getElementById('total-monthly-kwh');
+  const summaryEl = document.getElementById('bill-summary-text');
+
+  const fmtCurrency = (n) => {
+    if (!Number.isFinite(n) || isNaN(n)) return '$—';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  };
+
+  const defaultAppliances = [
+    { name: 'Refrigerator', watts: 150, hours: 24, days: 30 },
+    { name: 'Air Conditioner', watts: 1200, hours: 8, days: 30 },
+    { name: 'Television', watts: 100, hours: 4, days: 30 }
+  ];
+
+  function buildApplianceRow(name = '', watts = 100, hours = 4, days = 30) {
+    const row = document.createElement('div');
+    row.className = 'appliance-row grid grid-cols-12 gap-3 items-center p-4 rounded-xl border border-border/50 bg-bg/20';
+    row.innerHTML = `
+      <div class="col-span-12 sm:col-span-4">
+        <label class="block text-xs font-bold text-muted mb-1 uppercase">Appliance Name</label>
+        <input type="text" placeholder="e.g. Microwave" value="${name}" class="appliance-name w-full rounded-xl border border-border/70 bg-white px-3 py-2 text-sm text-text outline-none focus:border-accent" />
+      </div>
+      <div class="col-span-4 sm:col-span-2">
+        <label class="block text-xs font-bold text-muted mb-1 uppercase">Power (Watts)</label>
+        <input type="number" placeholder="Watts" value="${watts}" min="1" class="appliance-watts w-full rounded-xl border border-border/70 bg-white px-3 py-2 text-sm text-text outline-none focus:border-accent" />
+      </div>
+      <div class="col-span-4 sm:col-span-2">
+        <label class="block text-xs font-bold text-muted mb-1 uppercase">Hours / Day</label>
+        <input type="number" placeholder="Hours" value="${hours}" min="0.1" max="24" step="any" class="appliance-hours w-full rounded-xl border border-border/70 bg-white px-3 py-2 text-sm text-text outline-none focus:border-accent" />
+      </div>
+      <div class="col-span-3 sm:col-span-2">
+        <label class="block text-xs font-bold text-muted mb-1 uppercase">Days / Month</label>
+        <input type="number" placeholder="Days" value="${days}" min="1" max="31" class="appliance-days w-full rounded-xl border border-border/70 bg-white px-3 py-2 text-sm text-text outline-none focus:border-accent" />
+      </div>
+      <div class="col-span-1 text-center self-end pb-1.5">
+        <button type="button" class="remove-row-btn text-muted hover:text-red-500 font-bold text-xl">×</button>
+      </div>
+    `;
+
+    // Bind remove event
+    row.querySelector('.remove-row-btn')?.addEventListener('click', () => {
+      row.remove();
+      calculate();
+    });
+
+    // Bind change calculations
+    row.querySelectorAll('input').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+
+    appliancesContainer?.appendChild(row);
+  }
+
+  function calculate() {
+    const kwhCost = parseFloat((globalKwhCostInput as HTMLInputElement)?.value || '0.15');
+
+    if (kwhCost < 0) {
+      [totalMonthlyCostEl, totalAnnualCostEl, totalMonthlyKwhEl].forEach(el => {
+        if (el) el.textContent = '—';
+      });
+      if (summaryEl) summaryEl.textContent = 'Please enter a valid electricity rate.';
+      return;
+    }
+
+    const rows = document.querySelectorAll('.appliance-row');
+    let totalMonthlyKwh = 0;
+
+    rows.forEach(row => {
+      const watts = parseFloat((row.querySelector('.appliance-watts') as HTMLInputElement)?.value || '0');
+      const hours = parseFloat((row.querySelector('.appliance-hours') as HTMLInputElement)?.value || '0');
+      const days = parseFloat((row.querySelector('.appliance-days') as HTMLInputElement)?.value || '0');
+
+      if (watts > 0 && hours > 0 && days > 0) {
+        const rowKwh = (watts * hours * days) / 1000;
+        totalMonthlyKwh += rowKwh;
+      }
+    });
+
+    const totalMonthlyCost = totalMonthlyKwh * kwhCost;
+    const totalAnnualCost = totalMonthlyCost * 12;
+
+    // Update displays
+    if (totalMonthlyCostEl) totalMonthlyCostEl.textContent = fmtCurrency(totalMonthlyCost);
+    if (totalAnnualCostEl) totalAnnualCostEl.textContent = fmtCurrency(totalAnnualCost);
+    if (totalMonthlyKwhEl) totalMonthlyKwhEl.textContent = `${totalMonthlyKwh.toFixed(2)} kWh`;
+
+    if (summaryEl) {
+      summaryEl.textContent = `Based on your list, running these appliances consumes an estimated ${totalMonthlyKwh.toFixed(2)} kWh of electricity per month, totaling ${fmtCurrency(totalMonthlyCost)} monthly and ${fmtCurrency(totalAnnualCost)} annually.`;
+    }
+  }
+
+  // Initialize page defaults
+  if (appliancesContainer && appliancesContainer.children.length === 0) {
+    defaultAppliances.forEach(app => {
+      buildApplianceRow(app.name, app.watts, app.hours, app.days);
+    });
+  }
+
+  // Add event listener to new add button
+  addApplianceBtn?.addEventListener('click', () => {
+    buildApplianceRow('', 100, 4, 30);
+    calculate();
+  });
+
+  // Global rate bindings
+  globalKwhCostInput?.addEventListener('input', calculate);
+
+  // Initial call
+  calculate();
+</script>
