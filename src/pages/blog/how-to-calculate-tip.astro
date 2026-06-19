@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How Much Should You Tip? Complete Tipping Guide by Country | AllCalcNow";
+const pageDescription = "Learn how to calculate tips for restaurants and services. Complete tipping guide for the US, Europe, and other countries with formulas and calculator details.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-tip";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How Much Should You Tip?", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How Much Should You Tip? Complete Tipping Guide by Country",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-19",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-tip" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How Much Should You Tip?' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>6 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How Much Should You Tip? Complete Tipping Guide by Country
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Tipping customs vary wildly across the globe. What is considered standard appreciation in New York might be viewed as an insult in Tokyo. Learn the mathematics of tipping and discover local etiquette rules for popular travel destinations.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 19, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When dining out, staying at a hotel, or taking a taxi, calculating the tip can often feel stressful. If you tip too little, you risk appearing rude or ungrateful for the service. If you tip too much, you might strain your personal budget. Furthermore, traveling internationally adds another layer of complexity, as different countries maintain completely different social norms regarding gratuities.
+      </p>
+      <p class="mb-6">
+        Understanding the core mathematics of tipping and reviewing a country-by-country etiquette guide makes gratuity calculations second nature. In this guide, we break down standard tipping formulas, outline expectations across major regions, and share tips for splitting bills.
+      </p>
+
+      <!-- Section: The Math of Tipping -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Math of Tipping: Core Formulas</h2>
+      <p class="mt-4 mb-6">
+        To calculate a tip, you multiply the base bill amount (before taxes are added) by the tip percentage expressed as a decimal:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Tip Amount = Base Bill × (Tip % ÷ 100)
+      </div>
+      <p class="mt-4 mb-4">
+        Once you find the tip amount, add it to your base bill and taxes to calculate the total final amount:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Total Bill = Base Bill + Taxes + Tip Amount
+      </div>
+      
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Split Bills and Calculate Tips Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Don't stress over percentages or group division. Use our free, interactive Tip Calculator to split bills and calculate exact gratuities in seconds.
+        </p>
+        <div class="mt-4">
+          <a href="/tip-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Tip Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Global Guide -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Tipping Etiquette Around the World</h2>
+      <p class="mt-4 mb-6">
+        Tipping expectations are closely tied to regional economies, wage laws, and cultural history. Here is a summary of standard customs across major travel destinations:
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. United States and Canada</h3>
+      <p class="mt-2 mb-4">
+        In North America, service industry workers (like waiters, bartenders, and hair stylists) often earn a lower base wage and rely heavily on tips to make a living. Gratuities are expected in almost all sit-down service settings:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li><strong>Sit-down Restaurants:</strong> 15% to 20% of the pre-tax bill. 18% is generally considered standard.</li>
+        <li><strong>Bars:</strong> $1 to $2 per drink, or 15% to 20% of the total tab.</li>
+        <li><strong>Taxis &amp; Ride-shares:</strong> 10% to 15% of the fare.</li>
+        <li><strong>Hotels:</strong> $2 to $5 per night for housekeeping; $1 to $2 per bag for porters.</li>
+      </ul>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. United Kingdom and Europe</h3>
+      <p class="mt-2 mb-4">
+        European service staff generally earn a living wage, meaning tips are viewed as a bonus for good service rather than a core component of compensation.
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li><strong>Restaurants:</strong> Check the bill first. Many European restaurants include a service charge (labeled as <em>servizio incluso</em> or <em>service compris</em>). If a service charge is not included, tipping 5% to 10% or simply rounding up the bill to the nearest €5 or €10 is standard.</li>
+        <li><strong>Pubs and Cafes:</strong> Tipping is not expected, though leaving small spare coins is appreciated.</li>
+      </ul>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">3. Asia and Australia</h3>
+      <p class="mt-2 mb-4">
+        In many parts of Asia, tipping is not part of the culture and can sometimes lead to confusion or be perceived as rude.
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li><strong>Japan:</strong> Tipping is strongly discouraged. Leaving extra cash on a table will often result in the waitstaff chasing you down to return the money you forgot. Excellent service is considered the standard baseline.</li>
+        <li><strong>Australia &amp; New Zealand:</strong> Gratuities are not customary, as workers earn competitive base wages. However, leaving a 10% tip for exceptional restaurant service has become more common in major tourist centers.</li>
+        <li><strong>China:</strong> Gratuities are generally not expected, except for tour guides or high-end hotels catering to Western tourists.</li>
+      </ul>
+
+      <!-- Section: FAQs -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Should I tip on the pre-tax or post-tax amount?</h3>
+          <p class="mt-2 text-muted">
+            Standard etiquette dictates that you calculate the tip on the pre-tax total of your bill. Sales taxes are government charges and do not represent service quality, so there is no social obligation to tip on top of them.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the "double tax" tip shortcut?</h3>
+          <p class="mt-2 text-muted">
+            In areas where sales tax is around 8% to 9% (such as New York or California), you can quickly estimate a 15% to 18% tip by simply doubling the tax amount listed on your receipt.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Is tipping required for takeout orders?</h3>
+          <p class="mt-2 text-muted">
+            Tipping for takeout is generally optional. However, leaving a 10% gratuity is a polite gesture, especially for large, custom orders or if the restaurant staff packaged the meal with extra care.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

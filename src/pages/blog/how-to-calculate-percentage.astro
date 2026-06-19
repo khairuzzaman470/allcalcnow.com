@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Percentage — 3 Methods Anyone Can Learn | AllCalcNow";
+const pageDescription = "Master percentage calculations with 3 simple methods. Learn how to calculate percentages of numbers, percentage change, and what percentage one number is of another.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-percentage";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Percentage", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Percentage — 3 Methods Anyone Can Learn",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-19",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-percentage" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate Percentage' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Percentage: 3 Methods Anyone Can Learn
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Percentages are a fundamental part of daily math. From calculating store discounts and restaurant tips to tracking salary raises and portfolio gains, mastering percentages is an essential life skill.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 19, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        The word "percent" originates from the Latin <em>per centum</em>, which literally translates to "by the hundred." When you see a percentage like 25%, it represents a ratio of 25 out of 100, or the fraction 25/100 (which simplifies to 1/4 or the decimal 0.25). 
+      </p>
+      <p class="mb-6">
+        Percentages are incredibly versatile because they provide a standardized way to compare proportions. However, many people struggle with percentages because they are taught to memorize formulas without understanding the underlying math. In this guide, we break down percentage math into three simple, intuitive methods that cover virtually every everyday scenario.
+      </p>
+
+      <!-- Section: Method 1 -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Method 1: Finding the Percentage of a Number</h2>
+      <p class="mt-4 mb-6">
+        This is the most common percentage calculation. It answers questions like: <em>"What is 15% of $80?"</em> or <em>"How much is 8% sales tax on a $50 purchase?"</em>
+      </p>
+      <p class="mt-4 mb-6">
+        To calculate this, convert the percentage into a decimal (by dividing by 100) and multiply by the base number:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Result = Base Number × (Percentage ÷ 100)
+      </div>
+      <p class="mt-4 mb-4">
+        Let's work through an example: Find 15% of $80.
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li>Convert 15% to a decimal: `15 ÷ 100 = 0.15`.</li>
+        <li>Multiply by the base number: `0.15 × $80 = $12.00`.</li>
+      </ul>
+      <p class="mb-6">
+        <strong>Mental Math Shortcut:</strong> To calculate percentages in your head, start by finding 10%. To find 10% of any number, simply move the decimal point one place to the left. For $80, 10% is $8. To find 5%, take half of the 10% amount ($4). Add them together to find 15%: `$8 + $4 = $12`. This simple trick works for many common percentages (like doubling 10% to find 20%).
+      </p>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Solve Percentage Problems Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual multiplication and division. Our free Percentage Calculator handles all three types of calculations in seconds, with support for percentage increases and decreases.
+        </p>
+        <div class="mt-4">
+          <a href="/percentage-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Percentage Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Method 2 -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Method 2: Finding What Percentage One Number is of Another</h2>
+      <p class="mt-4 mb-6">
+        This method answers questions like: <em>"25 is what percent of 200?"</em> or <em>"If I scored 42 out of 50 on an exam, what is my percentage grade?"</em>
+      </p>
+      <p class="mt-4 mb-6">
+        To calculate this, divide the part by the whole, and then multiply by 100 to convert the decimal into a percentage:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Percentage = (Part ÷ Whole) × 100
+      </div>
+      <p class="mt-4 mb-4">
+        Let's work through the exam example: 42 out of 50.
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li>Identify the part and the whole: Part = 42, Whole = 50.</li>
+        <li>Divide: `42 ÷ 50 = 0.84`.</li>
+        <li>Multiply by 100: `0.84 × 100 = 84%`.</li>
+      </ul>
+
+      <!-- Section: Method 3 -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Method 3: Calculating Percentage Change (Increase or Decrease)</h2>
+      <p class="mt-4 mb-6">
+        This method is used in business, finance, and economics to measure growth or decline over time. It answers questions like: <em>"If my salary rose from $50,000 to $55,000, what is the percentage raise?"</em> or <em>"If a stock dropped from $100 to $85, what is the loss percentage?"</em>
+      </p>
+      <p class="mt-4 mb-6">
+        To calculate percentage change, subtract the original value from the new value to find the change amount, divide the change by the original value, and multiply by 100:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Percentage Change = ((New Value − Original Value) ÷ Original Value) × 100
+      </div>
+      <p class="mt-4 mb-4">
+        Let's work through the salary raise example:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li>Subtract original from new: `$55,000 − $50,000 = $5,000` (positive change represents an increase).</li>
+        <li>Divide the change by the original value: `$5,000 ÷ $50,000 = 0.10`.</li>
+        <li>Multiply by 100 to get the percentage: `0.10 × 100 = 10%`.</li>
+      </ul>
+      <p class="mb-6">
+        If the result is negative (such as the stock drop: `(($85 − $100) ÷ $100) × 100 = −15%`), it indicates a percentage decrease.
+      </p>
+
+      <!-- Section: FAQs -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do I add percentage increases together?</h3>
+          <p class="mt-2 text-muted">
+            Percentages cannot be added directly when applied sequentially. For example, if your investments grow by 10% in Year 1 and then by 10% in Year 2, your total growth is not 20%. Instead, the second year's growth applies to the new, higher value, resulting in a total compounding growth of 21% (`1.10 × 1.10 = 1.21`).
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Is 100% of a number just the number itself?</h3>
+          <p class="mt-2 text-muted">
+            Yes. Since 100% simplifies to the fraction `100/100` (which is exactly 1), multiplying any number by 100% yields the original number. Similarly, 200% of a number is double the number, and 50% is half.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between percentage and percentage points?</h3>
+          <p class="mt-2 text-muted">
+            A percentage point represents the absolute arithmetic difference between two percentages. If a mortgage rate rises from 4% to 6%, it has increased by **2 percentage points** (an absolute difference), but represents a **50% relative increase** (`(6 − 4) ÷ 4 × 100`) in the interest cost.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

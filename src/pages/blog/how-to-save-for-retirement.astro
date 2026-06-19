@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How Much Do You Need to Retire? Simple Retirement Planning Guide | AllCalcNow";
+const pageDescription = "Discover how to calculate your retirement savings goal, understand the 4% rule, and explore simple retirement planning strategies.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-save-for-retirement";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Simple Retirement Planning Guide", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How Much Do You Need to Retire? Simple Retirement Planning Guide",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-19",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-save-for-retirement" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Retirement Planning Guide' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Finance & Money</span>
+        <span class="text-border">•</span>
+        <span>10 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How Much Do You Need to Retire? Simple Retirement Planning Guide
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Retirement planning doesn't have to be overwhelming. Learn how to estimate your target savings, understand standard withdrawal rules, and take control of your financial future today.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 19, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        Imagine a future where work is optional. You wake up each morning with the freedom to spend your day traveling, volunteering, pursuing hobbies, or relaxing with family. To transition this dream into a reality, you need a solid financial foundation. That is where retirement planning comes in.
+      </p>
+      <p class="mb-6">
+        Unfortunately, many people avoid retirement planning because it seems too complicated or distant. However, starting early—even with small contributions—gives compound interest the time it needs to build a substantial nest egg. In this comprehensive guide, we simplify the retirement planning process. We cover how to determine your retirement savings target, detail the classic 4% rule, explore critical factors like inflation, and outline actionable steps to start building your wealth.
+      </p>
+
+      <!-- Section 1: The Core Question -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">How Much Money is Enough? The Rule of 25</h2>
+      <p class="mt-4 mb-6">
+        One of the most common questions in personal finance is: <em>"What is my retirement number?"</em> While the exact figure depends on your personal lifestyle goals, you can calculate a highly reliable estimate using the **Rule of 25**.
+      </p>
+      <p class="mt-4 mb-6">
+        The Rule of 25 states that to retire comfortably, you should aim to save a nest egg equal to **25 times your expected annual retirement expenses** (after subtracting other steady income sources like pensions or Social Security).
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Target Savings = Expected Annual Expenses × 25
+      </div>
+      <p class="mt-4 mb-4">
+        Let's look at an example:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li>Suppose you estimate that you will need **$4,000 per month** to live comfortably in retirement.</li>
+        <li>Your annual retirement expenses would be: `$4,000 × 12 = $48,000` per year.</li>
+        <li>Applying the Rule of 25: `$48,000 × 25 = $1,200,000`.</li>
+      </ul>
+      <p class="mb-6">
+        In this scenario, your target retirement nest egg is **$1.2 million**. Having this amount invested in a balanced portfolio gives you a high probability of sustaining your lifestyle for 30 years or more.
+      </p>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Estimate Your Retirement Track</h3>
+        <p class="mt-2 text-sm text-muted">
+          Want to see if your current savings and contributions are enough to reach your goals? Use our free Retirement Calculator to project your nest egg growth and map out your timelines.
+        </p>
+        <div class="mt-4">
+          <a href="/retirement-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Retirement Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section 2: The 4% Rule -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The 4% Rule for Retirement Explained</h2>
+      <p class="mt-4 mb-6">
+        The Rule of 25 is the mathematical inverse of the **4% Rule**. The 4% Rule is a guideline developed to help retirees withdraw money from their portfolios without running out of money before they die.
+      </p>
+      <p class="mt-4 mb-6">
+        According to the rule, you can safely withdraw **4% of your portfolio's total value in the first year of retirement**. In each subsequent year, you adjust that dollar amount to keep pace with the rate of inflation.
+      </p>
+      <p class="mt-4 mb-6">
+        For example, if you retire with a **$1,000,000** portfolio:
+      </p>
+      <ul class="mb-6 list-decimal pl-6 space-y-2">
+        <li><strong>Year 1:</strong> You withdraw 4% of $1,000,000, which is **$40,000** (or about $3,333 per month).</li>
+        <li><strong>Year 2:</strong> If annual inflation was 3%, you increase your withdrawal amount by 3%: `$40,000 × 1.03 = $41,200`.</li>
+        <li><strong>Year 3:</strong> If inflation in the second year was 2%, you increase the prior year's withdrawal by 2%: `$41,200 × 1.02 = $42,024`.</li>
+      </ul>
+      <p class="mb-6">
+        Historical market data shows that if you maintain a balanced portfolio (like 50% stocks and 50% bonds), your nest egg is highly likely to last at least 30 years under this withdrawal strategy.
+      </p>
+
+      <!-- Section 3: Factors Affecting Savings -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Key Factors Affecting Your Retirement Savings</h2>
+      <p class="mt-4 mb-6">
+        While simple guidelines like the 4% rule are useful, real-world retirement planning requires analyzing several variables:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li><strong>Inflation:</strong> Over 20 to 30 years, inflation will erode the purchasing power of your money. If inflation averages 2.5% per year, the nominal cost of goods will double in about 28 years. This means you must invest in assets (like equities) that historically outpace inflation.</li>
+        <li><strong>Sequence of Returns Risk:</strong> Market performance in the first few years of your retirement has a massive impact on your portfolio's longevity. If the stock market drops significantly right after you retire, withdrawing 4% can deplete your principal balance quickly, making it difficult to recover when the market rebounds.</li>
+        <li><strong>Healthcare Costs:</strong> Medical expenses tend to rise as we age. Even with Medicare, retirees should expect to spend a substantial amount out-of-pocket on healthcare, insurance premiums, and long-term care.</li>
+      </ul>
+
+      <!-- Section 4: Actionable Steps -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Simple Strategies to Start Saving</h2>
+      <p class="mt-4 mb-6">
+        Building your retirement nest egg starts with consistent habits. Here are simple strategies to implement:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-3">
+        <li><strong>Automate Your Contributions:</strong> Set up automatic transfers from your checking account to your investment accounts on paydays. This ensures you save first before spending.</li>
+        <li><strong>Maximize Employer Matches:</strong> If your employer offers a matching contribution in a 401(k) or pension plan, contribute at least enough to capture the full match. This is immediate, guaranteed return on your investment.</li>
+        <li><strong>Open an IRA or Roth IRA:</strong> Take advantage of tax-advantaged accounts. Traditional contributions may be tax-deductible now, while Roth contributions allow your investments to grow and be withdrawn tax-free in retirement.</li>
+      </ul>
+
+      <!-- Section 5: FAQs -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How much should I save by age 30, 40, and 50?</h3>
+          <p class="mt-2 text-muted">
+            As a general rule of thumb: aim to save 1 times your annual salary by age 30, 3 times by age 40, 6 times by age 50, and 10 times by age 60.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What if I start saving late?</h3>
+          <p class="mt-2 text-muted">
+            If you start in your 40s or 50s, you will need to save a larger percentage of your income to reach your goals. Take advantage of IRS "catch-up contributions" which allow older workers to contribute extra amounts to 401(k)s and IRAs.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Is the 4% rule safe in today's economy?</h3>
+          <p class="mt-2 text-muted">
+            Many financial experts suggest a slightly more conservative withdrawal rate of 3% to 3.5% if you expect to be retired for longer than 30 years or if market yields are low. Flexibility is key: being willing to reduce spending during market downturns will protect your nest egg.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How Old Are You in Days? Calculate Your Age in Days and Weeks | AllCalcNow";
+const pageDescription = "Find out your exact age in days, weeks, months, and hours. Explore standard date calculation methods, leap year mechanics, and age milestones.";
+const pageUrl = "https://allcalcnow.com/blog/age-in-days-weeks";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Calculate Your Age in Days and Weeks", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How Old Are You in Days? Calculate Your Age in Days and Weeks",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-19",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/age-in-days-weeks" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Calculate Your Age in Days and Weeks' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>8 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How Old Are You in Days? Calculate Your Age in Days and Weeks
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        We standardly measure our age in years. But looking at your lifespan in days, weeks, or hours provides a completely new perspective on time. Learn the exact math of date calculations.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 19, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When someone asks how old you are, your immediate response is a single number representing your age in years. However, a year is just one solar cycle—a relatively large chunk of time. Breaking down your lifespan into smaller increments like months, weeks, days, hours, or even minutes reveals the sheer quantity of time you have experienced.
+      </p>
+      <p class="mb-6">
+        Calculating your age in days or weeks is more than just a fun mathematical exercise. It requires navigating calendar mechanics, accounting for leap years, and understanding time zone boundaries. In this guide, we explore the mathematics of date difference calculations, explain the impact of leap years, highlight interesting day milestones, and detail how to track your age down to the hour.
+      </p>
+
+      <!-- Section 1: The Math -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">How to Calculate Your Age in Days</h2>
+      <p class="mt-4 mb-6">
+        Calculating the number of days between your birth date and today seems straightforward: multiply your age in years by 365. However, this basic method ignores key calendar nuances. A precise calculation requires accounting for:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li><strong>Leap Years:</strong> Every four years, our calendar adds an extra day (February 29) to keep aligned with the Earth's orbit. If you are 30 years old, you have lived through 7 or 8 leap years, adding 7 or 8 extra days to your total.</li>
+        <li><strong>Days in Months:</strong> Months range from 28 to 31 days. You must add the exact number of days for each partial month at the beginning and end of your calculation.</li>
+      </ul>
+      
+      <p class="mt-4 mb-6">
+        The most reliable manual approach is the **Days Since Birth Formula**:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold font-bold">
+        Total Days = (Full Years × 365) + Leap Days + Days in Current Year
+      </div>
+      
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Find Your Exact Age Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Don't get bogged down counting leap years or partial months. Our free Age Calculator computes your age in years, months, weeks, days, and hours, and shows a countdown to your next birthday.
+        </p>
+        <div class="mt-4">
+          <a href="/age-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Age Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section 2: Leap year details -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">How Leap Years Impact the Calculation</h2>
+      <p class="mt-4 mb-6">
+        To determine how many leap days to add to your calculation, you must count the number of leap years that have occurred since your birth. A year is a leap year if it meets the following criteria under the Gregorian calendar:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li>The year must be evenly divisible by 4.</li>
+        <li>If the year is divisible by 100 (a century year like 1900), it is <em>not</em> a leap year unless it is also divisible by 400 (like 2000).</li>
+      </ul>
+      <p class="mb-6">
+        If you were born in 1996, the leap years you have lived through include 1996 (if born before Feb 29), 2000, 2004, 2008, 2012, 2016, 2020, and 2024. Counting these active leap years ensures your day count matches the astronomical timeline.
+      </p>
+
+      <!-- Section 3: Weeks and Hours -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Calculating Age in Weeks and Hours</h2>
+      <p class="mt-4 mb-6">
+        Once you have your total days, converting your lifespan into other time intervals is simple:
+      </p>
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. Age in Weeks</h3>
+      <p class="mt-2 mb-4">
+        To find your age in weeks, divide your total days by 7:
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Weeks = Total Days ÷ 7
+      </div>
+      <p class="mt-4 mb-4">
+        For example, a person who is 10,000 days old is exactly 1,428.57 weeks old.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. Age in Hours</h3>
+      <p class="mt-2 mb-4">
+        To calculate your age in hours, multiply your total days by 24 (and add any hours elapsed on your current day):
+      </p>
+      <div class="my-4 rounded-xl border border-border/80 bg-card p-4 text-center font-mono text-accent font-semibold">
+        Hours = Total Days × 24
+      </div>
+
+      <!-- Section 4: Day Milestones -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Key Day Milestones in Your Life</h2>
+      <p class="mt-4 mb-6">
+        While we celebrate our birthdays every 365 days, celebrating "day milestones" is becoming a popular trend:
+      </p>
+      <ul class="mb-6 list-disc pl-6 space-y-2">
+        <li><strong>1,000 Days:</strong> Reached at approximately 2.7 years old.</li>
+        <li><strong>5,000 Days:</strong> Reached at approximately 13.7 years old.</li>
+        <li><strong>10,000 Days:</strong> Reached at approximately 27.4 years old. This is a major milestone representing over a quarter-century of life.</li>
+        <li><strong>20,000 Days:</strong> Reached at approximately 54.8 years old.</li>
+        <li><strong>30,000 Days:</strong> Reached at approximately 82.1 years old.</li>
+      </ul>
+
+      <!-- Section 5: FAQs -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do computers calculate age in days?</h3>
+          <p class="mt-2 text-muted">
+            Computers convert dates into "Unix time" (the number of milliseconds elapsed since January 1, 1970). To find the difference, the computer subtracts your birth date timestamp from the current timestamp and divides the resulting milliseconds by 86,400,000 (the number of milliseconds in a day).
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Are leap seconds included in age calculations?</h3>
+          <p class="mt-2 text-muted">
+            Leap seconds are occasionally added to UTC to align clock time with Earth's rotation. Because they are tiny adjustments (only 27 leap seconds have been added since 1972), they do not impact day-level calculations and are ignored in general age calculations.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Does my age change depending on time zones?</h3>
+          <p class="mt-2 text-muted">
+            Yes. Since days start and end at different times globally, the exact number of days you have lived depends on the time zone of your current location relative to your birth location. Our age calculator uses local browser times to ensure local accuracy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
