@@ -133,8 +133,9 @@ async function fetchRatesServer(): Promise<{ rates: Record<string, number>; upda
       const res = await fetch('https://open.er-api.com/v6/latest/USD');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      if (data.result === 'success' && data.conversion_rates) {
-        return { rates: data.conversion_rates, updated: data.time_last_update_utc || '' };
+      const rates = data.rates || data.conversion_rates;
+      if (data.result === 'success' && rates) {
+        return { rates, updated: data.time_last_update_utc || '' };
       }
       throw new Error('Invalid ExchangeRate-API response');
     },
@@ -645,9 +646,10 @@ const hasPreloadedRates = initialRates !== null;
 
   function parseRateResponse(data, type) {
     if (type === 'er-api') {
-      if (data.result === 'success' && data.conversion_rates) {
+      const rates = data.rates || data.conversion_rates;
+      if (data.result === 'success' && rates) {
         return {
-          rates: data.conversion_rates,
+          rates,
           updated: data.time_last_update_utc || new Date().toUTCString(),
         };
       }
