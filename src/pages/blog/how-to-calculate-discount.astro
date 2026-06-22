@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate a Discount: Formulas & Savings | AllCalcNow";
+const pageDescription = "Learn the formulas to calculate discounts, sale prices, and total savings. See worked examples for single, stacked, and reversed discounts.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-discount";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate a Discount", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate a Discount: Formulas & Savings",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-24",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-discount" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate a Discount' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate a Discount: Formula for Sale Price & Total Savings
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Whether you are shopping at a seasonal sale, evaluating a business promotion, or negotiating a contract, discount math is a vital skill. Learn the formulas to calculate sale prices and total savings.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 24, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        We encounter discount offers daily: "20% off all jackets," "Save $15 on purchases over $50," or "Take an extra 10% off clearance items." While retail stores place sale tags on items, understanding the arithmetic behind these discounts helps you verify receipt totals, compare promotions, and budget accurately.
+      </p>
+      <p class="mb-6">
+        Discount math is also a vital business tool, helping managers evaluate wholesale purchase orders, determine retail price points, and manage marketing campaigns. In this comprehensive guide, we layout the core discount formulas, walk through step-by-step examples of single, stacked, and reversed calculations, and reveal the mental math shortcuts that make shopping calculations second nature.
+      </p>
+
+      <!-- Section: The Formulas -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Discount Formulas</h2>
+      <p class="mt-4 mb-6">
+        To calculate savings and final sale prices, we use a set of basic percentage formulas:
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. Calculating the Sale Price</h3>
+      <p class="mt-2 mb-4">
+        To find the final sale price, multiply the original price by the inverse of the discount percentage:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Sale Price = Original Price * ( 1 - Discount % / 100 )</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. Calculating Total Savings</h3>
+      <p class="mt-2 mb-4">
+        To find the total cash savings, multiply the original price by the discount percentage:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Savings = Original Price * ( Discount % / 100 )</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">3. Finding the Original Price (Reversed Discount)</h3>
+      <p class="mt-2 mb-4">
+        If you know the sale price and the discount percentage, you can calculate the original retail price using division:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Original Price = Sale Price / ( 1 - Discount % / 100 )</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Discounts Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the fractions and decimals. Use our free interactive Discount Calculator to calculate final sale prices, stacked discounts, and tax impact in seconds.
+        </p>
+        <div class="mt-4">
+          <a href="/discount-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Discount Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through three scenarios to make the calculations intuitive.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: A Standard Single Discount</h3>
+      <p class="mt-2 mb-4">
+        A winter coat originally priced at <strong>$80</strong> is on sale for <strong>25% off</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Convert discount to a decimal:</strong> 25% = `25 / 100 = 0.25`
+        </li>
+        <li>
+          <strong>Calculate the savings amount:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Savings = $80 * 0.25 = $20.00</code>
+        </li>
+        <li>
+          <strong>Deduct the savings from the original price:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Sale Price = $80 - $20 = $60.00</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        You will pay <strong>$60.00</strong> for the coat, saving <strong>$20.00</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Stacked/Double Discounts</h3>
+      <p class="mt-2 mb-4">
+        A laptop is on clearance for <strong>30% off</strong> its original price of <strong>$1,200</strong>. At checkout, you apply an additional coupon code for <strong>10% off</strong> the sale price.
+      </p>
+      <p class="mb-4">
+        <strong>Important:</strong> You *cannot* add the percentages together (30% + 10% = 40% off). The discounts must be applied sequentially.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the first sale price (30% off $1,200):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">First Sale Price = $1,200 * (1 - 0.30) = $1,200 * 0.70 = $840.00</code>
+        </li>
+        <li>
+          <strong>Apply the second discount (10% off the $840 sale price):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Final Sale Price = $840 * (1 - 0.10) = $840 * 0.90 = $756.00</code>
+        </li>
+        <li>
+          <strong>Calculate total savings:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Savings = $1,200 - $756 = $444.00</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        You will pay <strong>$756.00</strong>, saving <strong>$444.00</strong>. Notice that a flat 40% discount would have been $720.00, meaning the sequential discount yields a slightly smaller effective discount of **37%**.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 3: Reversing the Discount</h3>
+      <p class="mt-2 mb-4">
+        A smartphone is on sale for <strong>$450</strong> after a <strong>10% discount</strong> has been applied. What was the original retail price?
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the remaining value multiplier:</strong><br />
+          `1 - 10% / 100 = 0.90` (The sale price represents 90% of the original price).
+        </li>
+        <li>
+          <strong>Divide the sale price by the multiplier:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Original Price = $450 / 0.90 = $500.00</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        The original price of the smartphone was <strong>$500.00</strong>.
+      </p>
+
+      <!-- Discount Lookup Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Sample Discount Reference Chart</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Original Price</th>
+              <th class="p-4 font-bold">10% Off</th>
+              <th class="p-4 font-bold">20% Off</th>
+              <th class="p-4 font-bold">30% Off</th>
+              <th class="p-4 font-bold">50% Off</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold font-mono">$20.00</td>
+              <td class="p-4 font-mono">$18.00</td>
+              <td class="p-4 font-mono text-emerald-700">$16.00</td>
+              <td class="p-4 font-mono">$14.00</td>
+              <td class="p-4 font-mono font-bold">$10.00</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold font-mono">$50.00</td>
+              <td class="p-4 font-mono">$45.00</td>
+              <td class="p-4 font-mono text-emerald-700">$40.00</td>
+              <td class="p-4 font-mono">$35.00</td>
+              <td class="p-4 font-mono font-bold">$25.00</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold font-mono">$100.00</td>
+              <td class="p-4 font-mono">$90.00</td>
+              <td class="p-4 font-mono text-emerald-700">$80.00</td>
+              <td class="p-4 font-mono">$70.00</td>
+              <td class="p-4 font-mono font-bold">$50.00</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold font-mono">$250.00</td>
+              <td class="p-4 font-mono">$225.00</td>
+              <td class="p-4 font-mono text-emerald-700">$200.00</td>
+              <td class="p-4 font-mono">$175.00</td>
+              <td class="p-4 font-mono font-bold">$125.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Mental Math & Shopping Pitfalls</h2>
+      <p class="mt-4 mb-6">
+        When shopping, protect your wallet by keeping these tips and calculation tricks in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">The 10% Shortcut:</strong> To calculate discounts in your head instantly, find 10% first by moving the decimal point one place to the left (e.g., 10% of $65 is $6.50). You can then multiply this amount to find other discounts (e.g., 20% is `$6.50 * 2 = $13`, and 5% is `$6.50 / 2 = $3.25`).
+        </li>
+        <li>
+          <strong class="text-text">Calculating Tax on Sale Price:</strong> Sales tax is calculated on the final negotiated sale price, not the original MSRP. Ensure the register computes tax *after* subtracting all discounts.
+        </li>
+        <li>
+          <strong class="text-text">Ignoring Unit Pricing:</strong> A large discount on a bulk package does not always make it the best deal. Compare the final price-per-unit to ensure you are truly saving money.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By mastering these basic calculations, you can shop confidently, verify transaction totals, and spot genuine promotional deals.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Does a double discount mean adding the percentages?</h3>
+          <p class="mt-2 text-muted">
+            No. Stacked discounts are calculated sequentially. The first discount is applied to the original price, and the second discount is applied to that new sale price.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do I reverse a discount to find the original price?</h3>
+          <p class="mt-2 text-muted">
+            Divide the final sale price by `1 minus the discount percentage expressed as a decimal`. For example, if an item is $80 after a 20% discount, calculate `$80 / 0.80 = $100`.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between markup and discount?</h3>
+          <p class="mt-2 text-muted">
+            Markup is the percentage increase added to a wholesale cost to set the retail price. Discount is the percentage reduction subtracted from the retail price to set a promotional sale price.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

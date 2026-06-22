@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "Gross vs Net Salary: How to Calculate Your Take-Home Pay | AllCalcNow";
+const pageDescription = "Learn the difference between gross and net salary, understand tax deductions and pre-tax benefits, and see step-by-step take-home pay calculation examples.";
+const pageUrl = "https://allcalcnow.com/blog/gross-vs-net-salary";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Gross vs Net Salary", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Gross vs Net Salary: How to Calculate Your Take-Home Pay",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-22",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/gross-vs-net-salary" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Gross vs Net Salary' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Finance & Money</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        Gross vs Net Salary: How to Calculate Your Real Take-Home Pay
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        If you have ever opened a paycheck only to find the amount is much smaller than expected, you have experienced the difference between gross and net salary. Learn the math behind your payroll deductions.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 22, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When negotiating a new job offer or receiving a raise, the salary discussed is almost always the "gross" figure. This is the top-line number—the total amount of money you earn before any deductions are made. While a gross salary of $80,000 sounds excellent on paper, the money that actually deposits into your bank account is the "net" salary, often referred to as your take-home pay.
+      </p>
+      <p class="mb-6">
+        The path from gross to net salary is filled with tax brackets, retirement contributions, healthcare deductions, and governmental fees. Understanding this math is critical for budgeting, renting an apartment, and negotiating salary packages. In this guide, we define gross and net earnings, lay out the core payroll equation, analyze the various types of withholding, and work through step-by-step examples so you can run the numbers yourself.
+      </p>
+
+      <!-- Section: The Definitions -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Gross Salary vs. Net Salary defined</h2>
+      <p class="mt-4 mb-6">
+        To calculate your take-home pay, you must first understand the two end points of the calculation:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Gross Salary:</strong> The total compensation earned by an employee during a pay period. For hourly workers, this is hourly rate multiplied by hours worked. For salaried workers, it is the annual salary divided by the number of pay periods in the year.
+        </li>
+        <li>
+          <strong class="text-text">Net Salary:</strong> The remaining income after all deductions, taxes, and contributions have been subtracted. This is the physical amount of money deposited into your bank account or written on your paycheck.
+        </li>
+      </ul>
+
+      <!-- Section: The Formula -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Take-Home Pay Formula</h2>
+      <p class="mt-4 mb-6">
+        The progression from gross to net salary follows a systematic order of deductions:
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Net Pay = Gross Pay - Pre-Tax Deductions - Taxes - Post-Tax Deductions</code>
+      </div>
+
+      <p class="mb-6">
+        This formula must be solved in order because taxes are calculated on your gross pay *minus* pre-tax deductions (which lower your overall taxable income). Here is how the components are categorized:
+      </p>
+
+      <ul class="mb-8 space-y-4 list-none pl-4">
+        <li>
+          <span class="font-bold text-text">1. Pre-Tax Deductions:</span> Voluntary contributions that are subtracted before taxes are computed. These include traditional 401(k) or 403(b) retirement plans, Health Savings Accounts (HSAs), and premium payments for employer-sponsored health insurance.
+        </li>
+        <li>
+          <span class="font-bold text-text">2. Taxes (Withholding):</span> Mandatory governmental deductions, including federal income taxes (progressive brackets), state income taxes, local/city taxes, and payroll taxes (FICA in the US, which comprises Social Security at 6.2% and Medicare at 1.45%).
+        </li>
+        <li>
+          <span class="font-bold text-text">3. Post-Tax Deductions:</span> Deductions subtracted after taxes have been applied. Examples include Roth 401(k) or Roth IRA contributions, union dues, life insurance premiums, and court-ordered garnishments.
+        </li>
+      </ul>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Your Real Take-Home Pay</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual tax bracket math. Use our free Salary Calculator to enter your gross income, select your deductions, and see your exact take-home pay estimate instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/salary-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Salary Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        To illustrate how these payroll layers interact, let's work through three detailed scenarios using standard 2026 tax assumptions.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: An Hourly Employee</h3>
+      <p class="mt-2 mb-4">
+        Suppose an employee earns <strong>$25 per hour</strong>, works 40 hours per week, and is paid bi-weekly (every two weeks). They contribute <strong>$50 per check</strong> to employer health insurance (pre-tax) and face a combined flat tax rate (income + payroll) of <strong>20%</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate Gross Pay:</strong><br />
+          Gross pay = 80 hours × $25/hour = <strong>$2,000.00</strong>
+        </li>
+        <li>
+          <strong>Subtract Pre-Tax Deductions:</strong><br />
+          Taxable Gross = $2,000.00 - $50.00 (health premium) = <strong>$1,950.00</strong>
+        </li>
+        <li>
+          <strong>Calculate and Subtract Taxes:</strong><br />
+          Taxes = $1,950.00 × 20% = <strong>$390.00</strong>
+        </li>
+        <li>
+          <strong>Subtract Post-Tax Deductions:</strong><br />
+          No post-tax deductions apply in this basic scenario.
+        </li>
+        <li>
+          <strong>Calculate Net Take-Home Pay:</strong><br />
+          Net Pay = $1,950.00 - $390.00 = <strong>$1,560.00</strong>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This employee will take home <strong>$1,560.00</strong> every two weeks, representing 78% of their gross earnings.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: A Salaried Employee ($75,000/year)</h3>
+      <p class="mt-2 mb-4">
+        Suppose a salaried worker in the US earns <strong>$75,000 per year</strong>, paid monthly ($6,250 gross per month).
+        They contribute <strong>6%</strong> to a traditional 401(k) (pre-tax) and <strong>$150/month</strong> for health insurance.
+        We apply payroll taxes (FICA = 7.65%) and estimate federal/state income withholding at a combined <strong>15%</strong> of taxable gross.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Identify Monthly Gross Pay:</strong><br />
+          Gross Pay = $75,000 / 12 = <strong>$6,250.00</strong>
+        </li>
+        <li>
+          <strong>Calculate and Subtract Pre-Tax Deductions:</strong><br />
+          401(k) contribution = 6% of $6,250 = $375.00<br />
+          Health premium = $150.00<br />
+          Total Pre-tax = $375 + $150 = $525.00<br />
+          Taxable Gross = $6,250.00 - $525.00 = <strong>$5,725.00</strong>
+        </li>
+        <li>
+          <strong>Calculate FICA Taxes (based on Gross minus health, usually 401k is subject to FICA):</strong><br />
+          Subject to FICA = Gross - Health = $6,100.00<br />
+          FICA Tax (7.65%) = $6,100.00 × 0.0765 = <strong>$466.65</strong>
+        </li>
+        <li>
+          <strong>Calculate Income Tax:</strong><br />
+          Income Tax (15% of Taxable Gross) = $5,725.00 × 0.15 = <strong>$858.75</strong>
+        </li>
+        <li>
+          <strong>Calculate Net Take-Home Pay:</strong><br />
+          Net Pay = Gross Pay - Pre-Tax ($525) - FICA ($466.65) - Income Tax ($858.75) = <strong>$4,399.60</strong>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This salaried worker will receive a monthly direct deposit of <strong>$4,399.60</strong>.
+      </p>
+
+      <!-- Pay Breakdown Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Sample Pay Breakdown Summary</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Payroll Line Item</th>
+              <th class="p-4 font-bold">Calculation / Value</th>
+              <th class="p-4 font-bold">Impact on Paycheck</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Gross Monthly Salary</td>
+              <td class="p-4 font-mono">$6,250.00</td>
+              <td class="p-4 text-emerald-700 font-semibold">Starting Balance</td>
+            </tr>
+            <tr>
+              <td class="p-4">Pre-tax 401(k) (6%)</td>
+              <td class="p-4 font-mono">-$375.00</td>
+              <td class="p-4 text-red-700">Reduces Taxable Income</td>
+            </tr>
+            <tr>
+              <td class="p-4">Pre-tax Health Premium</td>
+              <td class="p-4 font-mono">-$150.00</td>
+              <td class="p-4 text-red-700">Reduces Taxable Income</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">FICA Payroll Tax (7.65%)</td>
+              <td class="p-4 font-mono">-$466.65</td>
+              <td class="p-4 text-red-700">Mandatory Withholding</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Income Tax Withholding</td>
+              <td class="p-4 font-mono">-$858.75</td>
+              <td class="p-4 text-red-700">Mandatory Withholding</td>
+            </tr>
+            <tr class="bg-accent/5">
+              <td class="p-4 font-bold">Net Take-Home Pay</td>
+              <td class="p-4 font-mono font-bold text-accent">$4,399.60</td>
+              <td class="p-4 text-accent font-bold">Deposited Amount</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Common Payroll Misunderstandings</h2>
+      <p class="mt-4 mb-6">
+        Managing your personal budget effectively requires avoiding these common salary misconceptions:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Confusing Pre-tax and Post-tax Accounts:</strong> Contributing to a Roth account does *not* reduce your current taxable income. Although Roth funds are tax-free when withdrawn in retirement, they are deducted from your post-tax salary.
+        </li>
+        <li>
+          <strong class="text-text">Underestimating Progressive Tax Brackets:</strong> Income taxes are not calculated as a single flat percentage of your gross salary. Your income is split into progressive brackets, where higher percentages are only applied to the money that falls within those specific tiers.
+        </li>
+        <li>
+          <strong class="text-text">Assuming 4 Weeks Equals a Month:</strong> If you are paid bi-weekly, there are 26 pay periods in a year, which means two months out of the year will have three paydays instead of two. Budgeting on a standard 4-week cycle can hide this "bonus" paycheck cash flow.
+        </li>
+        <li>
+          <strong class="text-text">Ignoring State and Local Taxes:</strong> Depending on where you live and work, you may face municipal, county, or state income taxes that reduce your take-home pay beyond standard federal tax projections.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        Reviewing your monthly paystub and understanding exactly where your gross salary goes is the first step toward optimizing your deductions, planning savings, and securing your financial stability.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between gross and net?</h3>
+          <p class="mt-2 text-muted">
+            Gross salary is the total compensation earned before any deductions are made. Net salary is the take-home pay remaining after taxes, insurance, and retirement contributions are deducted.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Are retirement contributions deducted from gross or net pay?</h3>
+          <p class="mt-2 text-muted">
+            Traditional retirement contributions (e.g., Traditional 401k or IRA) are deducted from gross pay before income taxes are calculated. Roth contributions are deducted post-tax from your net pay.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is FICA?</h3>
+          <p class="mt-2 text-muted">
+            FICA stands for the Federal Insurance Contributions Act. In the United States, it is a mandatory payroll tax that funds Social Security (6.2%) and Medicare (1.45%) for a total of 7.65% paid by the employee.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do pay bonuses affect my take-home pay?</h3>
+          <p class="mt-2 text-muted">
+            Bonuses are subject to the same taxes as regular income, but they are often withheld at a flat rate (typically 22% federally in the US), which can make them appear heavily taxed on your paycheck.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

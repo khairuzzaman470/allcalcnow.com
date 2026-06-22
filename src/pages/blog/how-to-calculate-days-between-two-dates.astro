@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Days Between Two Dates | AllCalcNow";
+const pageDescription = "Learn how to calculate the exact number of days between two dates. Review manual month-summing, Julian Day Number formulas, and worked examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-days-between-two-dates";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Days Between Two Dates", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Days Between Two Dates",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-27",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-days-between-two-dates" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate Days Between Two Dates' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Days Between Two Dates: Step-by-Step
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Whether you are planning a project timeline, tracking billing cycles, or counting down to a special occasion, calculating the exact days between dates requires careful calendar math. Learn how to run the numbers manually and algorithmically.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 27, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        How many days are left until your vacation? How long has a client invoice been outstanding? If you try to calculate these durations in your head, you quickly run into a classic problem: the Gregorian calendar is highly irregular. Months vary in length, leap years add extra days, and standard date differences don't align with basic decimal arithmetic.
+      </p>
+      <p class="mb-6">
+        To calculate the exact number of days between two dates, you can use two main approaches: manual month-summing (which is excellent for quick estimates over a few months) and the Julian Day Number algorithm (the mathematical foundation used by computers and database software). In this guide, we walk through both methods, explain the difference between including and excluding the start date, and work through step-by-step example calculations.
+      </p>
+
+      <!-- Section: Inclusion vs Exclusion -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Inclusion vs. Exclusion: Counting the Days</h2>
+      <p class="mt-4 mb-6">
+        Before you begin counting, you must define your boundaries. There are two standard conventions:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Exclude Start Date (Standard Difference):</strong> Calculates the duration between two dates (e.g. from Monday to Tuesday is 1 day). This is the standard method used for project timelines, age, and loan interest calculations.
+        </li>
+        <li>
+          <strong class="text-text">Include Start Date (Inclusive Difference):</strong> Counts both the start date and the end date as full active days (e.g. from Monday to Tuesday is 2 days). This is common for vacation bookings, school semesters, and event planning.
+        </li>
+      </ul>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Date Differences Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual addition and leap year checks. Enter your target dates in our free interactive Date Difference Calculator to find the exact days, weeks, months, or years instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/date-difference-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Date Difference Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Method 1 Manual -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Method 1: Manual Month-Summing Math</h2>
+      <p class="mt-4 mb-6">
+        To calculate the days manually between two close dates, write down the days in the starting month, the days in the ending month, and add the full days of any months in between:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Total Days = Days remaining in Start Month + Days in intermediate months + Days elapsed in End Month</code>
+      </div>
+
+      <!-- Section: Method 2 Algorithm -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Method 2: The Julian Day Number (JDN) Algorithm</h2>
+      <p class="mt-4 mb-6">
+        For long intervals or software design, clinicians and programmers convert dates into a continuous count of days known as the <strong class="text-text">Julian Day Number (JDN)</strong>. This represents the number of days elapsed since January 1, 4713 BC. 
+      </p>
+      <p class="mb-6">
+        To find the JDN for a Gregorian date (Year Y, Month M, Day D), use these equations:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 font-mono text-sm leading-relaxed shadow-sm">
+        a = floor((14 - M) / 12)<br />
+        y = Y + 4800 - a<br />
+        m = M + 12*a - 3<br />
+        JDN = D + floor((153*m + 2) / 5) + 365*y + floor(y / 4) - floor(y / 100) + floor(y / 400) - 32045
+      </div>
+      <p class="mb-6">
+        Once you calculate `JDN1` (start date) and `JDN2` (end date), the exact day count is simply:
+        <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Difference = JDN2 - JDN1</code>.
+      </p>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through two detailed examples using the manual month-summing approach.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Days Between Jan 1, 2026, and June 22, 2026</h3>
+      <p class="mt-2 mb-4">
+        We want to find the standard day difference (excluding start date) between <strong>January 1, 2026</strong>, and <strong>June 22, 2026</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Identify the start month days remaining:</strong> January has 31 days. Excluding January 1, there are: `31 - 1 = 30` days remaining.
+        </li>
+        <li>
+          <strong>Sum the intermediate full months:</strong><br />
+          - February 2026 (non-leap year) = 28 days<br />
+          - March 2026 = 31 days<br />
+          - April 2026 = 30 days<br />
+          - May 2026 = 31 days<br />
+          Sum = `28 + 31 + 30 + 31 = 120` days.
+        </li>
+        <li>
+          <strong>Add the days in the end month:</strong> June 22 = 22 days.
+        </li>
+        <li>
+          <strong>Calculate the final sum:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Difference = 30 + 120 + 22 = 172 days</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        There are exactly <strong>172 days</strong> between January 1, 2026, and June 22, 2026. (If counting inclusively, add 1 day to yield <strong>173 days</strong>).
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Days Between Nov 15, 2025, and March 10, 2026</h3>
+      <p class="mt-2 mb-4">
+        We want to calculate the standard day difference between <strong>November 15, 2025</strong>, and <strong>March 10, 2026</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Identify start month days remaining:</strong> November has 30 days. Excluding November 15, there are: `30 - 15 = 15` days remaining.
+        </li>
+        <li>
+          <strong>Sum the intermediate full months:</strong><br />
+          - December 2025 = 31 days<br />
+          - January 2026 = 31 days<br />
+          - February 2026 = 28 days<br />
+          Sum = `31 + 31 + 28 = 90` days.
+        </li>
+        <li>
+          <strong>Add the days in the end month:</strong> March 10 = 10 days.
+        </li>
+        <li>
+          <strong>Calculate the final sum:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Difference = 15 + 90 + 10 = 115 days</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        There are exactly <strong>115 days</strong> between November 15, 2025, and March 10, 2026.
+      </p>
+
+      <!-- Comparison Month Lengths Reference -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Calendar Months Reference Guide</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Month</th>
+              <th class="p-4 font-bold">Standard Days</th>
+              <th class="p-4 font-bold">Leap Year Days</th>
+              <th class="p-4 font-bold">Mnemonic Check</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Jan, Mar, May, Jul, Aug, Oct, Dec</td>
+              <td class="p-4 font-mono font-bold text-accent">31</td>
+              <td class="p-4 font-mono">31</td>
+              <td class="p-4">"Knuckle" peaks on hand checks</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Apr, Jun, Sep, Nov</td>
+              <td class="p-4 font-mono font-bold text-accent">30</td>
+              <td class="p-4 font-mono">30</td>
+              <td class="p-4">"Thirty days hath September..."</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">February</td>
+              <td class="p-4 font-mono font-bold text-accent">28</td>
+              <td class="p-4 font-mono font-bold text-accent">29</td>
+              <td class="p-4">Modified during leap year resets</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Common Date Calculation Mistakes</h2>
+      <p class="mt-4 mb-6">
+        When counting calendar days manually, keep these critical errors in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Incorrect Leap Year Checks:</strong> Forgetting to verify whether February falls in a leap year is a classic bug. For example, 2024 was a leap year (29 days in Feb), whereas 2025 and 2026 are not (28 days).
+        </li>
+        <li>
+          <strong class="text-text">Off-by-One Errors:</strong> Forgetting whether you need standard difference (excluding start date) or inclusive difference (including start date) will lead to an off-by-one error. Clarify your criteria before starting.
+        </li>
+        <li>
+          <strong class="text-text">Daylight Saving Time (DST) Jumps:</strong> When calculating hours or days in computer code, subtracting timestamps directly can cause issues when clocks jump forward or backward by 1 hour. Always normalize date boundaries to midnight Coordinated Universal Time (UTC) to prevent DST skew.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        Whether calculating a project deadline or auditing billing intervals, double-check your boundaries and intermediate months to ensure your day count is exact.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the Julian Day Number?</h3>
+          <p class="mt-2 text-muted">
+            The Julian Day Number (JDN) is a continuous count of days starting from January 1, 4713 BC. It is widely used by astronomers and programmers to perform date math without struggling with calendar irregularities.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Does a date difference calculator include the start date?</h3>
+          <p class="mt-2 text-muted">
+            By default, standard date difference calculators exclude the start date. If you need an inclusive count (for example, counting vacation days), you must toggle the "include start date" option or manually add 1 day to the final result.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do leap years affect date counts?</h3>
+          <p class="mt-2 text-muted">
+            Leap years insert a 29th day in February. If your target range spans across February of a leap year (such as 2024 or 2028), you must add exactly 1 day to the standard calculation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

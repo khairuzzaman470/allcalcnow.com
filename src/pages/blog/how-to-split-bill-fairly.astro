@@ -1,0 +1,278 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Split a Bill Fairly when Orders Differ | AllCalcNow";
+const pageDescription = "Learn the math to split restaurant bills fairly. Calculate proportional tax and tip, divide shared appetizers, and review worked group examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-split-bill-fairly";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Split a Bill Fairly", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Split a Bill Fairly when Orders Differ",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-25",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-split-bill-fairly" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Split a Bill Fairly' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Split a Bill Fairly When Everyone Ordered Differently
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Splitting a restaurant bill evenly might be easy, but it is rarely fair when one person orders a salad and another orders a steak and cocktails. Learn the math of proportional bill splitting.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 25, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        We have all been there: a fun dinner with a group of friends ends, and the waiter drops a single large check on the table. Someone immediately says, "Let's just split it evenly!" If everyone ordered similar entrees and drinks, an even split is quick and painless.
+      </p>
+      <p class="mb-6">
+        However, if one guest ordered a $15 pasta and water, while another ordered a $40 steak, shared appetizers, and three $12 cocktails, an even split is highly unfair. The budget-conscious diners end up heavily subsidizing the expensive orders of others, leading to silent resentment. Fortunately, splitting a bill proportionally—allocating tax, tip, and shared items accurately—is simple when you apply the correct multipliers. In this guide, we layout the math of proportional splitting, walk through detailed group examples, and share tips to handle group payments smoothly.
+      </p>
+
+      <!-- Section: The Math -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Proportional Split Formula</h2>
+      <p class="mt-4 mb-6">
+        To split a bill fairly, you must ensure that each person pays for their own items, plus a **proportional share** of the sales tax and tip. The most efficient way to calculate this is by using a combined tax and tip multiplier:
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Combined Multiplier = Total Bill / Group Subtotal</code>
+      </div>
+
+      <p class="mb-6">
+        Once you have the multiplier, you calculate each person's total by multiplying their individual subtotal (their entree + their share of shared items) by the multiplier:
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Personal Total = Personal Subtotal * Combined Multiplier</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Split Your Group Bills Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Avoid the table-side calculator stress. Use our free interactive Tip Calculator to enter item prices, allocate shared appetizers, select tip rates, and calculate individual totals instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/tip-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Tip Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Splitting Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through two detailed scenarios representing proportional and shared-appetizer splits.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: A Proportional Split</h3>
+      <p class="mt-2 mb-4">
+        Three friends (Alice, Bob, and Charlie) dine together.
+      </p>
+      <ul class="mb-4 list-disc pl-6 space-y-1 text-sm">
+        <li>Alice's order: $30.00 (Steak)</li>
+        <li>Bob's order: $15.00 (Salad)</li>
+        <li>Charlie's order: $15.00 (Pasta)</li>
+        <li>Group Subtotal = $30 + $15 + $15 = <strong>$60.00</strong></li>
+        <li>The bill includes <strong>$5.00</strong> in sales tax and a <strong>$12.00</strong> tip, bringing the total bill to <strong>$77.00</strong>.</li>
+      </ul>
+      <h4 class="mt-4 font-bold text-text">Proportional Steps:</h4>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the Combined Multiplier:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Multiplier = $77.00 (Total) / $60.00 (Subtotal) = 1.28333</code> (This means tax and tip add 28.33% to the cost of every item).
+        </li>
+        <li>
+          <strong>Calculate Alice's Share:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Alice Pays = $30.00 * 1.28333 ≈ $38.50</code>
+        </li>
+        <li>
+          <strong>Calculate Bob's Share:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Bob Pays = $15.00 * 1.28333 ≈ $19.25</code>
+        </li>
+        <li>
+          <strong>Calculate Charlie's Share:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Charlie Pays = $15.00 * 1.28333 ≈ $19.25</code>
+        </li>
+        <li>
+          <strong>Sum Check:</strong> `$38.50 + $19.25 + $19.25 = $77.00`. The math aligns perfectly.
+        </li>
+      </ul>
+      <p class="mb-6">
+        If they had split evenly, Bob and Charlie would have paid $25.67 each, subsidizing Alice's steak. Under the proportional split, Alice pays her fair share of <strong>$38.50</strong>, and Bob/Charlie pay <strong>$19.25</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Factoring in Shared Appetizers</h3>
+      <p class="mt-2 mb-4">
+        The same three friends order a <strong>$12.00</strong> appetizer to share.
+        Alice's entree is <strong>$20</strong>, Bob's is <strong>$10</strong>, and Charlie's is <strong>$10</strong>.
+        The bill has <strong>$4.00</strong> tax and a <strong>$10.00</strong> tip, bringing the total bill to <strong>$66.00</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Split the shared appetizer cost:</strong><br />
+          `$12.00 / 3 = $4.00` per person.
+        </li>
+        <li>
+          <strong>Calculate Personal Subtotals:</strong><br />
+          Alice: `$20.00 + $4.00 = $24.00`<br />
+          Bob: `$10.00 + $4.00 = $14.00`<br />
+          Charlie: `$10.00 + $4.00 = $14.00`<br />
+          Group Subtotal = $24 + $14 + $14 = <strong>$52.00</strong>
+        </li>
+        <li>
+          <strong>Calculate the Combined Multiplier:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Multiplier = $66.00 (Total) / $52.00 (Subtotal) ≈ 1.26923</code>
+        </li>
+        <li>
+          <strong>Calculate Individual Totals:</strong><br />
+          Alice pays: `$24 * 1.26923 = $30.46`<br />
+          Bob pays: `$14 * 1.26923 = $17.77`<br />
+          Charlie pays: `$14 * 1.26923 = $17.77`<br />
+          Sum check: `$30.46 + $17.77 + $17.77 = $66.00`.
+        </li>
+      </ul>
+      <p class="mb-6">
+        Alice pays <strong>$30.46</strong>, while Bob and Charlie pay <strong>$17.77</strong>.
+      </p>
+
+      <!-- Cost Split Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Even Split vs. Proportional Split (Example 1)</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Diner</th>
+              <th class="p-4 font-bold">Items Ordered</th>
+              <th class="p-4 font-bold">Even Split Share</th>
+              <th class="p-4 font-bold">Proportional Share</th>
+              <th class="p-4 font-bold">Difference Gap</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Alice</td>
+              <td class="p-4">$30.00 (Steak)</td>
+              <td class="p-4 font-mono">$25.67</td>
+              <td class="p-4 font-mono text-red-700 font-semibold">$38.50</td>
+              <td class="p-4 font-mono">+$12.83 (Fair addition)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Bob</td>
+              <td class="p-4">$15.00 (Salad)</td>
+              <td class="p-4 font-mono">$25.67</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$19.25</td>
+              <td class="p-4 font-mono">-$6.42 (Saved)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Charlie</td>
+              <td class="p-4">$15.00 (Pasta)</td>
+              <td class="p-4 font-mono">$25.67</td>
+              <td class="p-4 font-mono text-emerald-700 font-semibold">$19.25</td>
+              <td class="p-4 font-mono">-$6.42 (Saved)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Common Bill Splitting Mistakes</h2>
+      <p class="mt-4 mb-6">
+        When dividing group checks, watch out for these mathematical pitfalls:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Splitting Tax and Tip Evenly:</strong> A common mistake is splitting entree costs proportionally but dividing tax and tip evenly among the group. This means Bob and Charlie pay the same dollar tax and tip as Alice, despite ordering half as much food. Always apply a combined multiplier to keep the allocation fair.
+        </li>
+        <li>
+          <strong class="text-text">Ignoring Coupons and Loyalty Discounts:</strong> If the table uses a discount coupon, apply the percentage discount to the group subtotal first to find the new multiplier, or deduct the dollar discount from the individual who brought the coupon before running the math.
+        </li>
+        <li>
+          <strong class="text-text">Forgetting to Check for Auto-Gratuity:</strong> Many restaurants automatically add a 18% or 20% gratuity (service charge) for large parties (typically 6 or more). Double-check the receipt before calculating tip to avoid double-tipping.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By mastering these simple multipliers, you can resolve group checks smoothly, keep payments fair, and maintain stress-free dining experiences.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Is it rude to ask to split a bill proportionally?</h3>
+          <p class="mt-2 text-muted">
+            No. In modern dining, it is widely accepted to pay strictly for what you consume, especially when order values differ significantly. Using payment apps makes sending exact shares quick and polite.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do you allocate shared items like appetizers?</h3>
+          <p class="mt-2 text-muted">
+            Divide the cost of the shared appetizer by the number of people who ate it, and add that share to their individual subtotals before applying the tax and tip multiplier.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Should we ask the server to split the check?</h3>
+          <p class="mt-2 text-muted">
+            Ask the server *before* ordering if they can split the check. If the restaurant has a policy against splitting cards (often limited to 3 or 4 cards), have one person pay the full check and settle shares via payment apps.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "Metric to Imperial Conversion: Formulas & Cheat Sheet | AllCalcNow";
+const pageDescription = "Learn standard formulas to convert length, weight, and temperature between metric and imperial systems. Study worked examples and quick math shortcuts.";
+const pageUrl = "https://allcalcnow.com/blog/metric-to-imperial-conversion";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Metric to Imperial Conversion", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Metric to Imperial Conversion: Formulas & Cheat Sheet",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-24",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/metric-to-imperial-conversion" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Metric to Imperial Conversion' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        Metric to Imperial Conversion: The Formulas Everyone Forgets
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Translating measurements between the metric and imperial systems is an everyday challenge in cooking, travel, science, and trade. Master the exact conversion formulas and shortcuts.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 24, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        Almost every country in the world uses the International System of Units (SI), commonly known as the metric system. Developed during the French Revolution, the metric system is structured on logical bases of ten (millimeters, centimeters, meters, kilometers). However, the United States, Myanmar, and Liberia continue to use the British Imperial system, relying on historical units like inches, feet, yards, pounds, and ounces.
+      </p>
+      <p class="mb-6">
+        Because of this split, travelers, international shoppers, home cooks, and engineers must continuously convert units back and forth. While translation apps exist, knowing the exact conversion ratios allows you to run calculations quickly without a phone. In this guide, we list the core conversion formulas for length, weight, temperature, and volume, demonstrate step-by-step calculations with real-world examples, and share mental math shortcuts that everyone can learn.
+      </p>
+
+      <!-- Section: The Cheat Sheet -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Conversion Cheat Sheet</h2>
+      <p class="mt-4 mb-6">
+        Here are the standard mathematical multipliers used to convert values between systems:
+      </p>
+
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Measurement Category</th>
+              <th class="p-4 font-bold">Metric Unit</th>
+              <th class="p-4 font-bold">Imperial Unit</th>
+              <th class="p-4 font-bold">Conversion Multiplier</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Length (Short)</td>
+              <td class="p-4">Centimeters (cm)</td>
+              <td class="p-4">Inches (in)</td>
+              <td class="p-4 font-mono text-accent">1 in = 2.54 cm</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Length (Long)</td>
+              <td class="p-4">Kilometers (km)</td>
+              <td class="p-4">Miles (mi)</td>
+              <td class="p-4 font-mono text-accent">1 mi ≈ 1.609 km</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Weight / Mass</td>
+              <td class="p-4">Kilograms (kg)</td>
+              <td class="p-4">Pounds (lbs)</td>
+              <td class="p-4 font-mono text-accent">1 kg ≈ 2.205 lbs</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Volume (Liquid)</td>
+              <td class="p-4">Liters (L)</td>
+              <td class="p-4">Gallons (gal)</td>
+              <td class="p-4 font-mono text-accent">1 gal ≈ 3.785 L</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Temperature</td>
+              <td class="p-4">Celsius (°C)</td>
+              <td class="p-4">Fahrenheit (°F)</td>
+              <td class="p-4 font-mono text-accent">°F = (°C * 1.8) + 32</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Convert Units Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Avoid the manual division and decimal ratios. Use our free interactive Unit Converter to instantly convert length, weight, area, volume, and temperature.
+        </p>
+        <div class="mt-4">
+          <a href="/unit-converter" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Unit Converter →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Formulas and Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Conversion Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through three detailed examples representing length, weight, and temperature to show the math in action.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Height Conversion (cm to Feet & Inches)</h3>
+      <p class="mt-2 mb-4">
+        You are reviewing a medical file that lists a patient's height as <strong>180 centimeters</strong>. You want to translate this to standard US feet and inches.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Convert centimeters to total inches:</strong><br />
+          Divide height by 2.54:<br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Inches = 180 / 2.54 ≈ 70.866 inches</code>
+        </li>
+        <li>
+          <strong>Find the number of whole feet:</strong><br />
+          Divide total inches by 12 (since 1 foot = 12 inches):<br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">70.866 / 12 = 5 feet with a remainder of 10.866 inches</code>
+        </li>
+        <li>
+          <strong>Round the remaining inches:</strong><br />
+          `10.866` rounds to approximately `11` inches.
+        </li>
+      </ul>
+      <p class="mb-6">
+        A height of 180 cm is approximately <strong>5 feet 11 inches</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Weight Conversion (kg to lbs)</h3>
+      <p class="mt-2 mb-4">
+        You are traveling internationally and your suitcase registers at <strong>23 kilograms</strong> at the airport scale. You want to verify if this is under the standard US weight limit of 50 pounds.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Apply the conversion multiplier:</strong><br />
+          Multiply weight in kg by 2.20462:<br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Pounds = 23 * 2.20462 ≈ 50.706 lbs</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Your suitcase weighs <strong>50.7 pounds</strong>, which is slightly over the 50-pound limit.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 3: Temperature Conversion (°C to °F)</h3>
+      <p class="mt-2 mb-4">
+        A weather forecast in London reports a high temperature of <strong>22° Celsius</strong>. You want to know the equivalent temperature in Fahrenheit.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Apply the temperature formula:</strong><br />
+          Multiply by 1.8 (or 9/5), then add 32:<br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">°F = (22 * 1.8) + 32</code>
+        </li>
+        <li>
+          <strong>Perform multiplication first:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">22 * 1.8 = 39.6</code>
+        </li>
+        <li>
+          <strong>Add 32:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">39.6 + 32 = 71.6</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        A temperature of 22°C is equal to <strong>71.6° Fahrenheit</strong>.
+      </p>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Things to Watch Out For</h2>
+      <p class="mt-4 mb-6">
+        When performing conversions manually, be careful to avoid these common mistakes:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Order of Operations in Temperature:</strong> When converting Fahrenheit back to Celsius, you must subtract 32 *before* multiplying by 5/9: `°C = (F - 32) * 5/9`. Reversing this order is a frequent math error.
+        </li>
+        <li>
+          <strong class="text-text">Imprecise Rounding:</strong> While multiplying kilograms by 2 is a useful mental shortcut for weight, it introduces a 10% error margin. For precise weights (e.g. shipping or medical contexts), always use the full `2.2` or `2.2046` multiplier.
+        </li>
+        <li>
+          <strong class="text-text">Fluid Ounces vs. Weight Ounces:</strong> In the imperial system, ounces are used to measure both weight (mass) and fluid ounces (volume). A fluid ounce of water weighs approximately one ounce, but this relationship does not hold true for other liquids or solids.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By keeping these formulas and multipliers handy, you can translate units easily, ensuring accuracy in cooking, travel logistics, and business projects.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do I convert Celsius to Fahrenheit quickly in my head?</h3>
+          <p class="mt-2 text-muted">
+            For a quick mental estimate, double the Celsius temperature and add 30. For example, if it is 20°C: `20 * 2 = 40`, and `40 + 30 = 70°F`. The actual value is 68°F, meaning this shortcut is close enough for casual use.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How many grams are in a pound?</h3>
+          <p class="mt-2 text-muted">
+            There are exactly 453.59237 grams in a standard pound. For quick calculations, engineers and cooks round this to 454 grams.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between SOFR and LIBOR?</h3>
+          <p class="mt-2 text-muted">
+            SOFR (Secured Overnight Financing Rate) is a broad measure of the cost of borrowing cash overnight collateralized by Treasury securities, which replaced LIBOR (London Interbank Offered Rate) as the standard benchmark index.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

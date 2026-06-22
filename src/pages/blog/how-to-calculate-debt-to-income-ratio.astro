@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Your Debt-to-Income (DTI) Ratio | AllCalcNow";
+const pageDescription = "Learn how to calculate your Debt-to-Income (DTI) ratio. Understand front-end vs back-end ratios, review lender guidelines, and see worked examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-debt-to-income-ratio";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate DTI Ratio", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Your Debt-to-Income (DTI) Ratio",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-23",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-debt-to-income-ratio" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate DTI Ratio' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Finance & Money</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Your Debt-to-Income Ratio (And Why Lenders Care)
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Before banks approve a mortgage or loan, they want to know how much of your income is already pledged to existing debts. Learn how to calculate your Debt-to-Income (DTI) ratio.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 23, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When applying for credit, your credit score is the primary metric lenders use to determine your reliability. However, when it comes to borrowing large sums of money—like a home mortgage or a substantial business loan—your credit score alone is not enough. Lenders need to evaluate your overall capacity to handle the payments. That is where the Debt-to-Income (DTI) ratio comes in.
+      </p>
+      <p class="mb-6">
+        Your DTI ratio is a simple percentage that compares your recurring monthly debt payments to your gross monthly income. It tells lenders exactly how much financial breathing room you have left after meeting your existing obligations. In this guide, we break down front-end vs. back-end DTI ratios, present the calculation formulas, walk through real-world step-by-step examples, and explain the threshold guidelines lenders use to approve your applications.
+      </p>
+
+      <!-- Section: Front vs Back -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Front-End vs. Back-End DTI Ratios</h2>
+      <p class="mt-4 mb-6">
+        When lenders evaluate your application, they calculate two separate DTI percentages:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Front-End DTI Ratio (Housing Ratio):</strong> The percentage of your gross income that goes strictly toward housing expenses. For renters, this is monthly rent. For homebuyers, it represents the total mortgage payment, consisting of Principal, Interest, Taxes, and Insurance (PITI), plus any mandatory Homeowners Association (HOA) fees.
+        </li>
+        <li>
+          <strong class="text-text">Back-End DTI Ratio (Total Debt Ratio):</strong> The percentage of your gross income required to cover all recurring monthly debt payments. This includes your housing expenses *plus* student loans, car loans, minimum credit card payments, personal loans, child support, and alimony.
+        </li>
+      </ul>
+
+      <!-- Section: The Formulas -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The DTI Calculation Formulas</h2>
+      <p class="mt-4 mb-6">
+        To calculate these ratios, you must divide your monthly payments by your gross monthly income (your income before taxes and deductions are taken out):
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. Front-End DTI Formula</h3>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Front-End DTI (%) = ( Monthly Housing Expenses / Gross Monthly Income ) * 100</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. Back-End DTI Formula</h3>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Back-End DTI (%) = ( Total Monthly Recurring Debt / Gross Monthly Income ) * 100</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Check Your Debt Capacity</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual fraction division. Use our free interactive Loan Calculator to enter your income and debts, and see your exact DTI ratio along with lender approval benchmarks instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/loan-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Loan Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through two examples representing different household budgets to show the math in action.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Salaried W-2 Worker</h3>
+      <p class="mt-2 mb-4">
+        Suppose a salaried worker has a gross annual income of <strong>$72,000</strong> ($6,000 per month). They are looking to buy a house with a projected monthly housing cost (PITI) of <strong>$1,600</strong>. Their other recurring monthly debts are:
+      </p>
+      <ul class="mb-4 list-disc pl-6 space-y-1 text-sm">
+        <li>Auto loan payment: $350</li>
+        <li>Student loan payment: $150</li>
+        <li>Minimum credit card payment: $100</li>
+      </ul>
+      <h4 class="mt-4 font-bold text-text">Steps:</h4>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate Gross Monthly Income:</strong> $72,000 / 12 = <strong>$6,000.00</strong>
+        </li>
+        <li>
+          <strong>Calculate Front-End DTI (Housing Ratio):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Front-End DTI = ($1,600 / $6,000) * 100 = 26.67%</code>
+        </li>
+        <li>
+          <strong>Sum Total Recurring Debt:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Debt = $1,600 (Housing) + $350 + $150 + $100 = $2,200</code>
+        </li>
+        <li>
+          <strong>Calculate Back-End DTI (Total Debt Ratio):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Back-End DTI = ($2,200 / $6,000) * 100 = 36.67%</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This borrower has a Front-End DTI of <strong>26.7%</strong> and a Back-End DTI of <strong>36.7%</strong>. This falls safely within standard lender underwriting guidelines.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Self-Employed Freelancer</h3>
+      <p class="mt-2 mb-4">
+        A freelancer has a gross monthly income average of <strong>$4,500</strong>. They rent an apartment for <strong>$1,200 per month</strong> and have these recurring debts:
+      </p>
+      <ul class="mb-4 list-disc pl-6 space-y-1 text-sm">
+        <li>Student loan payment: $400</li>
+        <li>Minimum credit card payment: $200</li>
+      </ul>
+      <h4 class="mt-4 font-bold text-text">Steps:</h4>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Identify Gross Income:</strong> $4,500
+        </li>
+        <li>
+          <strong>Calculate Front-End DTI:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Front-End DTI = ($1,200 / $4,500) * 100 = 26.67%</code>
+        </li>
+        <li>
+          <strong>Sum Total Recurring Debt:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Debt = $1,200 (Rent) + $400 + $200 = $1,800</code>
+        </li>
+        <li>
+          <strong>Calculate Back-End DTI:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Back-End DTI = ($1,800 / $4,500) * 100 = 40.00%</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This freelancer has a Back-End DTI of <strong>40.0%</strong>. While this is acceptable for rent, it is close to the standard mortgage threshold limits.
+      </p>
+
+      <!-- What to Include Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">What Expenses Are Included in DTI?</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Expense Category</th>
+              <th class="p-4 font-bold">Included in DTI?</th>
+              <th class="p-4 font-bold">Explanation</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Rent / Mortgage Payments (PITI)</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+              <td class="p-4">Primary housing expense</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Student and Auto Loans</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+              <td class="p-4">Fixed installment debt agreement</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Credit Cards (Minimum payments)</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+              <td class="p-4">Only the minimum required payment, not monthly spending</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Utilities, Groceries, & Cell phone bills</td>
+              <td class="p-4 text-red-700">No</td>
+              <td class="p-4">Living expenses, not debt agreements</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Health & Car Insurance premiums</td>
+              <td class="p-4 text-red-700">No</td>
+              <td class="p-4">Non-debt monthly bills</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Lender Limits & Common Pitfalls</h2>
+      <p class="mt-4 mb-6">
+        When planning to apply for credit, keep these guidelines and limits in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">The 28/36 Rule:</strong> Many mortgage lenders use the 28/36 rule as a baseline guideline. This states that your front-end housing DTI should not exceed **28%**, and your back-end total DTI should not exceed **36%**.
+        </li>
+        <li>
+          <strong class="text-text">Qualified Mortgage Limit (43%):</strong> Under federal rules, the maximum DTI ratio allowed to secure a standard "Qualified Mortgage" is **43%**. While some government-backed programs (FHA or VA loans) allow ratios up to 50% with compensating factors, 43% remains the primary baseline.
+        </li>
+        <li>
+          <strong class="text-text">Using Gross vs. Net Income:</strong> Borrowers often make the mistake of calculating DTI using their take-home pay (net income). Lenders always calculate DTI using **gross income** (pre-tax), which makes your DTI percentage appear lower than it feels in reality.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By monitoring your debt levels and calculating your ratios beforehand, you can present a strong, low-risk application to potential lenders.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is a good DTI ratio?</h3>
+          <p class="mt-2 text-muted">
+            Lenders generally prefer a back-end DTI ratio of 36% or lower. Ratios below 20% are considered excellent and represent low risk to lenders.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Does my DTI ratio affect my credit score?</h3>
+          <p class="mt-2 text-muted">
+            No. Your credit report does not record your income, so credit bureaus cannot calculate your DTI ratio. It has no direct effect on your FICO credit score, though lenders will calculate it manually during applications.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can I get a mortgage with a DTI ratio above 43%?</h3>
+          <p class="mt-2 text-muted">
+            Yes, but it requires compensating factors like a high credit score, a large down payment, or applying through government-backed programs (FHA, VA, or USDA) that allow higher debt caps.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

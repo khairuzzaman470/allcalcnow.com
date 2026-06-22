@@ -8,12 +8,313 @@ const pageUrl = "https://allcalcnow.com/blog";
 
 const posts = [
   {
+    title: "How to Calculate Age from Date of Birth",
+    description: "Learn how to calculate age from a date of birth. Discover the manual subtraction formula, borrow rules for months and days, and see worked examples.",
+    href: "/blog/how-to-calculate-age-from-date-of-birth",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 27, 2026",
+    dateISO: "2026-06-27",
+    icon: "🎂"
+  },
+  {
+    title: "How to Calculate Days Between Two Dates",
+    description: "Learn how to calculate the exact number of days between two dates. Review manual month-summing, Julian Day Number formulas, and worked examples.",
+    href: "/blog/how-to-calculate-days-between-two-dates",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 27, 2026",
+    dateISO: "2026-06-27",
+    icon: "📅"
+  },
+  {
+    title: "Pregnancy Due Date Calculation: How It Works",
+    description: "Learn how pregnancy due dates are calculated. Review Naegele's rule, IVF transfer date adjustments, and see step-by-step worked calculations.",
+    href: "/blog/pregnancy-due-date-calculation",
+    category: "Everyday Math",
+    readTime: "10 Min Read",
+    date: "June 27, 2026",
+    dateISO: "2026-06-27",
+    icon: "👶"
+  },
+  {
+    title: "How to Calculate Work Tenure and Anniversaries",
+    description: "Learn how to calculate work tenure, service years, and anniversaries. Review proportional year formulas, leap year adjustments, and see worked examples.",
+    href: "/blog/how-to-calculate-work-tenure",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 27, 2026",
+    dateISO: "2026-06-27",
+    icon: "💼"
+  },
+  {
+    title: "Leap Years Explained: Math and Calculations",
+    description: "Understand the mathematical rules of leap years. Learn why we have leap days, review the Gregorian divisibility algorithm, and see worked examples.",
+    href: "/blog/leap-years-explained",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 27, 2026",
+    dateISO: "2026-06-27",
+    icon: "🗓️"
+  },
+  {
+    title: "Body Fat Percentage: 4 Methods Compared",
+    description: "Compare 4 common methods to measure body fat percentage. Learn the US Navy formula, review worked examples, and check accuracy ranges.",
+    href: "/blog/body-fat-percentage-methods",
+    category: "Health & Fitness",
+    readTime: "9 Min Read",
+    date: "June 26, 2026",
+    dateISO: "2026-06-26",
+    icon: "⚖️"
+  },
+  {
+    title: "BMI vs Body Fat Percentage: Which is Better?",
+    description: "Compare BMI and Body Fat Percentage. Learn why BMI can be misleading for athletes, understand metabolic risks like TOFI, and see worked examples.",
+    href: "/blog/bmi-vs-body-fat-percentage",
+    category: "Health & Fitness",
+    readTime: "9 Min Read",
+    date: "June 26, 2026",
+    dateISO: "2026-06-26",
+    icon: "⚖️"
+  },
+  {
+    title: "How to Calculate Daily Calorie Needs: BMR & TDEE",
+    description: "Learn how to calculate your BMR and TDEE. Review the Mifflin-St Jeor formula, calculate activity factor adjustments, and see worked examples.",
+    href: "/blog/how-to-calculate-daily-calorie-needs",
+    category: "Health & Fitness",
+    readTime: "10 Min Read",
+    date: "June 26, 2026",
+    dateISO: "2026-06-26",
+    icon: "🔥"
+  },
+  {
+    title: "Healthy Weight Range by Height: Formulas & Calculation",
+    description: "Learn how to calculate a healthy weight range by height using reverse BMI equations. Compare standard boundaries and the Devine formula with worked examples.",
+    href: "/blog/healthy-weight-range-by-height",
+    category: "Health & Fitness",
+    readTime: "9 Min Read",
+    date: "June 26, 2026",
+    dateISO: "2026-06-26",
+    icon: "📏"
+  },
+  {
+    title: "How to Track Body Composition Changes (No Scale)",
+    description: "Learn how to track body composition without relying on a weight scale. Understand body recomposition, circumference measurements, and athletic benchmarks.",
+    href: "/blog/how-to-track-body-composition",
+    category: "Health & Fitness",
+    readTime: "9 Min Read",
+    date: "June 26, 2026",
+    dateISO: "2026-06-26",
+    icon: "📋"
+  },
+  {
+    title: "How to Calculate Markup vs Margin: Formulas & Differences",
+    description: "Learn the difference between markup and margin. Study the formulas, review worked pricing examples, and optimize your business profits.",
+    href: "/blog/markup-vs-margin",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 25, 2026",
+    dateISO: "2026-06-25",
+    icon: "📊"
+  },
+  {
+    title: "How to Split a Bill Fairly when Orders Differ",
+    description: "Learn the math to split restaurant bills fairly. Calculate proportional tax and tip, divide shared appetizers, and review worked group examples.",
+    href: "/blog/how-to-split-bill-fairly",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 25, 2026",
+    dateISO: "2026-06-25",
+    icon: "🍽️"
+  },
+  {
+    title: "Unit Conversion Cheat Sheet: Formulas & Estimations",
+    description: "Access our comprehensive unit conversion cheat sheet. Learn formulas for length, weight, volume, and temperature, and see worked examples.",
+    href: "/blog/unit-conversion-cheat-sheet",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 25, 2026",
+    dateISO: "2026-06-25",
+    icon: "📋"
+  },
+  {
+    title: "How to Calculate Price Per Unit: Find the Best Deal",
+    description: "Learn how to calculate price per unit to find the best deal. Compare bulk vs standard sizes, spot shrinkflation, and review worked shopping examples.",
+    href: "/blog/how-to-calculate-price-per-unit",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 25, 2026",
+    dateISO: "2026-06-25",
+    icon: "🏷️"
+  },
+  {
+    title: "Why Manual Percentage Math Differs from Calculators",
+    description: "Discover why manual percentage math doesn't always align with pocket calculators. Study percentage asymmetry, calculator % key logic, and worked examples.",
+    href: "/blog/manual-percentage-math-vs-calculator",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 25, 2026",
+    dateISO: "2026-06-25",
+    icon: "％"
+  },
+  {
+    title: "How to Calculate a Discount: Formulas & Savings",
+    description: "Learn the formulas to calculate discounts, sale prices, and total savings. See worked examples for single, stacked, and reversed discounts.",
+    href: "/blog/how-to-calculate-discount",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 24, 2026",
+    dateISO: "2026-06-24",
+    icon: "🏷️"
+  },
+  {
+    title: "Metric to Imperial Conversion: Formulas & Cheat Sheet",
+    description: "Learn standard formulas to convert length, weight, and temperature between metric and imperial systems. Study worked examples and quick math shortcuts.",
+    href: "/blog/metric-to-imperial-conversion",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 24, 2026",
+    dateISO: "2026-06-24",
+    icon: "📏"
+  },
+  {
+    title: "How to Calculate Fuel Cost and Mileage for Road Trips",
+    description: "Learn how to calculate your vehicle's fuel cost and MPG. Study worked road trip examples, compare vehicle efficiencies, and save on gas.",
+    href: "/blog/how-to-calculate-fuel-cost",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 24, 2026",
+    dateISO: "2026-06-24",
+    icon: "🚗"
+  },
+  {
+    title: "How to Calculate GPA: Weighted vs Unweighted",
+    description: "Learn how to calculate your Grade Point Average (GPA). Understand weighted vs unweighted scales, study credit-weight formulas, and see worked examples.",
+    href: "/blog/how-to-calculate-gpa",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 24, 2026",
+    dateISO: "2026-06-24",
+    icon: "🎓"
+  },
+  {
+    title: "The Global Tipping Guide: Gratuity Customs by Country",
+    description: "Learn tipping customs and gratuity rules for restaurants, hotels, and taxis worldwide. Check regional guides, see worked examples, and avoid travel mistakes.",
+    href: "/blog/international-tipping-guide",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 24, 2026",
+    dateISO: "2026-06-24",
+    icon: "🗺️"
+  },
+  {
+    title: "Simple vs Compound Interest: What's the Difference?",
+    description: "Discover the differences between simple and compound interest. Study the formulas, see side-by-side growth examples, and learn how compounding accelerates returns.",
+    href: "/blog/simple-interest-vs-compound-interest",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 23, 2026",
+    dateISO: "2026-06-23",
+    icon: "📈"
+  },
+  {
+    title: "Fixed vs Variable Rate Loans: Which Costs You More?",
+    description: "Compare fixed vs variable rate loans. Learn how variable rate resets are calculated, see rising and falling rate scenarios, and find the best loan.",
+    href: "/blog/fixed-vs-variable-rate-loans",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 23, 2026",
+    dateISO: "2026-06-23",
+    icon: "⚖️"
+  },
+  {
+    title: "APR vs Interest Rate: The Difference for Borrowers",
+    description: "Understand the difference between APR and interest rate. Learn how upfront loan fees affect APR, study worked examples, and make smarter borrowing choices.",
+    href: "/blog/apr-vs-interest-rate",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 23, 2026",
+    dateISO: "2026-06-23",
+    icon: "🏷️"
+  },
+  {
+    title: "How to Calculate Debt-to-Income Ratio (DTI)",
+    description: "Learn how to calculate your Debt-to-Income (DTI) ratio. Understand front-end vs back-end ratios, review lender guidelines, and see worked examples.",
+    href: "/blog/how-to-calculate-debt-to-income-ratio",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 23, 2026",
+    dateISO: "2026-06-23",
+    icon: "📊"
+  },
+  {
+    title: "Renting vs Buying a Home: How to Run the Numbers",
+    description: "Compare renting vs buying a home. Learn the price-to-rent ratio formula, understand break-even timelines, and see step-by-step worked calculations.",
+    href: "/blog/renting-vs-buying-home",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 23, 2026",
+    dateISO: "2026-06-23",
+    icon: "🏠"
+  },
+  {
+    title: "How to Calculate Loan EMI: Formula, Amortization & Examples",
+    description: "Learn the exact formula to calculate Equated Monthly Installments (EMI), understand loan amortization schedules, and see step-by-step worked examples.",
+    href: "/blog/how-to-calculate-loan-emi",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 22, 2026",
+    dateISO: "2026-06-22",
+    icon: "💳"
+  },
+  {
+    title: "Gross vs Net Salary: How to Calculate Your Take-Home Pay",
+    description: "Learn the difference between gross and net salary, understand tax deductions and pre-tax benefits, and see step-by-step take-home pay calculation examples.",
+    href: "/blog/gross-vs-net-salary",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 22, 2026",
+    dateISO: "2026-06-22",
+    icon: "💵"
+  },
+  {
+    title: "How Exchange Rates Work: Guide to Currency Conversion",
+    description: "Understand how currency pairings and exchange rates work. Learn conversion formulas, calculate spreads and retail fees, and see worked examples.",
+    href: "/blog/how-exchange-rates-work",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 22, 2026",
+    dateISO: "2026-06-22",
+    icon: "💱"
+  },
+  {
+    title: "How Much Should You Save for Retirement? Step-by-Step",
+    description: "Determine your ideal retirement savings rate using math. Learn the future value annuity formula, review age-based savings benchmarks, and see worked examples.",
+    href: "/blog/how-much-to-save-for-retirement",
+    category: "Finance & Money",
+    readTime: "9 Min Read",
+    date: "June 22, 2026",
+    dateISO: "2026-06-22",
+    icon: "🏦"
+  },
+  {
+    title: "How to Calculate Your Electricity Bill: Watts & Cost",
+    description: "Understand how to calculate your electricity bill. Learn to convert Watts to kWh, analyze utility rates, and see step-by-step cost examples.",
+    href: "/blog/how-to-calculate-electricity-bill",
+    category: "Everyday Math",
+    readTime: "9 Min Read",
+    date: "June 22, 2026",
+    dateISO: "2026-06-22",
+    icon: "⚡"
+  },
+  {
     title: "How to Calculate Your Mortgage Payment in 2026: A Complete Step-by-Step Guide",
     description: "Ready to buy a home or refinance? Learn how to calculate your monthly payment manually using the amortization formula and see how PITI affects your costs.",
     href: "/blog/how-to-calculate-mortgage-payment",
     category: "Finance & Money",
     readTime: "8 Min Read",
     date: "May 23, 2026",
+    dateISO: "2026-05-23",
     icon: "🏠"
   },
   {
@@ -23,6 +324,7 @@ const posts = [
     category: "Health & Fitness",
     readTime: "7 Min Read",
     date: "May 23, 2026",
+    dateISO: "2026-05-23",
     icon: "⚖️"
   },
   {
@@ -32,6 +334,7 @@ const posts = [
     category: "Finance & Money",
     readTime: "10 Min Read",
     date: "May 23, 2026",
+    dateISO: "2026-05-23",
     icon: "📈"
   },
   {
@@ -41,6 +344,7 @@ const posts = [
     category: "Finance & Money",
     readTime: "6 Min Read",
     date: "May 23, 2026",
+    dateISO: "2026-05-23",
     icon: "🧾"
   },
   {
@@ -50,6 +354,7 @@ const posts = [
     category: "Everyday Math",
     readTime: "6 Min Read",
     date: "June 19, 2026",
+    dateISO: "2026-06-19",
     icon: "🍽️"
   },
   {
@@ -59,6 +364,7 @@ const posts = [
     category: "Finance & Money",
     readTime: "10 Min Read",
     date: "June 19, 2026",
+    dateISO: "2026-06-19",
     icon: "🌴"
   },
   {
@@ -68,6 +374,7 @@ const posts = [
     category: "Everyday Math",
     readTime: "8 Min Read",
     date: "June 19, 2026",
+    dateISO: "2026-06-19",
     icon: "🎂"
   },
   {
@@ -77,9 +384,13 @@ const posts = [
     category: "Everyday Math",
     readTime: "9 Min Read",
     date: "June 19, 2026",
+    dateISO: "2026-06-19",
     icon: "％"
   }
 ];
+
+const todayISO = new Date().toISOString().split('T')[0];
+const visiblePosts = posts.filter(post => post.dateISO <= todayISO);
 
 const schemas = [
   {
@@ -128,7 +439,7 @@ const schemas = [
     <main class="mt-12">
       <h2 class="sr-only">Latest Articles</h2>
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
-        {posts.map((post) => (
+        {visiblePosts.map((post) => (
           <article class="group relative flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:border-accent/30 hover:shadow-md hover:-translate-y-0.5">
             <div class="flex items-center justify-between text-xs text-muted">
               <span class="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3 py-1 font-bold text-accent">

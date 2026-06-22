@@ -1,0 +1,268 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "Fixed vs Variable Rate Loans: Which Costs You More? | AllCalcNow";
+const pageDescription = "Compare fixed vs variable rate loans. Learn how variable rate resets are calculated, see rising and falling rate scenarios, and find the best loan.";
+const pageUrl = "https://allcalcnow.com/blog/fixed-vs-variable-rate-loans";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Fixed vs Variable Rate Loans", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Fixed vs Variable Rate Loans: Which Costs You More?",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-23",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/fixed-vs-variable-rate-loans" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Fixed vs Variable Rate Loans' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Finance & Money</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        Fixed vs. Variable Rate Loans: Which Actually Costs You More?
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Deciding between fixed-rate stability and variable-rate flexibility is a core choice for borrowers. Learn how rate indices, resets, and margins shape your total borrowing cost.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 23, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When borrowing money to buy a home, finance a vehicle, or consolidate personal debt, you are forced to make a major structural choice: should you lock in a fixed interest rate or opt for a variable (adjustable) interest rate?
+      </p>
+      <p class="mb-6">
+        A fixed-rate loan offers total predictability—your interest rate and monthly payment remain unchanged for the entire life of the loan. A variable-rate loan, by contrast, starts with a lower introductory rate but fluctuates over time in response to central bank decisions and market forces. Under variable terms, your monthly installment can rise or fall at any reset date. In this comprehensive guide, we compare fixed and variable rate loans, explain how variable resets are calculated using benchmark indices, walk through comparative step-by-step math scenarios, and help you select the safest option for your budget.
+      </p>
+
+      <!-- Section: Mechanics -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Mechanics of Interest Rate Types</h2>
+      <p class="mt-4 mb-6">
+        To contrast the financial outcomes of these loans, you must understand how their rates are determined:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Fixed Rate Loans:</strong> The lender locks in a single rate at the loan's inception. This rate is determined by long-term bond yields and the lender's risk premium. It never changes, regardless of economic shifts.
+        </li>
+        <li>
+          <strong class="text-text">Variable Rate Loans:</strong> The rate is tied to a floating benchmark index, such as the Prime Rate or SOFR (Secured Overnight Financing Rate). Lenders calculate your rate using a simple addition formula:
+        </li>
+      </ul>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Variable Interest Rate = Index Rate + Lender Margin</code>
+      </div>
+
+      <p class="mb-6">
+        The **Margin** is a fixed percentage set by the lender based on your creditworthiness, which remains constant for the life of the loan. The **Index Rate** is the component that moves in response to economic conditions.
+      </p>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Model Your Loan Scenarios</h3>
+        <p class="mt-2 text-sm text-muted">
+          Want to see how rate resets alter your monthly payments? Use our interactive Loan Calculator to test fixed payments against variable rate assumptions, and see how much interest you can save.
+        </p>
+        <div class="mt-4">
+          <a href="/loan-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Loan Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Fixed vs. Variable: Worked Math Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's compare two borrowers who both borrow <strong>$20,000</strong> over a <strong>5-year term</strong> (60 months) to see how rate cycles alter their payments.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Borrower A: The Fixed-Rate Path</h3>
+      <p class="mt-2 mb-4">
+        Borrower A locks in a fixed rate of <strong>7%</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          We calculate the monthly EMI using the standard formula:<br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">EMI = [ 20,000 * 0.0058333 * (1.0058333)^60 ] / [ (1.0058333)^60 - 1 ]</code>
+        </li>
+        <li>
+          The fixed payment is <strong>$396.02 per month</strong>.
+        </li>
+        <li>
+          Total repayment over 60 months = `$396.02 * 60 = $23,761.20`.
+        </li>
+      </ul>
+      <p class="mb-6">
+        Borrower A pays a total of <strong>$3,761.20</strong> in interest.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Borrower B: The Variable-Rate Path (Rising Rate Market)</h3>
+      <p class="mt-2 mb-4">
+        Borrower B takes a variable loan starting at <strong>5%</strong>. Because of inflation, the index rate rises, causing Borrower B's rate to increase by 1% at the end of each year.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Year 1 (Rate: 5%):</strong><br />
+          EMI = **$377.42 per month**. After 12 months, they have paid $4,529.04. The remaining principal is $16,472.10.
+        </li>
+        <li>
+          <strong>Year 2 (Rate: 6%):</strong><br />
+          Recalculate EMI for remaining 48 months on $16,472.10 principal:<br />
+          EMI = **$386.95 per month**. Remaining principal at year-end = $12,713.80.
+        </li>
+        <li>
+          <strong>Year 3 (Rate: 7%):</strong><br />
+          Recalculate EMI for remaining 36 months on $12,713.80 principal:<br />
+          EMI = **$392.35 per month**. Remaining principal at year-end = $8,723.10.
+        </li>
+        <li>
+          <strong>Year 4 (Rate: 8%):</strong><br />
+          Recalculate EMI for remaining 24 months on $8,723.10 principal:<br />
+          EMI = **$394.38 per month**. Remaining principal at year-end = $4,510.40.
+        </li>
+        <li>
+          <strong>Year 5 (Rate: 9%):</strong><br />
+          Recalculate EMI for remaining 12 months on $4,510.40 principal:<br />
+          EMI = **$394.32 per month**. Final balance = $0.00.
+        </li>
+      </ul>
+      <p class="mb-6">
+        Borrower B's total repayment is `$4,529.04 (Y1) + $4,643.40 (Y2) + $4,708.20 (Y3) + $4,732.56 (Y4) + $4,731.84 (Y5) = $23,345.04`.
+        They paid a total of <strong>$3,345.04</strong> in interest. In this specific rising rate environment, Borrower B still saved $416.16 compared to Borrower A because the early years were heavily discounted. However, if the rates had risen faster or the loan term was longer, Borrower B would have paid far more.
+      </p>
+
+      <!-- Comparison Summary Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Structural Comparison: Fixed vs. Variable</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Feature</th>
+              <th class="p-4 font-bold">Fixed-Rate Loan</th>
+              <th class="p-4 font-bold">Variable-Rate Loan</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Introductory Rate</td>
+              <td class="p-4">Higher baseline</td>
+              <td class="p-4 text-emerald-700 font-semibold">Lower introductory rate</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Payment Predictability</td>
+              <td class="p-4 text-emerald-700 font-semibold">100% Constant payments</td>
+              <td class="p-4">Changes at every reset date</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Interest Rate Risk</td>
+              <td class="p-4 text-emerald-700 font-semibold">None (Lender bears risk)</td>
+              <td class="p-4 text-red-700 font-semibold">High (Borrower bears risk)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Refinancing Need</td>
+              <td class="p-4">High if market rates drop</td>
+              <td class="p-4 text-emerald-700 font-semibold">Low (Adjusts down automatically)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Best Suited For</td>
+              <td class="p-4">Long-term debt (e.g., 30-year mortgage)</td>
+              <td class="p-4">Short-term debt or falling-rate markets</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Things to Watch Out For</h2>
+      <p class="mt-4 mb-6">
+        If you choose a variable-rate loan, verify these contract clauses to protect your budget:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Rate Caps:</strong> Make sure your contract has interest rate caps. An **Adjustment Cap** limits how much the rate can increase at a single reset date (e.g., maximum 2% increase per year). A **Lifetime Cap** limits the maximum interest rate that can ever be charged during the loan life (e.g., maximum 12% lifetime rate).
+        </li>
+        <li>
+          <strong class="text-text">The Teaser Rate Trap:</strong> Lenders often advertise very low initial "teaser" rates that are only locked for 6 to 12 months. Make sure you can afford the monthly payments once the teaser rate expires and the index rate resets.
+        </li>
+        <li>
+          <strong class="text-text">Prepayment Penalties:</strong> Fixed-rate loans sometimes charge penalty fees if you repay the loan early because the lender loses expected interest income. Variable-rate loans typically have more flexible prepayment terms.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By checking your loan agreement clauses and modeling payment resets, you can select terms that align with your budget and keep your borrowing costs low.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What index are variable loans tied to?</h3>
+          <p class="mt-2 text-muted">
+            Most consumer variable loans are tied to the Prime Rate (the rate banks offer to their highest-rated corporate customers) or SOFR (Secured Overnight Financing Rate).
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can I convert a variable-rate loan to a fixed-rate loan?</h3>
+          <p class="mt-2 text-muted">
+            Yes, you can typically convert a variable loan to a fixed loan by refinancing. This involves taking out a new fixed-rate loan to pay off the old variable-rate loan, which may involve administrative or closing fees.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Which rate type is safer during inflation?</h3>
+          <p class="mt-2 text-muted">
+            Fixed-rate loans are much safer during inflation. When inflation rises, central banks raise interest rates, causing variable loan rates to increase. Fixed rates remain unchanged.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

@@ -1,0 +1,292 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Markup vs Margin: Formulas & Differences | AllCalcNow";
+const pageDescription = "Learn the difference between markup and margin. Study the formulas, review worked pricing examples, and optimize your business profits.";
+const pageUrl = "https://allcalcnow.com/blog/markup-vs-margin";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Markup vs Margin", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Markup vs Margin: Formulas & Differences",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-25",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/markup-vs-margin" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Markup vs Margin' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Markup vs Margin: Formulas & Differences
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Markup and margin are two of the most critical metrics in sales, retail, and business. Confusing them can lead to major pricing errors and severe profit losses. Learn the math behind both.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 25, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When running a business or managing sales, your pricing strategy determines whether you make a profit or go out of business. To set prices and analyze profitability, managers use two key percentages: markup and gross profit margin.
+      </p>
+      <p class="mb-6">
+        Unfortunately, because both metrics use the relationship between cost and selling price, business owners and sales teams frequently use them interchangeably. Confusing markup with margin is a costly error. If you calculate your selling prices assuming a 30% margin but apply a 30% markup instead, you will underprice your product, leaving substantial profit on the table. In this guide, we define markup and margin, layout their mathematical formulas, work through step-by-step pricing examples, and show you how to navigate profit ratios like a professional.
+      </p>
+
+      <!-- Section: The Definitions -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Markup vs. Margin defined</h2>
+      <p class="mt-4 mb-6">
+        While both metrics measure gross profit, they compare it to different reference points:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Markup:</strong> The percentage added to the wholesale cost of a product to determine its selling price. It measures profit relative to the product's **cost price**.
+        </li>
+        <li>
+          <strong class="text-text">Margin (Gross Profit Margin):</strong> The percentage of the selling price that is profit. It measures profit relative to the product's **selling price** (revenue).
+        </li>
+      </ul>
+
+      <!-- Section: The Formulas -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Calculation Formulas</h2>
+      <p class="mt-4 mb-6">
+        To calculate these ratios, we first determine the Gross Profit: `Gross Profit = Selling Price - Wholesale Cost`.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. The Markup Formula</h3>
+      <p class="mt-2 mb-4">
+        Markup is calculated by dividing gross profit by the wholesale cost:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Markup (%) = [ ( Selling Price - Cost ) / Cost ] * 100</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. The Margin Formula</h3>
+      <p class="mt-2 mb-4">
+        Margin is calculated by dividing gross profit by the final selling price:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Margin (%) = [ ( Selling Price - Cost ) / Selling Price ] * 100</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Convert Markups and Margins Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual fraction conversions. Use our free interactive Percentage Calculator to easily convert markup percentages to margins, find target price points, and audit transaction margins.
+        </p>
+        <div class="mt-4">
+          <a href="/percentage-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Percentage Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through three scenarios to make the pricing arithmetic clear.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Basic Markup and Margin Comparison</h3>
+      <p class="mt-2 mb-4">
+        You buy a product for a wholesale cost of <strong>$100</strong> and retail it for a selling price of <strong>$150</strong>. Let's calculate both metrics.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate Gross Profit:</strong> $150 (Selling Price) - $100 (Cost) = <strong>$50.00</strong>
+        </li>
+        <li>
+          <strong>Calculate Markup:</strong><br />
+          Divide profit by cost: `($50 / $100) * 100 = 50.00%`.
+        </li>
+        <li>
+          <strong>Calculate Margin:</strong><br />
+          Divide profit by selling price: `($50 / $150) * 100 = 33.33%`.
+        </li>
+      </ul>
+      <p class="mb-6">
+        This transaction has a **50% markup** but only a **33.3% gross profit margin**.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Achieving a Target Margin vs. Markup</h3>
+      <p class="mt-2 mb-4">
+        You source a product for <strong>$100</strong>. You want to price it to earn a <strong>50% return</strong>. Let's see what happens if you apply a 50% markup vs. a 50% margin.
+      </p>
+      <h4 class="mt-4 font-bold text-text">Scenario A: Applying a 50% Markup</h4>
+      <ul class="mb-4 list-decimal pl-6 space-y-1">
+        <li>Formula: `Selling Price = Cost * (1 + Markup / 100)`</li>
+        <li>Calculation: `$100 * (1 + 0.50) = $150.00`</li>
+      </ul>
+      <p class="mb-4 text-sm font-semibold">Selling Price = $150.00 (Profit = $50.00, Margin = 33.33%)</p>
+
+      <h4 class="mt-4 font-bold text-text">Scenario B: Applying a 50% Margin Target</h4>
+      <ul class="mb-4 list-decimal pl-6 space-y-1">
+        <li>Formula: `Selling Price = Cost / (1 - Margin / 100)`</li>
+        <li>Calculation: `$100 / (1 - 0.50) = $100 / 0.50 = $200.00`</li>
+      </ul>
+      <p class="mb-4 text-sm font-semibold">Selling Price = $200.00 (Profit = $100.00, Markup = 100.00%)</p>
+      <p class="mb-6">
+        If you confuse these targets, you will price your product at $150 instead of $200, **losing $50 in gross profit per unit**. To achieve a true 50% profit margin, you must apply a 100% markup to the cost.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 3: Reversing the Margin to Find Cost</h3>
+      <p class="mt-2 mb-4">
+        A competitor sells an item for <strong>$300</strong>. Industry data suggests they operate at a <strong>40% gross margin</strong>. What is their estimated wholesale cost?
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Identify the cost multiplier:</strong> `1 - Margin / 100 = 1 - 0.40 = 0.60` (Cost represents 60% of the selling price).
+        </li>
+        <li>
+          <strong>Multiply selling price by cost multiplier:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Cost = $300 * 0.60 = $180.00</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Their estimated wholesale cost is <strong>$180.00</strong>.
+      </p>
+
+      <!-- Reference Lookup Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Markup to Margin Conversion Table</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Target Margin (%)</th>
+              <th class="p-4 font-bold">Required Markup (%)</th>
+              <th class="p-4 font-bold">Wholesale Cost</th>
+              <th class="p-4 font-bold">Resulting Selling Price</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">10% Margin</td>
+              <td class="p-4 font-mono">11.1% Markup</td>
+              <td class="p-4 font-mono">$100.00</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$111.11</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">20% Margin</td>
+              <td class="p-4 font-mono">25.0% Markup</td>
+              <td class="p-4 font-mono">$100.00</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$125.00</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">30% Margin</td>
+              <td class="p-4 font-mono">42.9% Markup</td>
+              <td class="p-4 font-mono">$100.00</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$142.86</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">50% Margin</td>
+              <td class="p-4 font-mono">100.0% Markup</td>
+              <td class="p-4 font-mono">$100.00</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$200.00</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">75% Margin</td>
+              <td class="p-4 font-mono">300.0% Markup</td>
+              <td class="p-4 font-mono">$100.00</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$400.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Pricing Rules & Business Pitfalls</h2>
+      <p class="mt-4 mb-6">
+        When evaluating product lines and transaction sheets, protect your business profits by avoiding these mistakes:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Applying Markup Instead of Margin:</strong> Since markup is always higher than the equivalent margin, applying your margin target as a markup results in underpriced products. Ensure your pricing spreadsheets use the correct division formulas.
+        </li>
+        <li>
+          <strong class="text-text">Neglecting Overhead (Gross vs. Net Margin):</strong> Gross profit margin only accounts for the direct cost of goods sold (COGS). It ignores fixed overhead costs like rent, marketing, utilities, and payroll. A product line with a high gross margin can still lose money if net operational costs exceed those returns.
+        </li>
+        <li>
+          <strong class="text-text">The 100% Margin Myth:</strong> Profit margin can never reach or exceed 100% unless your wholesale cost is zero or negative. Since cost of goods is always positive, your profit margin will always be less than 100%. Markup, by contrast, has no ceiling and can reach 1,000% or more.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By checking your pricing math and verifying margins, you can establish healthy price points that cover operating expenses and drive business growth.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between markup and margin?</h3>
+          <p class="mt-2 text-muted">
+            Markup is the percentage increase added to a product's wholesale cost to determine its retail price. Margin is the percentage of the selling price that is profit.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Why is markup always higher than margin?</h3>
+          <p class="mt-2 text-muted">
+            Because markup calculates profit relative to a smaller number (wholesale cost), while margin calculates profit relative to a larger number (retail selling price).
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can profit margin be higher than 100%?</h3>
+          <p class="mt-2 text-muted">
+            No. Profit margin can never be 100% or higher. It is calculated by dividing profit by selling price. Since selling price includes costs, profit can never equal or exceed selling price unless cost is zero or negative.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

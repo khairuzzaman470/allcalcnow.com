@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "APR vs Interest Rate: The Difference for Borrowers | AllCalcNow";
+const pageDescription = "Understand the difference between APR and interest rate. Learn how upfront loan fees affect APR, study worked examples, and make smarter borrowing choices.";
+const pageUrl = "https://allcalcnow.com/blog/apr-vs-interest-rate";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "APR vs Interest Rate", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "APR vs Interest Rate: The Difference for Borrowers",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-23",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/apr-vs-interest-rate" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'APR vs Interest Rate' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Finance & Money</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        APR vs. Interest Rate: The Difference That Affects Your Payment
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        When reviewing a loan offer, you will find two different percentage rates: the Interest Rate and the APR. Learn the math behind both to understand the true cost of your loan.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 23, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        Shopping for a mortgage or personal loan can feel like navigating a maze of financial jargon. One of the most common sources of confusion for borrowers is the presence of two separate interest percentages on their loan disclosure documents: the interest rate and the Annual Percentage Rate (APR).
+      </p>
+      <p class="mb-6">
+        Many borrowers focus solely on the interest rate, believing it represents their entire borrowing cost. However, the interest rate only covers the cost of borrowing the principal. It ignores the upfront fees, processing charges, and closing costs that lenders require to finalize the loan. To represent these additional costs, regulators require lenders to disclose the APR. In this guide, we define both metrics, explain the mathematical relationship between them, walk through step-by-step calculation examples, and show you how to use APR to compare loan offers fairly.
+      </p>
+
+      <!-- Section: The Definitions -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Definitions: Interest Rate vs. APR</h2>
+      <p class="mt-4 mb-6">
+        To understand how these rates differ, you must first define what each rate measures:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Interest Rate:</strong> The annual cost of borrowing the principal loan balance, expressed as a percentage. This rate determines your monthly principal and interest payment (EMI). It does not include any fees or charges.
+        </li>
+        <li>
+          <strong class="text-text">Annual Percentage Rate (APR):</strong> The broad measure of the total cost of borrowing, including the interest rate plus upfront lender fees, discount points, mortgage insurance, and processing costs, expressed as an annual percentage.
+        </li>
+      </ul>
+
+      <!-- Section: The Math -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Mathematics of APR</h2>
+      <p class="mt-4 mb-6">
+        Calculating APR involves finding the interest rate that equates the present value of all monthly payments to the "net proceeds" of the loan. The net proceeds represent the principal amount minus any upfront fees required to secure the loan:
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Net Loan Proceeds = Principal - Upfront Fees</code>
+      </div>
+
+      <p class="mb-6">
+        Once the net proceeds are calculated, the APR is the effective interest rate required to pay off that smaller net proceed amount using your actual monthly payment over the life of the loan.
+      </p>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Project Your True Loan Costs</h3>
+        <p class="mt-2 text-sm text-muted">
+          Want to see how closing fees affect your loan's true annual cost? Use our interactive Mortgage Calculator to input rates and fees, and see your calculated APR instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/mortgage-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Mortgage Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's analyze two examples to see how upfront fees pull the APR away from the nominal interest rate.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: A $300,000 30-Year Mortgage</h3>
+      <p class="mt-2 mb-4">
+        A homebuyer takes out a <strong>$300,000</strong> home loan over <strong>30 years</strong> (360 months) at a nominal interest rate of <strong>6%</strong>. The lender charges <strong>$6,000</strong> in upfront fees (processing, origination, and discount points).
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the monthly payment (EMI):</strong><br />
+          Using the 6% rate on $300,000 principal: EMI = <strong>$1,798.65 per month</strong>.
+        </li>
+        <li>
+          <strong>Calculate the Net Loan Proceeds:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Net Proceeds = $300,000 - $6,000 = $294,000</code>
+        </li>
+        <li>
+          <strong>Solve for the APR:</strong><br />
+          We find the interest rate that yields a monthly payment of $1,798.65 on a principal of $294,000 over 360 months. Solving this mathematically gives a rate of approximately <strong>6.18%</strong>.
+        </li>
+      </ul>
+      <p class="mb-6">
+        For this mortgage, the Interest Rate is <strong>6.00%</strong>, but the APR is <strong>6.18%</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: A $15,000 5-Year Car Loan</h3>
+      <p class="mt-2 mb-4">
+        A car buyer borrows <strong>$15,000</strong> over <strong>5 years</strong> (60 months) at an interest rate of <strong>5%</strong>. The lender charges a flat <strong>$500</strong> processing and documentation fee upfront.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the monthly payment (EMI):</strong><br />
+          Using the 5% rate on $15,000: EMI = <strong>$283.07 per month</strong>.
+        </li>
+        <li>
+          <strong>Calculate the Net Loan Proceeds:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Net Proceeds = $15,000 - $500 = $14,500</code>
+        </li>
+        <li>
+          <strong>Solve for the APR:</strong><br />
+          We find the interest rate that yields a monthly payment of $283.07 on a principal of $14,500 over 60 months. Solving this gives an APR of approximately <strong>6.44%</strong>.
+        </li>
+      </ul>
+      <p class="mb-6">
+        Here, the Interest Rate is <strong>5.00%</strong>, but the APR is <strong>6.44%</strong> due to the high proportion of upfront fees relative to the small loan size.
+      </p>
+
+      <!-- Comparison Breakdown Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">What Fees Are Included in APR?</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Fee / Charge Item</th>
+              <th class="p-4 font-bold">Included in Interest Rate?</th>
+              <th class="p-4 font-bold">Included in APR?</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Nominal Interest charges</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Origination & processing fees</td>
+              <td class="p-4 text-red-700">No</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Discount points (prepaid interest)</td>
+              <td class="p-4 text-red-700">No</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Private Mortgage Insurance (PMI)</td>
+              <td class="p-4 text-red-700">No</td>
+              <td class="p-4 text-emerald-700 font-semibold">Yes</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Appraisal & home inspection fees</td>
+              <td class="p-4 text-red-700">No</td>
+              <td class="p-4 text-red-700">No (Third-party cost)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Things to Watch Out For</h2>
+      <p class="mt-4 mb-6">
+        When evaluating loan disclosures, keep these essential rules in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">APR is NOT your payment rate:</strong> Your monthly payment is calculated solely using the nominal interest rate. A loan with a 6% interest rate and a 6.3% APR will have monthly payments based on 6%, not 6.3%.
+        </li>
+        <li>
+          <strong class="text-text">Comparing different terms is misleading:</strong> You cannot compare the APR of a 15-year loan with the APR of a 30-year loan. Because upfront fees are spread over 15 years instead of 30, the 15-year loan's APR will appear artificially higher even if it has a lower interest rate and lower total borrowing cost.
+        </li>
+        <li>
+          <strong class="text-text">Early repayment increases effective APR:</strong> The APR formula assumes you will keep the loan for its entire tenure (e.g., 30 years). If you sell the home or refinance after 5 years, the upfront fees are amortized over a much shorter period, meaning your effective APR was actually much higher than disclosed.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By checking both the nominal rate and the APR, you can evaluate loan options accurately, spot hidden fees, and choose the most cost-effective financing.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Why is APR higher than the interest rate?</h3>
+          <p class="mt-2 text-muted">
+            APR is higher because it incorporates both the base interest rate and any upfront lender fees, points, and administrative costs required to finalize the loan.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Does a lower interest rate always mean a lower APR?</h3>
+          <p class="mt-2 text-muted">
+            Not necessarily. A loan with a lower interest rate but very high closing fees can end up with a higher APR than a loan with a slightly higher interest rate but minimal upfront fees.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can APR be equal to the interest rate?</h3>
+          <p class="mt-2 text-muted">
+            Yes. If a lender charges absolutely zero upfront fees, processing costs, or closing points, the APR will be identical to the nominal interest rate.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

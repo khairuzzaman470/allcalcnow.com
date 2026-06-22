@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Work Tenure and Anniversaries | AllCalcNow";
+const pageDescription = "Learn how to calculate work tenure, service years, and anniversaries. Review proportional year formulas, leap year adjustments, and see worked examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-work-tenure";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Work Tenure", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Work Tenure and Anniversaries",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-27",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-work-tenure" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate Work Tenure' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Work Tenure and Anniversaries
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Tracking employee tenure and service years is essential for HR administration, benefits eligibility, and anniversary awards. Learn the formulas to calculate precise work durations.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 27, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        In the corporate world, tracking how long an employee has been with a company is more than a matter of celebrating anniversaries. An employee's "years of service" or "work tenure" frequently determines retirement plan vesting schedules, paid time off (PTO) accrual rates, seniority lists, severance allocations, and tax filings.
+      </p>
+      <p class="mb-6">
+        However, counting tenure is not as simple as subtracting calendar years. Because employees start on different days of the month, leap years inject extra days, and part-time service needs proportional calculations, HR teams must establish rigorous mathematical standards. In this guide, we explore the formulas to compute exact tenure, detail year/day borrowing subtraction, walk through worked examples, and explain how to calculate fractional tenure years.
+      </p>
+
+      <!-- Section: Formulas -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Tenure Calculations: The Key Formulas</h2>
+      <p class="mt-4 mb-6">
+        Depending on your organization's policy, you can calculate tenure in two ways:
+      </p>
+
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Exact Years, Months, and Days:</strong> Subtracts the start date from the current date using date column borrowing. This method is standard for anniversary tracking and resume building.
+        </li>
+        <li>
+          <strong class="text-text">Fractional Year (Decimal) Formula:</strong> Calculates a decimal value of tenure, which is crucial for benefits math and accrual rates. To represent years of service as a decimal, divide the absolute days elapsed by the mean length of a Gregorian year (365.2425 days):
+          <div class="my-4 font-mono text-accent font-semibold bg-bg px-4 py-2 rounded text-center border border-border/60">
+            Tenure (Dec. Years) = Total Days Worked / 365.2425
+          </div>
+        </li>
+      </ul>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Tenure Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual days-worked division. Enter your hire date in our free, interactive Date Difference Calculator to find your exact years of service and upcoming anniversaries instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/date-difference-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Date Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through two detailed tenure examples.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Exact Years, Months, and Days</h3>
+      <p class="mt-2 mb-4">
+        An employee was hired on <strong>August 15, 2018</strong>. We want to calculate their exact tenure as of <strong>June 22, 2026</strong>.
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 font-mono text-sm leading-relaxed shadow-sm">
+        <pre class="text-text">
+  Current Date:  2026 Year - 06 Month - 22 Day
+  Hire Date:    - 2018 Year - 08 Month - 15 Day
+        </pre>
+      </div>
+      <ul class="mb-4 list-decimal pl-6 space-y-3">
+        <li>
+          <strong>Subtract Days:</strong> `22 - 15 = 7 days` (No borrowing needed).
+        </li>
+        <li>
+          <strong>Subtract Months:</strong> Since 6 is smaller than 8, we borrow 1 year from the Year column. 2026 becomes 2025. We add 12 months to the Month column: `6 + 12 = 18 months`. Now we subtract: `18 - 8 = 10 months`.
+        </li>
+        <li>
+          <strong>Subtract Years:</strong> Our Year column is now 2025. We subtract: `2025 - 2018 = 7 years`.
+        </li>
+      </ul>
+      <p class="mb-6">
+        The employee has worked at the company for exactly <strong>7 years, 10 months, and 7 days</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: 10-Year Anniversary Day Count</h3>
+      <p class="mt-2 mb-4">
+        An employee started work on <strong>October 10, 2016</strong>. We want to calculate the exact number of calendar days they will have worked on their 10-year anniversary date (<strong>October 10, 2026</strong>).
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Identify the number of full years:</strong> exactly 10 years.
+        </li>
+        <li>
+          <strong>Determine standard days:</strong> `10 years * 365 days/year = 3,650 days`.
+        </li>
+        <li>
+          <strong>Identify and add leap days:</strong> Between October 10, 2016, and October 10, 2026, there are exactly two leap years whose February 29ths were traversed: <strong>2020</strong> and <strong>2024</strong>. We must add 2 days.
+        </li>
+        <li>
+          <strong>Calculate the final sum:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Days = 3,650 + 2 = 3,652 days</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Over their first 10 years of tenure, this employee will have accumulated exactly <strong>3,652 days of service</strong>.
+      </p>
+
+      <!-- HR Tenure Bands Summary -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Typical HR Recognition and Vesting Benchmarks</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Tenure Milestone</th>
+              <th class="p-4 font-bold">Standard Calendar Days</th>
+              <th class="p-4 font-bold">Vesting / PTO Accrual Influence</th>
+              <th class="p-4 font-bold">Typical Recognition Gift</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">1 Year</td>
+              <td class="p-4 font-mono">365 (or 366) days</td>
+              <td class="p-4">Standard 401(k) vesting baseline; 10 days base PTO</td>
+              <td class="p-4">Company anniversary letter / lapel pin</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">3 Years</td>
+              <td class="p-4 font-mono">1,096 days</td>
+              <td class="p-4">Intermediate cliff vesting checks; PTO expands to 15 days</td>
+              <td class="p-4">Custom corporate gift selection catalogue</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">5 Years</td>
+              <td class="p-4 font-mono">1,826 days</td>
+              <td class="p-4">100% full graded vesting; PTO expands to 20 days</td>
+              <td class="p-4">Engraved service award plaque / sabbatical check</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">10 Years</td>
+              <td class="p-4 font-mono">3,652 days</td>
+              <td class="p-4">Maximum PTO tier eligibility (e.g. 25 days)</td>
+              <td class="p-4">Anniversary clock / crystal trophy / bonus block</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Key Challenges -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Common HR Tenure Mistakes</h2>
+      <p class="mt-4 mb-6">
+        When managing employee service records, avoid these analytical pitfalls:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Ignoring Leaves of Absence:</strong> Many company policies pause tenure accumulation during unpaid leaves or long-term disability. Forgetting to subtract these non-active intervals from the absolute day count is a common error.
+        </li>
+        <li>
+          <strong class="text-text">Leap Year Neglect:</strong> Using a hard 365-day denominator to calculate decimal tenure years over long careers will accumulate off-by-one errors. Always divide by 365.2425 for long-term decimal calculations.
+        </li>
+        <li>
+          <strong class="text-text">Start/End Date Confusion:</strong> Failing to establish whether the hire date itself is counted as "Day Worked #1" (inclusive) vs "Day 0" (exclusive) can lead to slight discrepancies in payroll and PTO calculations.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        Establishing consistent start-date logic, accounting for leaves, and using standard leap year divisors will ensure your employee service records remain legally and administratively solid.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do you calculate years of service manually?</h3>
+          <p class="mt-2 text-muted">
+            You subtract the employee's start date from the evaluation date (using year/month borrowing math if needed) to yield years, months, and days, or divide the absolute days worked by 365.2425 to yield a decimal year value.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Do leap years affect employee tenure calculations?</h3>
+          <p class="mt-2 text-muted">
+            Yes. Every leap year adds February 29th. If you only assume 365 days per year, a 10-year employee will appear to have worked 2 days less than their true calendar tenure. Use 365.2425 as a divisor for decimal accuracy.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How is tenure calculated for part-time workers?</h3>
+          <p class="mt-2 text-muted">
+            Many benefits plans use a "pro-rata" approach: multiplying the calendar tenure by the employee's weekly worked percentage (e.g. working 20 hours a week counts as 50% tenure speed for retirement vesting).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

@@ -1,0 +1,265 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "The Global Tipping Guide: Gratuity Customs by Country | AllCalcNow";
+const pageDescription = "Learn tipping customs and gratuity rules for restaurants, hotels, and taxis worldwide. Check regional guides, see worked examples, and avoid travel mistakes.";
+const pageUrl = "https://allcalcnow.com/blog/international-tipping-guide";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "The Global Tipping Guide", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Global Tipping Guide: Gratuity Customs by Country",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-24",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/international-tipping-guide" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'The Global Tipping Guide' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        The Global Tipping Guide: Gratuity Customs by Country
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Tipping customs vary wildly across the globe. What is considered standard appreciation in Chicago might be viewed as an insult in Tokyo. Learn how to navigate international tipping norms and calculate split bills abroad.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 24, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When traveling abroad, one of the most stressful cultural challenges is figuring out how much to tip for services. While you want to show appreciation for excellent care, leaving a large gratuity in a country where tipping is not customary can create awkward situations. Conversely, failing to tip in countries where service staff rely on gratuities to earn a living wage is considered a serious breach of etiquette.
+      </p>
+      <p class="mb-6">
+        Tipping conventions are closely tied to a nation's labor laws, wages, and social history. Understanding the math and cultural logic of gratuities in your destination ensures you travel smoothly, budget accurately, and show respect to service workers. In this guide, we break down standard tipping ranges across major global regions, walk through step-by-step calculations for currency conversions and split bills, and explain how to spot hidden service fees on international receipts.
+      </p>
+
+      <!-- Section: Global Reference Chart -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Global Tipping Customs by Country</h2>
+      <p class="mt-4 mb-6">
+        Here is a quick-reference summary of restaurant, hotel, and transport tipping customs for major tourist destinations:
+      </p>
+
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Country / Region</th>
+              <th class="p-4 font-bold">Standard Restaurant Tip</th>
+              <th class="p-4 font-bold">Hotel Housekeeping (per day)</th>
+              <th class="p-4 font-bold">Taxi / Rideshare</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">United States & Canada</td>
+              <td class="p-4 text-accent font-semibold">15% to 20%</td>
+              <td class="p-4 font-mono">$2 to $5</td>
+              <td class="p-4">10% to 15% of fare</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Mexico</td>
+              <td class="p-4 text-accent font-semibold">10% to 15%</td>
+              <td class="p-4 font-mono">20 to 50 Pesos</td>
+              <td class="p-4">Round up fare</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">France, Germany & Italy</td>
+              <td class="p-4">Round up or 5% to 10% (if fee not included)</td>
+              <td class="p-4 font-mono">€1 to €2</td>
+              <td class="p-4">Round up to nearest €5</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Australia & New Zealand</td>
+              <td class="p-4">Not expected (optional 10% for great service)</td>
+              <td class="p-4 font-mono">Not expected</td>
+              <td class="p-4">Not expected</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Japan & South Korea</td>
+              <td class="p-4 text-red-700 font-semibold">0% (Considered rude)</td>
+              <td class="p-4 font-mono">0% (Considered rude)</td>
+              <td class="p-4 text-red-700">0% (No tipping)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Split Bills & Calculate Gratuities Instantly</h3>
+        <p class="mt-2 text-sm text-muted">
+          Don't stress over split checks or currency conversion. Use our free, interactive Tip Calculator to split bills among a group, apply regional percentages, and calculate tips in seconds.
+        </p>
+        <div class="mt-4">
+          <a href="/tip-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Tip Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Worked Travel Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's analyze three real-world travel scenarios to see how tipping math and local rules interact.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Dining in Paris (Service Compris)</h3>
+      <p class="mt-2 mb-4">
+        You are dining in a Parisian bistro and receive a bill totaling <strong>€85 Euros</strong>. The bottom of the bill states "Service Compris," indicating a service charge is legally included. What is the appropriate tip?
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Understand the rule:</strong> Because "service compris" is included, the staff are already paid a portion of the bill. Leaving a large 20% tip is unnecessary.
+        </li>
+        <li>
+          <strong>Calculate a polite round-up:</strong> It is customary to simply round the bill to the nearest €5 or €10.
+        </li>
+        <li>
+          <strong>Perform calculation:</strong> Rounding €85 up to <strong>€90</strong> leaves a €5 gratuity (about a 6% tip), which represents an excellent, polite reward for good service.
+        </li>
+      </ul>
+      <p class="mb-6">
+        You pay exactly <strong>€90.00</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Dining in Mexico (Calculating Propina)</h3>
+      <p class="mt-2 mb-4">
+        You are vacationing in Mexico and receive a bill for <strong>600 Mexican Pesos</strong>. You want to leave a standard 10% propina (tip).
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Apply the tipping formula:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Tip Amount = 600 Pesos * (10 / 100) = 60 Pesos</code>
+        </li>
+        <li>
+          <strong>Calculate the total bill in Pesos:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total = 600 + 60 = 660 Pesos</code>
+        </li>
+        <li>
+          <strong>Optional (USD conversion at 18:1 rate):</strong><br />
+          To understand your dollar cost, divide Pesos by 18:<br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">USD Cost = 660 / 18 ≈ $36.67 USD</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        You will pay <strong>660 Pesos</strong>, with <strong>60 Pesos</strong> going toward the tip.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 3: US Group Bill Split</h3>
+      <p class="mt-2 mb-4">
+        A group of 4 friends is dining at a restaurant in Boston. The bill total (before tax) is <strong>$120.00</strong>. The group decides to leave an <strong>18% tip</strong> and split the total cost equally.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the total tip:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Tip = $120.00 * 0.18 = $21.60</code>
+        </li>
+        <li>
+          <strong>Calculate the grand total (assuming 7% sales tax = $8.40):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Grand Total = $120.00 (Base) + $8.40 (Tax) + $21.60 (Tip) = $150.00</code>
+        </li>
+        <li>
+          <strong>Divide by the number of people:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Per Person Share = $150.00 / 4 = $37.50</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Each person pays exactly <strong>$37.50</strong>.
+      </p>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Things to Watch Out For</h2>
+      <p class="mt-4 mb-6">
+        When traveling, protect your budget by avoiding these common tipping mistakes:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Tipping in US Dollars Cash:</strong> Unless you are in a country where the US dollar is the official currency (like Ecuador or El Salvador), do not tip in USD cash. This forces service staff to pay high exchange fees to convert the money. Always tip in the local currency.
+        </li>
+        <li>
+          <strong class="text-text">Tipping on Top of Service Charges:</strong> Always review the bill itemization before tipping. If a service fee (labeled as *coperto* in Italy or *service charge* in the UK) is already added, you do not need to add a full percentage tip on top.
+        </li>
+        <li>
+          <strong class="text-text">Leaving Loose Coins in High-End Venues:</strong> In European countries, while leaving small coins is fine at casual cafes, doing so at a fine-dining establishment can appear cheap. If the service was excellent, add a note or pay with a card.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By checking receipt itemizations and applying regional custom percentages, you can travel confidently, budget accurately, and show respect to service staff.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Is tipping mandatory when a service charge is included?</h3>
+          <p class="mt-2 text-muted">
+            No, when a service charge is already included on the bill, leaving an additional tip is completely optional. Leaving a few small coins or rounding up to the nearest €5 is considered a polite bonus but is not expected.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Should I tip in local currency or US dollars?</h3>
+          <p class="mt-2 text-muted">
+            You should always tip in the local currency of the country you are visiting. Tipping in US dollars requires the recipient to pay transaction fees and go to a bank or currency booth to exchange the money.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Where is tipping considered rude?</h3>
+          <p class="mt-2 text-muted">
+            In Japan and South Korea, tipping is not part of the culture and can be perceived as insulting or patronizing. Excellent service is considered a standard duty and is included in the base price.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

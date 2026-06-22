@@ -1,0 +1,277 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate GPA: Weighted vs Unweighted | AllCalcNow";
+const pageDescription = "Learn how to calculate your Grade Point Average (GPA). Understand weighted vs unweighted scales, study credit-weight formulas, and see worked examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-gpa";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate GPA", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate GPA: Weighted vs Unweighted",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-24",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-gpa" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate GPA' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate GPA: Weighted vs. Unweighted Explained
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Your Grade Point Average (GPA) is the core metric used by schools and colleges to measure your academic performance. Learn the math behind credit-hour weighting and advanced course scales.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 24, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When applying to colleges, scholarships, or competitive graduate programs, one number stands out on your transcript above all others: your Grade Point Average, or GPA. This single metric summarizes years of homework, exams, lab reports, and lectures.
+      </p>
+      <p class="mb-6">
+        However, the way GPAs are computed is not always standard. Many high schools and universities use different scales, adding extra points for advanced classes (AP, IB, or Honors) to calculate a "weighted" GPA, while others look strictly at an "unweighted" average. Furthermore, because different courses carry different credit hours, you cannot simply average your grades together. In this comprehensive guide, we explain the difference between weighted and unweighted scales, present the core credit-weight GPA formula, walk through step-by-step calculation examples, and analyze the most common transcript pitfalls.
+      </p>
+
+      <!-- Section: Scales -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Understanding the Grade Point Scale</h2>
+      <p class="mt-4 mb-6">
+        Before calculating your average, you must translate letter grades into numerical "grade points." The standard unweighted scale maps letters onto a 4.0 scale:
+      </p>
+
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Letter Grade</th>
+              <th class="p-4 font-bold">Standard Unweighted Points</th>
+              <th class="p-4 font-bold">Weighted Honors Points (+0.5)</th>
+              <th class="p-4 font-bold">Weighted AP / IB Points (+1.0)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">A</td>
+              <td class="p-4 font-mono">4.0</td>
+              <td class="p-4 font-mono text-emerald-700">4.5</td>
+              <td class="p-4 font-mono text-accent">5.0</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">B</td>
+              <td class="p-4 font-mono">3.0</td>
+              <td class="p-4 font-mono text-emerald-700">3.5</td>
+              <td class="p-4 font-mono text-accent">4.0</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">C</td>
+              <td class="p-4 font-mono">2.0</td>
+              <td class="p-4 font-mono text-emerald-700">2.5</td>
+              <td class="p-4 font-mono text-accent">3.0</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">D</td>
+              <td class="p-4 font-mono">1.0</td>
+              <td class="p-4 font-mono text-emerald-700">1.5</td>
+              <td class="p-4 font-mono text-accent">2.0</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">F</td>
+              <td class="p-4 font-mono">0.0</td>
+              <td class="p-4 font-mono text-red-700">0.0</td>
+              <td class="p-4 font-mono text-red-700">0.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: The Formula -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Weighted GPA Formula</h2>
+      <p class="mt-4 mb-6">
+        To calculate your GPA accurately, you must multiply each course’s grade points by its credit hours. This ensures that a 4-credit science lecture has a larger impact on your average than a 1-credit physical education lab.
+      </p>
+
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">GPA = Sum of ( Grade Points * Course Credits ) / Total Course Credits</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Your GPA automatically</h3>
+        <p class="mt-2 text-sm text-muted">
+          Avoid the manual summation and weight multiplications. Use our free, interactive GPA Calculator to list your classes, choose weighted scales, and project your cumulative GPA instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/gpa-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to GPA Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through unweighted and weighted scenarios for a student taking 4 semester classes to show the math.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Unweighted GPA</h3>
+      <p class="mt-2 mb-4">
+        Suppose a student takes these 4 courses with standard unweighted points:
+      </p>
+      <ul class="mb-4 list-disc pl-6 space-y-1 text-sm">
+        <li>English (3 credits): A (4.0 points)</li>
+        <li>Math (4 credits): B (3.0 points)</li>
+        <li>Chemistry (4 credits): B (3.0 points)</li>
+        <li>History (3 credits): C (2.0 points)</li>
+      </ul>
+      <h4 class="mt-4 font-bold text-text">Steps:</h4>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate Quality Points for each class (Points × Credits):</strong><br />
+          English: `4.0 * 3 = 12.0`<br />
+          Math: `3.0 * 4 = 12.0`<br />
+          Chemistry: `3.0 * 4 = 12.0`<br />
+          History: `2.0 * 3 = 6.0`
+        </li>
+        <li>
+          <strong>Sum the Quality Points:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Points = 12.0 + 12.0 + 12.0 + 6.0 = 42.0</code>
+        </li>
+        <li>
+          <strong>Sum the Course Credits:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Credits = 3 + 4 + 4 + 3 = 14 credits</code>
+        </li>
+        <li>
+          <strong>Divide points by credits:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Unweighted GPA = 42.0 / 14 = 3.00</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        The student's unweighted GPA is exactly <strong>3.00</strong> (a straight B average).
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Weighted GPA</h3>
+      <p class="mt-2 mb-4">
+        Now suppose the same student took the same courses, but their Math class was an **Advanced Placement (AP)** class (+1.0 point) and Chemistry was an **Honors** class (+0.5 point).
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Adjust Grade Points for weights:</strong><br />
+          AP Math grade B: `3.0 + 1.0 = 4.0` points.<br />
+          Honors Chemistry grade B: `3.0 + 0.5 = 3.5` points.
+        </li>
+        <li>
+          <strong>Calculate Weighted Quality Points (Points × Credits):</strong><br />
+          English (Regular): `4.0 * 3 = 12.0`<br />
+          Math (AP): `4.0 * 4 = 16.0`<br />
+          Chemistry (Honors): `3.5 * 4 = 14.0`<br />
+          History (Regular): `2.0 * 3 = 6.0`
+        </li>
+        <li>
+          <strong>Sum Weighted Quality Points:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Total Points = 12.0 + 16.0 + 14.0 + 6.0 = 48.0</code>
+        </li>
+        <li>
+          <strong>Divide by total credits (14):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Weighted GPA = 48.0 / 14 ≈ 3.43</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        The student's weighted GPA increases to <strong>3.43</strong>, reflecting the rigorous nature of their course schedule.
+      </p>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Things to Watch Out For</h2>
+      <p class="mt-4 mb-6">
+        When managing your transcript, protect your academic record by keeping these pitfalls in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Simple Averaging:</strong> Calculating GPA by simply averaging the grade points of your classes (e.g. `(4 + 3 + 3 + 2) / 4 = 3.0`) is a major error. You must always weight each class by its credit hours.
+        </li>
+        <li>
+          <strong class="text-text">Pass/Fail and Audits:</strong> In most schools, pass/fail or audited courses do not receive grade points and are excluded from the GPA calculation. However, failing a pass/fail class can sometimes result in an "F" grade point being added, dragging down your GPA.
+        </li>
+        <li>
+          <strong class="text-text">Colleges Recalculate GPAs:</strong> Because high schools use completely different weighted scales (some add +1.0 for honors, some use a 5.0 or 6.0 scale), college admissions offices typically strip away school-specific weights and recalculate all applicants' GPAs on a standard unweighted 4.0 scale.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By monitoring your grades and calculating your ratios beforehand, you can track your academic progress, project scholarship eligibility, and apply to programs with confidence.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between weighted and unweighted GPA?</h3>
+          <p class="mt-2 text-muted">
+            An unweighted GPA measures academic averages on a standard 4.0 scale, treating all classes equally. A weighted GPA adds extra points (+0.5 or +1.0) for advanced classes (AP, IB, Honors) to reflect course difficulty.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can unweighted GPA go above 4.0?</h3>
+          <p class="mt-2 text-muted">
+            No, on a standard 4.0 scale, the maximum grade point for an A is 4.0. Therefore, an unweighted GPA cannot exceed 4.0. Weighted GPAs, however, can reach 4.5 or 5.0.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How does a pass/fail class affect GPA?</h3>
+          <p class="mt-2 text-muted">
+            Passing a pass/fail class gives you credits toward graduation but does not alter your GPA. However, failing a pass/fail class (getting a "No Pass" or "U") can register as 0.0 grade points, lowering your average.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

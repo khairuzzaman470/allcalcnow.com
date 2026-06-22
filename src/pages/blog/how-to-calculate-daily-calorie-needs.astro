@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Daily Calorie Needs: BMR & TDEE | AllCalcNow";
+const pageDescription = "Learn how to calculate your BMR and TDEE. Review the Mifflin-St Jeor formula, calculate activity factor adjustments, and see worked examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-daily-calorie-needs";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Daily Calorie Needs", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Daily Calorie Needs: BMR & TDEE",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-26",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-daily-calorie-needs" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate Daily Calorie Needs' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Health & Fitness</span>
+        <span class="text-border">•</span>
+        <span>10 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Daily Calorie Needs: BMR & TDEE
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Understanding the balance of calories in versus calories out is the foundation of any successful body transformation. Learn how to estimate your BMR and TDEE using proven scientific equations.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 26, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        Whether your goal is to lose stubborn body fat, build lean skeletal muscle, or maintain your current weight, every path begins with a simple scientific truth: the law of energy balance. Your body is a thermodynamic system that requires energy in the form of calories to function. 
+      </p>
+      <p class="mb-6">
+        If you consume more energy than you burn, that excess energy is stored as body fat. Conversely, if you consume less energy than you expend, your body is forced to burn stored tissues—predominantly fat—to cover the energy deficit. To manage this equation effectively, you must know your target numbers. This guide breaks down the mathematics of energy expenditure, explaining the difference between Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE), detailing the Mifflin-St Jeor equation, and providing worked step-by-step examples.
+      </p>
+
+      <!-- Section: BMR vs TDEE -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">BMR vs. TDEE: What is the Difference?</h2>
+      <p class="mt-4 mb-6">
+        Many people confuse BMR and TDEE, but they represent very different aspects of your metabolism:
+      </p>
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li>
+          <strong class="text-text">Basal Metabolic Rate (BMR):</strong> The absolute minimum number of calories your body needs to survive at rest. This covers involuntary life-sustaining physiological functions such as breathing, blood circulation, cellular repair, hormone production, and maintaining body temperature. Imagine waking up and laying completely motionless in bed for 24 hours—the energy burned in that state is your BMR.
+        </li>
+        <li>
+          <strong class="text-text">Total Daily Energy Expenditure (TDEE):</strong> The total number of calories you burn throughout a full day, factoring in all physical movement, digestion, and deliberate exercise. TDEE is always higher than BMR and serves as your actual "maintenance calorie" level.
+        </li>
+      </ul>
+
+      <!-- Section: TDEE Components -->
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">The 4 Components of TDEE</h3>
+      <p class="mt-2 mb-4">
+        Your TDEE is the sum of four distinct metabolic components:
+      </p>
+      <ol class="mb-8 list-decimal pl-6 space-y-2">
+        <li><strong>Basal Metabolic Rate (BMR):</strong> Comprises roughly 60% to 70% of daily energy expenditure for sedentary people.</li>
+        <li><strong>Thermic Effect of Food (TEF):</strong> The energy required to digest, absorb, and process nutrients from the meals you eat. It accounts for about 10% of total expenditure (protein has the highest thermic cost, burning off 20–30% of its own calories during digestion).</li>
+        <li><strong>Exercise Activity Thermogenesis (EAT):</strong> The energy expended during planned, structured exercise (e.g. running, weightlifting, cycling). This usually accounts for 5% to 10% of total expenditure.</li>
+        <li><strong>Non-Exercise Activity Thermogenesis (NEAT):</strong> The energy expended for everything we do that is not sleeping, eating, or sports-like exercise (e.g. walking to your car, fidgeting, carrying groceries, washing dishes). NEAT varies wildly and can account for 15% to 50% of total daily calories.</li>
+      </ol>
+
+      <!-- Section: Mifflin-St Jeor Equations -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Mifflin-St Jeor Equations</h2>
+      <p class="mt-4 mb-6">
+        To calculate your BMR, scientists have developed several formulas. While the older Harris-Benedict equation is still widely cited, modern clinical guidelines recommend the <strong class="text-text">Mifflin-St Jeor equation</strong>, which was formulated in 1990 and has been shown to be the most accurate predictive formula for BMR in healthy populations.
+      </p>
+      <p class="mb-6">
+        The equations require you to input your weight in kilograms, height in centimeters, and age in years.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">BMR Formula for Men</h3>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">BMR (kcal/day) = 10 * Weight (kg) + 6.25 * Height (cm) - 5 * Age (y) + 5</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">BMR Formula for Women</h3>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">BMR (kcal/day) = 10 * Weight (kg) + 6.25 * Height (cm) - 5 * Age (y) - 161</code>
+      </div>
+
+      <p class="mb-6 text-sm text-muted italic">
+        Note: If you have measurements in pounds or feet/inches, first convert them (1 lb = 0.453592 kg; 1 inch = 2.54 cm).
+      </p>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Your BMR automatically</h3>
+        <p class="mt-2 text-sm text-muted">
+          Don't want to convert units and multiply decimals manually? Use our free interactive BMI and Body Metrics Calculator to instantly calculate your baseline requirements.
+        </p>
+        <div class="mt-4">
+          <a href="/bmi-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to BMI & Calorie Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Activity Multipliers -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Calculating TDEE: Activity Factors</h2>
+      <p class="mt-4 mb-6">
+        Once you have determined your baseline BMR, you estimate your TDEE by multiplying your BMR by an activity factor corresponding to your lifestyle.
+      </p>
+
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Activity Level</th>
+              <th class="p-4 font-bold">Multiplier</th>
+              <th class="p-4 font-bold">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Sedentary</td>
+              <td class="p-4 font-mono font-bold text-accent">1.200</td>
+              <td class="p-4">Desk job, minimal exercise, little daily walking.</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Lightly Active</td>
+              <td class="p-4 font-mono font-bold text-accent">1.375</td>
+              <td class="p-4">Light exercise or sports 1–3 days per week.</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Moderately Active</td>
+              <td class="p-4 font-mono font-bold text-accent">1.550</td>
+              <td class="p-4">Moderate exercise or sports 3–5 days per week.</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Very Active</td>
+              <td class="p-4 font-mono font-bold text-accent">1.725</td>
+              <td class="p-4">Hard exercise or heavy sports 6–7 days per week.</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Extra Active</td>
+              <td class="p-4 font-mono font-bold text-accent">1.900</td>
+              <td class="p-4">Very strenuous physical job or training twice a day.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Worked Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's perform step-by-step arithmetic for two different scenarios.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Active 30-Year-Old Male</h3>
+      <p class="mt-2 mb-4">
+        A male subject is <strong>30 years old</strong>, stands <strong>180 cm tall</strong>, and weighs <strong>80 kg</strong>. He works out 4 days a week, making his activity level <strong>Moderately Active (1.550)</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Step 1: Calculate BMR</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BMR = 10 * 80 + 6.25 * 180 - 5 * 30 + 5</code><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BMR = 800 + 1125 - 150 + 5 = 1780 kcal/day</code>
+        </li>
+        <li>
+          <strong>Step 2: Multiply by Activity Factor</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">TDEE = BMR * 1.550</code><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">TDEE = 1780 * 1.550 = 2759 kcal/day</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This subject needs approximately <strong>2,759 calories per day</strong> to maintain his current weight.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Sedentary 28-Year-Old Female</h3>
+      <p class="mt-2 mb-4">
+        A female subject is <strong>28 years old</strong>, stands <strong>165 cm tall</strong>, and weighs <strong>60 kg</strong>. She has a desk job and does not engage in structured physical training, making her activity level <strong>Sedentary (1.200)</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Step 1: Calculate BMR</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BMR = 10 * 60 + 6.25 * 165 - 5 * 28 - 161</code><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BMR = 600 + 1031.25 - 140 - 161 = 1330.25 kcal/day</code>
+        </li>
+        <li>
+          <strong>Step 2: Multiply by Activity Factor</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">TDEE = BMR * 1.200</code><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">TDEE = 1330.25 * 1.200 = 1596.3 ≈ 1596 kcal/day</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This subject needs approximately <strong>1,596 calories per day</strong> to maintain her current weight.
+      </p>
+
+      <!-- Section: Common Pitfalls -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Common Calorie Estimation Mistakes</h2>
+      <p class="mt-4 mb-6">
+        Mathematical formulas are approximations. Be aware of these common errors when utilizing BMR and TDEE calculations:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Overestimating Activity Multipliers:</strong> Most people overestimate their physical activity level. Selecting "Moderately Active" because you take a light walk twice a week is a frequent error. When in doubt, it is safer to select one level lower to avoid overeating.
+        </li>
+        <li>
+          <strong class="text-text">Ignoring Body Fat and Muscle Ratios:</strong> Standard equations assume average body compositions. Lean muscle tissue is highly active and burns more energy than body fat. If you are extremely muscular (or carry significant body fat), equations like Mifflin-St Jeor can slightly underestimate or overestimate your BMR.
+        </li>
+        <li>
+          <strong class="text-text">Confusing Exercise and Daily NEAT:</strong> Working out in the gym for 45 minutes does not make you highly active if you spend the remaining 23 hours sitting in a chair. Tracking daily step counts (e.g. aiming for 8,000–10,000 steps) is a more consistent metric for evaluating daily activity.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        Remember, BMR and TDEE calculators provide a theoretical baseline. Use these numbers as a starting point, track your nutritional intake, and adjust your calories up or down depending on how your scale weight and body measurements respond over a 2-week period.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is the difference between BMR and TDEE?</h3>
+          <p class="mt-2 text-muted">
+            BMR is the base amount of energy required to stay alive at rest without movement. TDEE is the actual total energy you burn in a day, which includes BMR plus activity multipliers for physical movement, digestion, and exercise.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How many calories should I cut from my TDEE to lose weight?</h3>
+          <p class="mt-2 text-muted">
+            A safe, sustainable caloric deficit is generally 300 to 500 calories below your calculated TDEE. This typically results in a weight loss of 0.5 to 1 pound (0.2 to 0.5 kg) per week.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Does my BMR slow down as I age?</h3>
+          <p class="mt-2 text-muted">
+            Yes. BMR naturally decreases with age. This is partly due to changes in hormone levels and, more significantly, the gradual loss of lean skeletal muscle mass (sarcopenia) that occurs as activity levels decrease. Resistance training helps preserve muscle and protect your BMR.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

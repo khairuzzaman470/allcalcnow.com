@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "Pregnancy Due Date Calculation: How It Works | AllCalcNow";
+const pageDescription = "Learn how pregnancy due dates are calculated. Review Naegele's rule, IVF transfer date adjustments, and see step-by-step worked calculations.";
+const pageUrl = "https://allcalcnow.com/blog/pregnancy-due-date-calculation";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Pregnancy Due Date Calculation", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Pregnancy Due Date Calculation: How It Works",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-27",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/pregnancy-due-date-calculation" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Pregnancy Due Date Calculation' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>10 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        Pregnancy Due Date Calculation: How It Works
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Calculating a pregnancy due date involves estimating the standard 280-day gestational period. Learn the mathematical models behind Naegele's Rule and IVF calculations.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 27, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        The moment a pregnancy is confirmed, the very first question that arises is: "When is the baby due?" An Estimated Date of Confinement (EDC) or Estimated Due Date (EDD) is critical for scheduling ultrasound appointments, monitoring fetal growth, and preparing for the arrival of the child.
+      </p>
+      <p class="mb-6">
+        However, human biology does not operate on a rigid calendar. A standard pregnancy is estimated to last approximately <strong>280 days (or 40 weeks)</strong> from the first day of the Last Menstrual Period (LMP). Since conception typically occurs about 14 days after the LMP in a standard 28-day cycle, the actual biological age of the fetus at birth is closer to 266 days. To simplify this arithmetic, researchers have developed mathematical formulas. In this guide, we outline Naegele's Rule, explain IVF transfer date calculations, walk through worked examples, and evaluate why only a small percentage of babies are born on their exact due date.
+      </p>
+
+      <!-- Section: Naegele's Rule -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Standard Calculation: Naegele's Rule</h2>
+      <p class="mt-4 mb-6">
+        Formulated by the German obstetrician Franz Karl Naegele in the early 19th century, <strong class="text-text">Naegele's Rule</strong> is the clinical baseline for estimating due dates. It assumes a standard 280-day gestation period and a regular 28-day menstrual cycle.
+      </p>
+      <p class="mb-4">
+        To calculate the due date manually using Naegele's Rule, follow this formula:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Due Date = LMP + 7 Days - 3 Months + 1 Year</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Your Due Date automatically</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual addition and calendar backtracking. Enter your last menstrual period (LMP) or conception date in our free, interactive Due Date Calculator to find your target date and current week instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/due-date-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Due Date Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: IVF Math -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">IVF Transfer Date Calculations</h2>
+      <p class="mt-4 mb-6">
+        For pregnancies achieved through In Vitro Fertilization (IVF), the date of the Last Menstrual Period is irrelevant because the exact date of fertilization or embryo transfer is known. 
+      </p>
+      <p class="mb-6">
+        To find the due date for IVF, we calculate the equivalent LMP by subtracting the developmental age of the embryo plus 14 days of a standard cycle:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Equivalent LMP = Transfer Date - Embryo Age (in Days) - 14 Days</code>
+      </div>
+      <p class="mb-6">
+        For example, for a 5-day blastocyst transfer, the equivalent LMP is exactly <strong>19 days before the transfer date</strong> (5 days + 14 days). Once the equivalent LMP is calculated, Naegele's Rule is applied as normal.
+      </p>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through both a natural conception and an IVF example calculation.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Natural Conception via LMP</h3>
+      <p class="mt-2 mb-4">
+        A woman's Last Menstrual Period (LMP) began on <strong>September 15, 2025</strong>. She has a standard 28-day cycle.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Step 1: Add 7 Days to LMP:</strong><br />
+          September 15 + 7 Days = <strong>September 22, 2025</strong>.
+        </li>
+        <li>
+          <strong>Step 2: Subtract 3 Months:</strong><br />
+          Counting back 3 months from September (9) yields June (6). The day remains the same: <strong>June 22, 2025</strong>.
+        </li>
+        <li>
+          <strong>Step 3: Add 1 Year:</strong><br />
+          June 22, 2025 + 1 Year = <strong>June 22, 2026</strong>.
+        </li>
+      </ul>
+      <p class="mb-6">
+        The Estimated Due Date is <strong>June 22, 2026</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: IVF Embryo Transfer Calculation</h3>
+      <p class="mt-2 mb-4">
+        An IVF patient undergoes a 5-day embryo transfer (blastocyst) on <strong>October 10, 2025</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Step 1: Calculate the Equivalent LMP:</strong><br />
+          Subtract 19 days from October 10. October has 31 days. Subtraction yields: <strong>September 21, 2025</strong>.
+        </li>
+        <li>
+          <strong>Step 2: Add 7 Days to Equivalent LMP:</strong><br />
+          September 21 + 7 Days = <strong>September 28, 2025</strong>.
+        </li>
+        <li>
+          <strong>Step 3: Subtract 3 Months:</strong><br />
+          Counting back 3 months from September (9) yields June (6): <strong>June 28, 2025</strong>.
+        </li>
+        <li>
+          <strong>Step 4: Add 1 Year:</strong><br />
+          June 28, 2025 + 1 Year = <strong>June 28, 2026</strong>.
+        </li>
+      </ul>
+      <p class="mb-6">
+        The Estimated Due Date for the IVF pregnancy is <strong>June 28, 2026</strong>.
+      </p>
+
+      <!-- Gestational Milestones Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Typical Pregnancy Milestones</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Trimester</th>
+              <th class="p-4 font-bold">Weeks Band</th>
+              <th class="p-4 font-bold">Key Fetal Developments</th>
+              <th class="p-4 font-bold">Fetal Size Proxy</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">First Trimester</td>
+              <td class="p-4">Weeks 1 – 12</td>
+              <td class="p-4">Heartbeat starts; major organs begin to form</td>
+              <td class="p-4">Lime / Plum</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Second Trimester</td>
+              <td class="p-4">Weeks 13 – 26</td>
+              <td class="p-4">Active movement; hearing develops; hair and fingerprints form</td>
+              <td class="p-4">Banana / Eggplant</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Third Trimester</td>
+              <td class="p-4">Weeks 27 – 40+</td>
+              <td class="p-4">Rapid weight gain; lung maturation; head-down positioning</td>
+              <td class="p-4">Cantaloupe / Watermelon</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Key Challenges -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Why Due Dates Are Rarely Exact</h2>
+      <p class="mt-4 mb-6">
+        It is essential to understand that a due date is a statistical midpoint, not a biological guarantee. In fact, research shows that <strong>only about 4% to 5% of babies are born on their exact calculated due date</strong>. Keep these biological variables in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Menstrual Cycle Variances:</strong> Naegele's rule assumes a 28-day cycle with ovulation occurring on Day 14. If a woman has a 35-day cycle, ovulation likely occurred around Day 21. This means the standard formula will overestimate the baby's gestational age by 7 days.
+        </li>
+        <li>
+          <strong class="text-text">Implantation Duration:</strong> Following fertilization, the embryo can take anywhere from 6 to 12 days to implant in the uterine wall, altering the baseline release of hCG hormones and early growth markers.
+        </li>
+        <li>
+          <strong class="text-text">Natural Gestational Variations:</strong> Research shows that normal, healthy pregnancies naturally vary in length by up to five weeks. First-time mothers, for example, tend to deliver slightly later (averaging 40.5 weeks) than mothers who have previously given birth.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        Because of these variances, clinical teams use early ultrasounds (usually during the first trimester) to measure crown-rump length (CRL) and adjust the estimated due date if the ultrasound measurements differ significantly from LMP calculations.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How accurate is Naegele's rule?</h3>
+          <p class="mt-2 text-muted">
+            It is a useful statistical baseline, but it has limitations. It assumes regular 28-day cycles and standard ovulation timelines. For irregular cycles, doctors rely on first-trimester ultrasounds, which are the most accurate way to date a pregnancy.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How is the due date calculated for an IVF pregnancy?</h3>
+          <p class="mt-2 text-muted">
+            It is calculated from the date of the embryo transfer. For a 5-day transfer, the equivalent LMP is calculated by subtracting 19 days from the transfer date, and then applying Naegele's rule.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can I calculate my due date if I only know the conception date?</h3>
+          <p class="mt-2 text-muted">
+            Yes. If you know the exact date of conception (or intercourse), you can estimate the due date by adding exactly 266 days (38 weeks) to that date.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

@@ -1,0 +1,15 @@
+name: Daily Scheduled Rebuild
+
+on:
+  schedule:
+    # Run daily at 00:05 UTC (which is 6:05 AM Asia/Dhaka)
+    - cron: '5 0 * * *'
+  workflow_dispatch: # Allows you to manually trigger a rebuild from the GitHub Actions tab
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify Build Hook
+        run: |
+          curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_HOOK }}

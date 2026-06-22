@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "How to Calculate Your Electricity Bill: Watts & Cost | AllCalcNow";
+const pageDescription = "Understand how to calculate your electricity bill. Learn to convert Watts to kWh, analyze utility rates, and see step-by-step cost examples.";
+const pageUrl = "https://allcalcnow.com/blog/how-to-calculate-electricity-bill";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How to Calculate Your Electricity Bill", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to Calculate Your Electricity Bill: Watts & Cost",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-22",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/how-to-calculate-electricity-bill" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'How to Calculate Your Electricity Bill' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        How to Calculate Your Electricity Bill: Watts & Cost
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Powering a home is one of the most significant recurring costs of modern life. Learn the math behind kilowatt-hours (kWh) and find out how much individual appliances add to your utility bill.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 22, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When your monthly electric utility statement arrives, the final balance can often feel like a mystery. You see charges for delivery, supply, transmission, and environmental adjustments, all compiled under a total metric of kilowatt-hours (kWh). Without a clear understanding of what these terms mean, it is nearly impossible to take control of your energy costs.
+      </p>
+      <p class="mb-6">
+        Fortunately, calculating your electricity bill is straightforward. By converting the power rating (Watts) of your household appliances into energy consumption units (kWh), you can determine exactly how much it costs to run everything in your home. In this comprehensive guide, we explain the difference between Watts and kilowatt-hours, lay out the core calculation formulas, walk through real-world step-by-step examples, and highlight simple tricks to reduce your energy bill.
+      </p>
+
+      <!-- Section: The Formulas -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Electricity Calculation Formulas</h2>
+      <p class="mt-4 mb-6">
+        To determine how much an electrical appliance costs to operate, you must complete two basic steps: convert the appliance’s power draw to kilowatt-hours (kWh), and multiply that by your local utility rate.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. Calculating Energy Consumption (kWh)</h3>
+      <p class="mt-2 mb-4">
+        Electrical appliances list their power rating in Watts (W). To find the energy consumed, multiply the power rating by the hours of operation, and divide by 1,000 (since 1 kilowatt = 1,000 Watts):
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Energy (kWh) = [ Power (Watts) * Time (Hours) ] / 1000</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. Calculating Total Energy Cost</h3>
+      <p class="mt-2 mb-4">
+        Once you have the total energy in kWh, multiply it by the rate your utility company charges per kilowatt-hour:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">Cost ($) = Energy (kWh) * Utility Rate ($ per kWh)</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Your Bill automatically</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the manual calculations. Use our free Electricity Bill Calculator to select common household appliances, enter your local rates, and instantly project your monthly utility expenses.
+        </p>
+        <div class="mt-4">
+          <a href="/electricity-bill-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Electricity Bill Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through three common household scenarios to see how appliance wattage and operating schedules impact your bill. For all examples, we will use a standard US utility rate of <strong>$0.15 per kWh</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-lg font-bold text-text">Example 1: Running a Space Heater</h3>
+      <p class="mt-2 mb-4">
+        During winter, you run a <strong>1,500-Watt</strong> portable space heater in your home office for <strong>8 hours a day</strong>. Let's calculate the cost for a 30-day month.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate total monthly hours:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">8 hours/day * 30 days = 240 hours</code>
+        </li>
+        <li>
+          <strong>Calculate monthly energy consumption in kWh:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Energy = [ 1,500 Watts * 240 hours ] / 1,000 = 360,000 / 1,000 = 360 kWh</code>
+        </li>
+        <li>
+          <strong>Calculate total cost:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Cost = 360 kWh * $0.15 = $54.00</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Running a single space heater in your office costs <strong>$54.00 per month</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-lg font-bold text-text">Example 2: Leaving a Light On 24/7</h3>
+      <p class="mt-2 mb-4">
+        You leave a traditional <strong>100-Watt incandescent light bulb</strong> on in the basement constantly (24 hours a day) for a 30-day month.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate total monthly hours:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">24 hours/day * 30 days = 720 hours</code>
+        </li>
+        <li>
+          <strong>Calculate monthly energy consumption in kWh:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Energy = [ 100 Watts * 720 hours ] / 1,000 = 72 kWh</code>
+        </li>
+        <li>
+          <strong>Calculate total cost:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Cost = 72 kWh * $0.15 = $10.80</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Leaving one incandescent light bulb on continuously costs <strong>$10.80 per month</strong>. (Note: Replacing this bulb with a modern 9-Watt LED equivalent would reduce this cost to just <strong>$0.97 per month</strong>!)
+      </p>
+
+      <h3 class="mt-6 font-heading text-lg font-bold text-text">Example 3: A Refrigerator (Duty Cycling)</h3>
+      <p class="mt-2 mb-4">
+        A refrigerator nameplate lists its power draw at <strong>200 Watts</strong>. However, a refrigerator compressor does not run continuously—it cycles on and off to maintain temperature. Suppose the compressor runs only <strong>35% of the day</strong>. Let's calculate its monthly cost.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Determine average power draw:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Average Power = 200 Watts * 0.35 = 70 Watts</code>
+        </li>
+        <li>
+          <strong>Calculate monthly energy consumption in kWh:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Energy = [ 70 Watts * 24 hours/day * 30 days ] / 1,000 = 50.4 kWh</code>
+        </li>
+        <li>
+          <strong>Calculate total cost:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Cost = 50.4 kWh * $0.15 = $7.56</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        Operating your refrigerator costs approximately <strong>$7.56 per month</strong>.
+      </p>
+
+      <!-- Appliance Cost Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Typical Monthly Cost of Household Appliances (Rate: $0.15/kWh)</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Household Appliance</th>
+              <th class="p-4 font-bold">Wattage Rating</th>
+              <th class="p-4 font-bold">Usage (Hours/Day)</th>
+              <th class="p-4 font-bold">Monthly Energy (kWh)</th>
+              <th class="p-4 font-bold">Estimated Monthly Cost</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4">Central Air Conditioner</td>
+              <td class="p-4 font-mono">3,500 W</td>
+              <td class="p-4 font-mono">8 hours</td>
+              <td class="p-4 font-mono">840.0 kWh</td>
+              <td class="p-4 font-mono font-semibold text-red-700">$126.00</td>
+            </tr>
+            <tr>
+              <td class="p-4">Water Heater (Electric)</td>
+              <td class="p-4 font-mono">4,500 W</td>
+              <td class="p-4 font-mono">3 hours</td>
+              <td class="p-4 font-mono">405.0 kWh</td>
+              <td class="p-4 font-mono font-semibold text-red-700">$60.75</td>
+            </tr>
+            <tr>
+              <td class="p-4">Electric Clothes Dryer</td>
+              <td class="p-4 font-mono">3,000 W</td>
+              <td class="p-4 font-mono">1 hour</td>
+              <td class="p-4 font-mono">90.0 kWh</td>
+              <td class="p-4 font-mono font-semibold text-red-700">$13.50</td>
+            </tr>
+            <tr>
+              <td class="p-4">Desktop Gaming PC</td>
+              <td class="p-4 font-mono">400 W</td>
+              <td class="p-4 font-mono">4 hours</td>
+              <td class="p-4 font-mono">48.0 kWh</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$7.20</td>
+            </tr>
+            <tr>
+              <td class="p-4">LED Smart TV</td>
+              <td class="p-4 font-mono">100 W</td>
+              <td class="p-4 font-mono">5 hours</td>
+              <td class="p-4 font-mono">15.0 kWh</td>
+              <td class="p-4 font-mono font-semibold text-emerald-700">$2.25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Things to Watch Out For</h2>
+      <p class="mt-4 mb-6">
+        When reviewing your energy bills, be mindful of these billing adjustments and factors:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Fixed Connection Fees:</strong> Your bill will contain a flat monthly fee (often labeled as "Customer Charge" or "Service Charge") that you pay just to remain connected to the grid. This means your bill will never be $0.00, even if you consume no electricity.
+        </li>
+        <li>
+          <strong class="text-text">Time-of-Use (TOU) Rates:</strong> Many utilities charge higher rates per kWh during "peak demand" hours (e.g., late afternoon and early evening in summer) and lower rates during "off-peak" hours (overnight). Shifting heavy appliance usage to off-peak periods can reduce costs without changing your overall consumption.
+        </li>
+        <li>
+          <strong class="text-text">Vampire Power Draw:</strong> Many modern electronics (televisions, chargers, gaming consoles) consume power in "standby mode" even when turned off. Unplugging devices or using smart power strips can eliminate this phantom load.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        Understanding these calculations gives you the insights needed to audit your household energy consumption, select energy-efficient appliances, and lower your monthly bills.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is a kilowatt-hour (kWh)?</h3>
+          <p class="mt-2 text-muted">
+            A kilowatt-hour is a unit of energy measurement representing the consumption of 1,000 Watts of electricity continuously for one hour. It is the standard billing unit used by electrical utilities worldwide.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How do I find the wattage of an appliance?</h3>
+          <p class="mt-2 text-muted">
+            The power rating of an appliance is typically printed on a metal nameplate or sticker on the back, bottom, or power adapter of the device, listed as "W" or "Watts."
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What are tiered utility rates?</h3>
+          <p class="mt-2 text-muted">
+            In a tiered pricing model, the rate you pay per kWh increases as you consume more total electricity during a billing cycle. For example, Tier 1 might cover your first 500 kWh at a lower rate, while Tier 2 charges a higher rate for usage beyond that.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

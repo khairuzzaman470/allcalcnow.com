@@ -1,0 +1,285 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "Body Fat Percentage: 4 Methods Compared | AllCalcNow";
+const pageDescription = "Compare 4 common methods to measure body fat percentage. Learn the US Navy formula, review worked examples, and check accuracy ranges.";
+const pageUrl = "https://allcalcnow.com/blog/body-fat-percentage-methods";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Body Fat Percentage Methods", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Body Fat Percentage: 4 Methods Compared",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-26",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/body-fat-percentage-methods" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Body Fat Percentage Methods' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Health & Fitness</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        Body Fat Percentage: 4 Methods Compared
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        When evaluating fitness, scale weight alone fails to distinguish between fat and muscle. Learn how to calculate body fat percentage using standard formulas and compare the most popular measurement methods.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 26, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        When embarking on a health journey, our standard reaction is to step onto a bathroom scale. While scale weight is a useful general metric, it is a blunt instrument. It cannot distinguish whether a weight change consists of fat loss, muscle gain, or daily water retention.
+      </p>
+      <p class="mb-6">
+        To understand your true body composition, you must measure your body fat percentage (BFP)—the proportion of your total weight that consists of adipose tissue. Measuring body fat allows you to set realistic fitness goals, optimize your training, and monitor cardiovascular and metabolic health risks. In this comprehensive guide, we compare the four most popular methods to calculate body fat, detail the standard US Navy equations, walk through step-by-step example calculations, and evaluate the pros and cons of each method.
+      </p>
+
+      <!-- Section: The Methods -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The 4 Body Fat Measurement Methods</h2>
+      <p class="mt-4 mb-6">
+        Depending on your access to equipment and budget, you can estimate your body fat using several techniques:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">US Navy Circumference Method:</strong> A mathematical approach developed by the US Navy. It uses simple tape measurements of the neck, waist (and hips for women) alongside height to estimate fat density. It is highly popular due to requiring only a tape measure.
+        </li>
+        <li>
+          <strong class="text-text">Skinfold Calipers (Jackson-Pollock):</strong> A physical pinch test where a technician measures skinfold thickness at 3, 4, or 7 specific anatomical sites (e.g. chest, abdomen, thigh). These values are plugged into regression formulas to calculate density.
+        </li>
+        <li>
+          <strong class="text-text">Bioelectrical Impedance Analysis (BIA):</strong> The technology behind household smart scales. It sends a weak, harmless electrical current through your feet and measures electrical resistance (impedance). Since muscle conducts electricity faster than fat, it estimates body composition.
+        </li>
+        <li>
+          <strong class="text-text">DEXA Scan (Dual-Energy X-Ray Absorptiometry):</strong> A low-radiation full-body X-ray scan that distinguishes bone mineral, lean mass, and fat mass with pixel-level precision. It is widely considered the clinical gold standard.
+        </li>
+      </ol>
+
+      <!-- Section: Navy Formula -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The US Navy Circumference Formulas</h2>
+      <p class="mt-4 mb-6">
+        The US Navy formulas rely on base-10 logarithmic values of circumference measurements (taken in inches) to estimate body density:
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">1. Imperial Formula for Men</h3>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">BFP (%) = 86.010 * log10( abdomen - neck ) - 70.041 * log10( height ) + 36.76</code>
+      </div>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">2. Imperial Formula for Women</h3>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm">
+        <code class="text-lg font-semibold text-accent font-mono block sm:inline">BFP (%) = 163.205 * log10( abdomen + hip - neck ) - 97.684 * log10( height ) - 78.387</code>
+      </div>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Estimate Your Body Fat automatically</h3>
+        <p class="mt-2 text-sm text-muted">
+          Skip the logarithmic math. Use our free interactive Body Fat Calculator to enter your circumference measurements and find your body fat percentage and category instantly.
+        </p>
+        <div class="mt-4">
+          <a href="/body-fat-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Body Fat Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's work through both male and female imperial calculations to demonstrate the arithmetic.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Male Circumference Calculation</h3>
+      <p class="mt-2 mb-4">
+        A male subject is <strong>70 inches tall</strong> (Height = 70). Their tape measurements are: <strong>34 inches</strong> around the abdomen (at navel level) and <strong>15 inches</strong> around the neck.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate the circumference difference:</strong> Abdomen - Neck = `34 - 15 = 19`
+        </li>
+        <li>
+          <strong>Calculate log10(19):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">log10(19) ≈ 1.27875</code>
+        </li>
+        <li>
+          <strong>Calculate log10(Height):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">log10(70) ≈ 1.84510</code>
+        </li>
+        <li>
+          <strong>Apply the formula:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BFP = 86.010 * 1.27875 - 70.041 * 1.84510 + 36.76</code><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BFP = 109.985 - 129.233 + 36.76 ≈ 17.51%</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This subject has an estimated body fat percentage of <strong>17.5%</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Female Circumference Calculation</h3>
+      <p class="mt-2 mb-4">
+        A female subject is <strong>64 inches tall</strong>. Her tape measurements are: <strong>30 inches</strong> around the waist (at narrowest point), <strong>38 inches</strong> around the hips (at widest point), and <strong>13.5 inches</strong> around the neck.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Sum waist and hip, and subtract neck:</strong> Waist + Hip - Neck = `30 + 38 - 13.5 = 54.5`
+        </li>
+        <li>
+          <strong>Calculate log10(54.5):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">log10(54.5) ≈ 1.73640</code>
+        </li>
+        <li>
+          <strong>Calculate log10(Height):</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">log10(64) ≈ 1.80618</code>
+        </li>
+        <li>
+          <strong>Apply the formula:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BFP = 163.205 * 1.73640 - 97.684 * 1.80618 - 78.387</code><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">BFP = 283.389 - 176.435 - 78.387 ≈ 28.57%</code>
+        </li>
+      </ul>
+      <p class="mb-6">
+        This subject has an estimated body fat percentage of <strong>28.6%</strong>.
+      </p>
+
+      <!-- Comparison Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Body Fat Methods Comparison Summary</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Method</th>
+              <th class="p-4 font-bold">Accuracy Rating</th>
+              <th class="p-4 font-bold">Typical Cost</th>
+              <th class="p-4 font-bold">Key Pro</th>
+              <th class="p-4 font-bold">Key Con</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">US Navy Formula</td>
+              <td class="p-4">Moderate (±3-4%)</td>
+              <td class="p-4 text-emerald-700 font-semibold">$0.00 (Self-test)</td>
+              <td class="p-4">Requires only tape measure</td>
+              <td class="p-4">Vulnerable to shape variations</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Skinfold Calipers</td>
+              <td class="p-4">Moderate-High (±3%)</td>
+              <td class="p-4 font-mono">$10 - $30</td>
+              <td class="p-4">Measures subcutaneous fat directly</td>
+              <td class="p-4">Requires skilled technician</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">BIA Smart Scales</td>
+              <td class="p-4">Low-Moderate (±4-8%)</td>
+              <td class="p-4 font-mono">$30 - $100</td>
+              <td class="p-4">Instant, daily home logs</td>
+              <td class="p-4">Heavily affected by hydration shifts</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">DEXA Scan</td>
+              <td class="p-4 font-bold text-emerald-700">High (±1-2%)</td>
+              <td class="p-4 font-mono">$100 - $250</td>
+              <td class="p-4">Gold standard clinical accuracy</td>
+              <td class="p-4">Requires clinic visit & cost</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Things to Watch Out For -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Common Measurement Mistakes</h2>
+      <p class="mt-4 mb-6">
+        When tracking your body fat percentage, keep these essential guidelines in mind:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Inconsistent Tape Placement:</strong> The US Navy method requires precise anatomical landmarks. Men must measure waist circumference at the navel level. Women must measure waist at the narrowest point and hips at the widest point of the gluteal muscle. Shifting these positions by even an inch skew results.
+        </li>
+        <li>
+          <strong class="text-text">BIA Hydration Fluctuations:</strong> BIA scales work by measuring electrical resistance, which is heavily determined by body water. If you weigh yourself dehydrated (e.g. immediately after waking up or post-workout), your BIA scale will display an artificially high body fat percentage. Always weigh yourself under consistent hydration conditions.
+        </li>
+        <li>
+          <strong class="text-text">Caliper Technique Variances:</strong> Using skinfold calipers requires pinching only the subcutaneous fat layers and avoiding muscle. It takes substantial practice to replicate pinches precisely, which is why professional measurements are recommended for skinfold testing.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        By checking your measurements and maintaining a consistent testing schedule, you can audit your body composition changes, optimize training, and drive real physical progress.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">What is a healthy body fat percentage for men and women?</h3>
+          <p class="mt-2 text-muted">
+            For men, 8% to 19% is considered healthy and fit; 25% or higher is classified as obese. For women, 21% to 33% is considered healthy and fit; 32% or higher is classified as obese.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">How accurate is the US Navy body fat formula?</h3>
+          <p class="mt-2 text-muted">
+            For most individuals, the US Navy formula is accurate within 3% to 4% of a clinical DEXA scan. It can, however, be less accurate for extreme body shapes, such as professional bodybuilders or individuals with severe abdominal bloating.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Can I target fat loss in specific areas (e.g. belly fat)?</h3>
+          <p class="mt-2 text-muted">
+            No. Spot reduction is a biological myth. Fat loss occurs systemically across the entire body as a calorie deficit forces cells to release triglycerides. Where fat deposits accumulate or burn first is determined by genetics and hormones.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

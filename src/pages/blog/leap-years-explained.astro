@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const pageTitle = "Leap Years Explained: Math & Calculations | AllCalcNow";
+const pageDescription = "Understand the mathematical rules of leap years. Learn why we have leap days, review the Gregorian divisibility algorithm, and see worked examples.";
+const pageUrl = "https://allcalcnow.com/blog/leap-years-explained";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://allcalcnow.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://allcalcnow.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": "Leap Years Explained", "item": pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Leap Years Explained: Math & Calculations",
+    "description": pageDescription,
+    "url": pageUrl,
+    "datePublished": "2026-06-27",
+    "author": {
+      "@type": "Organization",
+      "name": "AllCalcNow"
+    }
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/blog/leap-years-explained" schemas={schemas}>
+  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- Breadcrumb Navigation -->
+    <div class="mb-6">
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Leap Years Explained' }
+      ]} />
+    </div>
+
+    <!-- Header Section -->
+    <header class="border-b border-border/60 pb-8">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>Everyday Math</span>
+        <span class="text-border">•</span>
+        <span>9 Min Read</span>
+      </div>
+      <h1 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-5xl leading-tight">
+        Leap Years Explained: The Math Behind the Calendar Calendar
+      </h1>
+      <p class="mt-4 text-lg text-muted leading-relaxed">
+        Why does our calendar insert an extra day every four years? Discover the astronomical math that requires leap days and study the three rules of the Gregorian divisibility algorithm.
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">ACN</span>
+        <div>
+          <p class="text-sm font-bold text-text">AllCalcNow Editorial Team</p>
+          <p class="text-xs text-muted">Published June 27, 2026</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="mt-8 prose prose-slate max-w-none text-muted leading-relaxed">
+      <p class="mb-6">
+        Every four years, our calendars add a 366th day: February 29. Known as a leap day, this calendar adjustment is widely recognized, but the mathematics and astronomy that make it necessary are rarely understood. Without leap years, our seasons would slowly drift, causing July to eventually fall in the middle of winter.
+      </p>
+      <p class="mb-6">
+        However, simply adding a day every four years is not accurate enough. Over centuries, this basic approach creates a slight mathematical overshoot. To correct this, the modern Gregorian calendar uses a three-tier divisibility algorithm to check which century years deserve a leap day. In this guide, we break down the astronomical math, detail the leap year algorithm, walk through worked examples, and look at the unique case of "leaplings" born on February 29.
+      </p>
+
+      <!-- Section: The Astronomy Math -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The Astronomical Problem: Why We Need Leap Days</h2>
+      <p class="mt-4 mb-6">
+        We standardly define a calendar year as 365 days. However, a "solar year" (or tropical year)—the time it takes for Earth to complete one full orbit around the Sun—is not an integer number of days.
+      </p>
+      <p class="mb-6">
+        Specifically, one solar year is approximately <strong>365.24219 days</strong>.
+      </p>
+      <p class="mb-6">
+        If we ignored the fractional part (0.24219 of a day) and kept our calendar strictly at 365 days, we would accumulate a deficit of about <strong>0.2422 days every single year</strong>:
+      </p>
+      
+      <ul class="mb-8 space-y-4 list-disc pl-6">
+        <li><strong>In 4 Years:</strong> deficit = `0.24219 * 4 = 0.96876` days (almost 1 full day). By inserting February 29 every 4 years, we correct this.</li>
+        <li><strong>The Overshoot:</strong> However, adding 1 day (24 hours) every 4 years corrects for 0.25 days per year, which is slightly more than the actual 0.24219 deficit. This creates a small overshoot of <strong>0.0078 days per year</strong> (`0.25 - 0.2422 ≈ 0.0078`).</li>
+        <li><strong>The Century Correction:</strong> In about 128 years, this tiny annual overshoot accumulates to a full day. To fix this, we omit leap days during specific century years.</li>
+      </ul>
+
+      <!-- Interactive Callout -->
+      <div class="my-10 rounded-2xl border border-accent/20 bg-accent/5 p-6 sm:p-8">
+        <h3 class="font-heading text-lg font-bold text-text">Calculate Ages and Dates automatically</h3>
+        <p class="mt-2 text-sm text-muted">
+          Need to calculate age or the difference between dates across leap years? Enter your dates in our free, interactive Age Calculator to instantly get precise numbers.
+        </p>
+        <div class="mt-4">
+          <a href="/age-calculator" class="inline-flex items-center gap-1.5 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white shadow-md shadow-accent/15 transition-all hover:bg-accent/90">
+            Go to Age Calculator →
+          </a>
+        </div>
+      </div>
+
+      <!-- Section: The Rules -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">The 3 Gregorian Leap Year Rules</h2>
+      <p class="mt-4 mb-6">
+        To address the century overshoot, Pope Gregory XIII introduced the Gregorian calendar in 1582. The calendar established three mathematical rules to determine whether a given year is a leap year:
+      </p>
+
+      <ol class="mb-8 space-y-4 list-decimal pl-6">
+        <li>
+          <strong class="text-text">Rule 1 (The 4-Year Rule):</strong> The year must be evenly divisible by 4. If it is not, it is a standard year.
+        </li>
+        <li>
+          <strong class="text-text">Rule 2 (The 100-Year Century Rule):</strong> If the year is divisible by 4, but is also divisible by 100 (a century year, like 1800, 1900, 2100), it is <strong>NOT</strong> a leap year, unless:
+        </li>
+        <li>
+          <strong class="text-text">Rule 3 (The 400-Year Exception):</strong> If the century year is also evenly divisible by 400 (like 1600, 2000, 2400), it <strong>IS</strong> a leap year.
+        </li>
+      </ol>
+
+      <p class="mb-6">
+        This algorithm produces an average calendar year length of exactly <strong>365.2425 days</strong>, which aligns almost perfectly with the solar year of 365.2422 days (differing by only 1 day every 3,200 years).
+      </p>
+
+      <!-- Section: Examples -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Step-by-Step Calculation Examples</h2>
+      <p class="mt-4 mb-6">
+        Let's apply these rules to three different years to test divisibility.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 1: Analyzing the Year 2000</h3>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li><strong>Check Rule 1 (Divisible by 4?):</strong> `2000 / 4 = 500` (Yes, proceed).</li>
+        <li><strong>Check Rule 2 (Divisible by 100?):</strong> `2000 / 100 = 20` (Yes, century year).</li>
+        <li><strong>Check Rule 3 (Divisible by 400?):</strong> `2000 / 400 = 5` (Yes, meets the exception).</li>
+      </ul>
+      <p class="mb-6">
+        Since the year 2000 is divisible by 400, it was a <strong>leap year</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 2: Analyzing the Year 2100</h3>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li><strong>Check Rule 1 (Divisible by 4?):</strong> `2100 / 4 = 525` (Yes, proceed).</li>
+        <li><strong>Check Rule 2 (Divisible by 100?):</strong> `2100 / 100 = 21` (Yes, century year).</li>
+        <li><strong>Check Rule 3 (Divisible by 400?):</strong> `2100 / 400 = 5.25` (No, does not meet the exception).</li>
+      </ul>
+      <p class="mb-6">
+        Since the year 2100 is divisible by 100 but not by 400, it is <strong>not a leap year</strong>.
+      </p>
+
+      <h3 class="mt-6 font-heading text-xl font-bold text-text">Example 3: Age of a Leapling Born on Feb 29, 2008</h3>
+      <p class="mt-2 mb-4">
+        A person was born on <strong>February 29, 2008</strong>. We want to calculate their chronological age and their birthday count as of <strong>June 22, 2026</strong>.
+      </p>
+      <ul class="mb-4 list-decimal pl-6 space-y-2">
+        <li>
+          <strong>Calculate Completed Chronological Years:</strong><br />
+          <code class="bg-bg px-2 py-0.5 rounded text-text font-mono text-sm">Age = 2026 - 2008 = 18 years old</code>.
+        </li>
+        <li>
+          <strong>Identify leap years traversed:</strong><br />
+          The years 2012, 2016, 2020, and 2024 were leap years.
+        </li>
+        <li>
+          <strong>Calculate Leap Birthdays Celebrated:</strong><br />
+          This individual has lived through exactly <strong>4 actual calendar birthdays</strong>.
+        </li>
+      </ul>
+      <p class="mb-6">
+        Although 18 years have elapsed chronologically, this individual has only had 4 opportunities to blow out candles on their exact birth date.
+      </p>
+
+      <!-- Calendar System Comparison Table -->
+      <h3 class="font-heading text-lg font-bold text-text mb-4">Comparison of Calendar Systems</h3>
+      <div class="my-6 overflow-x-auto rounded-xl border border-border/80 shadow-sm">
+        <table class="w-full text-left border-collapse text-sm bg-card">
+          <thead>
+            <tr class="bg-bg text-text border-b border-border/80">
+              <th class="p-4 font-bold">Calendar System</th>
+              <th class="p-4 font-bold">Leap Year Rule</th>
+              <th class="p-4 font-bold">Mean Year Length</th>
+              <th class="p-4 font-bold">Discrepancy (1 Day Shift)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/60">
+            <tr>
+              <td class="p-4 font-semibold">Julian Calendar (45 BC)</td>
+              <td class="p-4">Add 1 day every 4 years (Divisible by 4)</td>
+              <td class="p-4 font-mono">365.25 days00</td>
+              <td class="p-4 text-red-700">Shifts by 1 day every 128 years</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Gregorian Calendar (1582)</td>
+              <td class="p-4 text-emerald-700 font-semibold">Divisible by 4; not 100 unless divisible by 400</td>
+              <td class="p-4 font-mono font-bold text-accent">365.2425 days</td>
+              <td class="p-4 text-emerald-700">Shifts by 1 day every 3,200 years</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold">Astronomical Solar Year</td>
+              <td class="p-4">Fetal orbital velocity variable</td>
+              <td class="p-4 font-mono">365.2422 days</td>
+              <td class="p-4">True baseline standard</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section: Key Challenges -->
+      <h2 class="mt-10 font-heading text-2xl font-bold text-text">Code Implementations and Bugs</h2>
+      <p class="mt-4 mb-6">
+        In computer science, checking for leap years is a common interview exercise. However, failing to apply the second and third rules of the algorithm has caused massive historic software crashes (known as leap year bugs).
+      </p>
+      <p class="mb-4">
+        Here is the standard programming logic to check leap years:
+      </p>
+      <div class="my-6 rounded-xl border border-border/80 bg-card p-6 font-mono text-sm leading-relaxed shadow-sm">
+        <pre class="text-text">{`function isLeapYear(year) {
+  if (year % 4 === 0) {
+    if (year % 100 === 0) {
+      return year % 400 === 0;
+    }
+    return true;
+  }
+  return false;
+}`}</pre>
+      </div>
+
+      <p class="mb-6">
+        Understanding the core arithmetic of the calendar allows you to write clean algorithms, track exact age benchmarks, and prevent software overflows during calendar year changes.
+      </p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-12 border-t border-border/60 pt-10">
+      <h2 class="font-heading text-2xl font-bold text-text">Frequently Asked Questions</h2>
+      <div class="mt-6 space-y-6">
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Why do we have leap years?</h3>
+          <p class="mt-2 text-muted">
+            We have leap years to synchronize our 365-day calendar year with the astronomical solar year (which is approximately 365.2422 days). Without leap years, the seasons would gradually slip out of alignment with the calendar months.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">Is the year 2000 a leap year?</h3>
+          <p class="mt-2 text-muted">
+            Yes. The year 2000 was divisible by 4, 100, and 400, satisfying the century rule exception.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-heading text-lg font-bold text-text">When is a leapling's legal birthday in non-leap years?</h3>
+          <p class="mt-2 text-muted">
+            It varies by jurisdiction. In some regions (like the UK and Hong Kong), a leapling legally turns a year older on March 1. In others (like New Zealand and Taiwan), the legal birthday is recognized as February 28.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="mt-12 border-t border-border/60 pt-8 text-center">
+      <a href="/blog" class="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline">
+        ← Back to All Guides
+      </a>
+    </footer>
+  </article>
+</BaseLayout>
